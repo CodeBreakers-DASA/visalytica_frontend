@@ -1,9 +1,10 @@
 import "../globals.css";
+import Hotbar from '../../components/Hotbar'
 
-export default function RootLayout({  children }) {
+export default function RootLayout({ children }) {
   return (
     <main> 
-        <h2>HOTBAR</h2>
+        <Hotbar />
         {children} 
     </main>
   );
