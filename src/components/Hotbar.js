@@ -10,7 +10,7 @@ export default function Hotbar({ nome = 'Fulano' }) {
             <div className="flex justify-between items-center gap-8">
                 <Image src={LogoVisalytica} alt="Logo da Visalytica"/>
                 <div className="w-0.5 h-full bg-[#166DED]"></div>
-                <Image src={LogoDasa} alt="Lodo da Dasas"/>
+                <Image src={LogoDasa} alt="Lodo da Dasa"/>
             </div>
             <div className="flex items-center gap-3.5">
                 <Image src={IconePessoa} alt="Icone de uma pessoa"/>
