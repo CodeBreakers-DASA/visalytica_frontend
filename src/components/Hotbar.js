@@ -6,7 +6,7 @@ import IconePessoa from '../../public/IconePessoa.svg'
 
 export default function Hotbar({ nome = 'Fulano' }) {
     return ( 
-        <div className="flex justify-between mx-12 mt-8">
+        <div className="flex justify-between mx-12 my-8">
             <div className="flex justify-between items-center gap-8">
                 <Image src={LogoVisalytica} alt="Logo da Visalytica"/>
                 <div className="w-0.5 h-full bg-[#166DED]"></div>
