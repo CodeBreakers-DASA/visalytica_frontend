@@ -1,7 +1,10 @@
+import CardHome from '../../../components/CardHome'
+
 function HomeInicial() {
     return ( 
         <div>
-            <h2>HomeInicial</h2>
+            <CardHome nome='Consultar pacientes' alt=''/>
+            <CardHome invertido nome='Fazer análise' alt=''/>
         </div>
      );
 }
