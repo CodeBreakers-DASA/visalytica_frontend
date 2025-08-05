@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
           objectFit="cover"
         />
       </div>
-      <div className="flex flex-col justify-center items-center w-full p-[90px]">
+      <div className="flex flex-col justify-center items-center w-full p-[90px] pt-56">
         <Image
           src={logo}
           alt="logo visalytica"
