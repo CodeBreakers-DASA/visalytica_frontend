@@ -35,7 +35,7 @@ export default function Analise() {
                         type='date'
                     />
                     <Input
-                        label={'Node da peça*'}
+                        label={'Nome da peça*'}
                         placeHolder={'Pulmão'}
                     />
                     <Input
