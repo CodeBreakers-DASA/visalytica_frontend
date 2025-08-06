@@ -4,7 +4,7 @@ function CardHome({ nome, imagem, alt, invertido = false}) {
             <div className="bg-gray-400 min-w-1/3 h-full rounded-4xl">
                 
             </div>
-            <h2 className="text-5xl uppercase text-[#166DED] font-black max-w-1/3 text-center">{nome}</h2>
+            <h2 className="text-5xl uppercase text-azul font-black max-w-1/3 text-center">{nome}</h2>
         </div>
      );
 }
