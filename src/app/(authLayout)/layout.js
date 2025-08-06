@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
           src={logo}
           alt="logo visalytica"
         />
-        <div className="mt-14 p-[30px] border border-[#166DED] rounded-[10px] shadow-[4px_4px_0_1px_#166DED]">
+        <div className="mt-14 p-[30px] border border-azul rounded-[10px] shadow-[4px_4px_0_1px_#166DED]">
           {children}
         </div>
         <div className="mt-auto">
