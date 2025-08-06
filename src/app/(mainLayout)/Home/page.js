@@ -4,7 +4,9 @@ import CardHome from '../../../components/CardHome'
 function HomeInicial() {
     return ( 
         <div>
-            <CardHome nome='Consultar pacientes' alt=''/>
+            <Link href={'/ConsultarPacientes'}>
+                <CardHome nome='Consultar pacientes' alt=''/>
+            </Link>
             <Link href={'/Analise'}>
                 <CardHome invertido nome='Fazer análise' alt=''/>
             </Link>

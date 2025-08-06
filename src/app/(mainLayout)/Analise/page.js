@@ -57,7 +57,7 @@ export default function Analise() {
                         </svg>
                     </Button>
                     <Link href='/GeraPDF' className='w-full'> 
-                        <Button classes={'bg-gradient-to-r from-azul to-azul_escuro] w-full py-4 px-6'}>
+                        <Button classes={'bg-gradient-to-r from-azul to-azul_escuro w-full py-4 px-6'}>
                             Continuar
                         </Button>
                     </Link>
