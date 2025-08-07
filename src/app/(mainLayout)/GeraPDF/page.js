@@ -41,9 +41,9 @@ function GeraPDF() {
                 </CardInputs>
                 <div className="flex gap-5 ">
                     <Link href='/Analise'>
-                        <Button classes={'bg-cinza_escuro w-full'}>Cancelar</Button>
+                        <Button classes={'p-4 bg-cinza_escuro w-full'}>Cancelar</Button>
                     </Link>
-                    <Button classes={'w-full bg-gradient-to-r from-azul to-azul_escuro'}>Salvar</Button>
+                    <Button classes={'p-4 w-full bg-gradient-to-r from-azul to-azul_escuro'}>Salvar</Button>
                 </div>
                 <Button classes={'bg-gradient-to-r from-azul to-azul_escuro w-full py-4 px-6'}>Imprimir</Button>
             </div>

@@ -47,17 +47,17 @@ export default function Analise() {
                 </CardInputs>
                 <div className='flex gap-2'>
                     <Link href='/Home' className='w-full'>
-                        <Button classes={'bg-cinza_escuro w-full'}>
+                        <Button classes={'p-4 bg-cinza_escuro w-full'}>
                             Cancelar
                         </Button>
                     </Link>
-                    <Button classes={'bg-azul'}>
+                    <Button classes={'p-4 bg-azul'}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
                             <path d="M0 9.375H9.375V0H0V9.375ZM3.125 3.125H6.25V6.25H3.125V3.125ZM12.5 0V9.375H21.875V0H12.5ZM18.75 6.25H15.625V3.125H18.75V6.25ZM0 21.875H9.375V12.5H0V21.875ZM3.125 15.625H6.25V18.75H3.125V15.625ZM20.3125 12.5H21.875V18.75H17.1875V17.1875H15.625V21.875H12.5V12.5H17.1875V14.0625H20.3125V12.5ZM20.3125 20.3125H21.875V21.875H20.3125V20.3125ZM17.1875 20.3125H18.75V21.875H17.1875V20.3125Z" fill="white" />
                         </svg>
                     </Button>
                     <Link href='/GeraPDF' className='w-full'> 
-                        <Button classes={'bg-gradient-to-r from-azul to-azul_escuro w-full py-4 px-6'}>
+                        <Button classes={'p-4 bg-gradient-to-r from-azul to-azul_escuro w-full py-4 px-6'}>
                             Continuar
                         </Button>
                     </Link>

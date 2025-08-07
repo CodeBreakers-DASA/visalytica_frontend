@@ -1,11 +1,35 @@
 import Link from "next/link";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
+import TabelaPacientes from "../../../components/TabelaPacientes";
+import IconSeta from "../../../components/IconSeta";
+
+
+const mockPacientes = [
+  { id: 1, nome: "Kimberly Maria Vieira", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
+  { id: 2, nome: "Angelina Queiroz", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 2 },
+  { id: 3, nome: "Milena Faria", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
+  { id: 4, nome: "Mario Antunes", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
+  { id: 5, nome: "Miguel Augusto", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
+  { id: 6, nome: "Sebastian Silva Santos", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 2 },
+  { id: 7, nome: "Antonia Aparecida", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
+  { id: 72, nome: "Antonia Aparecida", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
+  { id: 73, nome: "Antonia Aparecida", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
+  { id: 8, nome: "José Silveira", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 4 }
+];
 
 export default function ConsultarPacientes() {
+
+  // Comentado pois está em prototipagem
+
+  // for (let index = 0; index = 8; index++) {
+  //   var pagePacientes = [];
+  //   pagePacientes.push(mockPacientes[index])
+  // }
+
   return (
-    <div className="flex h-[80vh] mx-12 gap-6">
-      <div className="w-full flex justify-between h-16">
+    <div className="h-[80vh] mx-12 gap-6">
+      <div className="w-full flex justify-between gap-20 h-16">
         <Link className="flex text-azul items-center gap-2" href={"/Home"}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -21,9 +45,11 @@ export default function ConsultarPacientes() {
           </svg>
           <h3 className="text-lg">Voltar</h3>
         </Link>
-        <div className="flex">
-          <Input type="text" />
-          <Button classes={'bg-gradient-to-b from-azul to-azul_escuro my-2'}>
+        <div className="flex w-full gap-5">
+          <Input type="text" placeHolder="Pesquise por CPF, nome ou peça" />
+          <Button
+            classes={"bg-gradient-to-b from-azul to-azul_escuro my-2 px-3"}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -39,7 +65,27 @@ export default function ConsultarPacientes() {
           </Button>
         </div>
       </div>
-      <div></div>
+      <div>
+        <div className="max-w-7xl mx-auto mt-6">
+          <TabelaPacientes pacientes={pagePacientes} />
+        </div>
+        <div className="flex items-center justify-end gap-5 mt-4">
+          <IconSeta classe="cursor-pointer"/>
+          <Button classes={'w-10 h-10 bg-gradient-to-b from-azul to-azul_escuro'}>
+            1
+          </Button>
+          {
+            mockPacientes.length > 8 ? 
+              <Button classes={'w-10 h-10 bg-gradient-to-b from-azul to-azul_escuro'}>
+                2
+              </Button>
+            : ''
+          }
+
+          <IconSeta classe="rotate-180 cursor-pointer"/>
+
+        </div>
+      </div>
     </div>
   );
 }
