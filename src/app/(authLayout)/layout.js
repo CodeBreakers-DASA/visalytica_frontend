@@ -14,15 +14,17 @@ export default function RootLayout({ children }) {
           objectFit="cover"
         />
       </div>
-      <div className="flex flex-col justify-center items-center w-full p-[90px] pt-56">
+      <div className="flex flex-col justify-center items-center w-full">
+        <div className="mt-auto flex flex-col items-center">
         <Image
           src={logo}
           alt="logo visalytica"
-        />
-        <div className="mt-14 p-[30px] border border-azul rounded-[10px] shadow-[4px_4px_0_1px_#166DED]">
+          />
+        <div className="mt-14 p-[30px] border border-azul rounded-[10px] w-96 shadow-[4px_4px_0_1px_#166DED]">
           {children}
         </div>
-        <div className="mt-auto">
+          </div>
+        <div className="my-auto">
           <Image
             src={logoDasa}
             alt="logo dasa"
