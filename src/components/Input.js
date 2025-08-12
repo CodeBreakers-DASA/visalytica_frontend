@@ -10,7 +10,7 @@ function Input({ label, placeHolder, type, value = '', disabled }) {
                 disabled={disabled}
                 type={type} 
                 placeholder={placeHolder} 
-                className={`${inter.className} appearance-none bg-cinza_medio border-cinza border px-4 py-3 rounded-xl text-cinza stroke-cinza`} 
+                className={`${inter.className} appearance-none bg-cinza_medio border-cinza border px-4 py-3 rounded-xl  stroke-cinza`} 
             />
         </div>
     );
