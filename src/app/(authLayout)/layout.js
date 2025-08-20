@@ -1,18 +1,21 @@
-import "../globals.css"; // Você pode importar os mesmos estilos globais
-import authImage from '../../assets/authImage.png'
+import "../globals.css"; 
 import logo from '../../assets/logoGradiente.svg'
 import logoDasa from '../../assets/logoDasa.svg'
 import Image from 'next/image'
 export default function RootLayout({ children }) {
   return (
     <main className="flex">
-      <div className="h-screen w-full relative">
-        <Image
-          src={authImage}
-          alt="uma mulher em um fundo azul olhando em um microscópio"
-          layout="fill"
-          objectFit="cover"
-        />
+      <div className="h-screen w-full relative overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src="/authvideo.mp4" type="video/mp4" />
+          Seu navegador não suporta vídeos.
+        </video>
       </div>
       <div className="flex flex-col justify-center items-center w-full">
         <div className="mt-auto flex flex-col items-center">
