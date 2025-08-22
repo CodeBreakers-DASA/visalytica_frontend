@@ -1,4 +1,5 @@
 import { Inter } from 'next/font/google'
+import { Toaster } from 'react-hot-toast'
 import "./globals.css";
 
 const inter = Inter({
@@ -15,9 +16,30 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br" className={inter.className}>
-      <body
-      >
+      <body>
         {children}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: '#16a34a',
+              color: '#fff',
+              fontFamily: 'Inter, sans-serif',
+              fontWeight: '500',
+            },
+            success: {
+              style: {
+                background: '#16a34a',
+              },
+            },
+            error: {
+              style: {
+                background: '#DD2020',
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );
