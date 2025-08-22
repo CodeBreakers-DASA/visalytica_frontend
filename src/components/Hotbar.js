@@ -3,12 +3,15 @@ import Image from "next/image";
 import LogoVisalytica from '../../public/LogoVisalytica.png'
 import LogoDasa from '../../public/LogoDasa.svg'
 import IconePessoa from '../../public/IconePessoa.svg'
+import Link from "next/link";
 
 export default function Hotbar({ nome = 'Fulano' }) {
     return ( 
         <div className="flex justify-between mx-12 my-8">
             <div className="flex justify-between items-center gap-8">
-                <Image src={LogoVisalytica} alt="Logo da Visalytica"/>
+                <Link href={'/Home'}>
+                    <Image src={LogoVisalytica} alt="Logo da Visalytica"/>
+                </Link>
                 <div className="w-0.5 h-full bg-azul"></div>
                 <Image src={LogoDasa} alt="Logo da Dasa"/>
             </div>
