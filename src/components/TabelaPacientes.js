@@ -28,7 +28,7 @@ export default function TabelaPacientes({ pacientes }) {
                 <td className="px-6 py-4 border-r">{paciente.dataCriacao}</td>
                 <td className="px-6 py-4 border-r">
                   <Link
-                    href={`/pacientes/${paciente.id}/exames`}
+                    href={`/pacientes/${paciente.id}`}
                     className="font-medium text-blue-600 hover:underline"
                   >
                     {paciente.examesCount} exame{paciente.examesCount > 1 ? 's' : ''}
