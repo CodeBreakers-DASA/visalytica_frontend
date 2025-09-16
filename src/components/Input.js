@@ -1,3 +1,5 @@
+'use-client'
+
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ['latin'] });
@@ -16,7 +18,7 @@ function Input({ label, placeHolder, type = 'text', value, defaultValue, disable
                 value={value}
                 defaultValue={defaultValue}
                 onChange={onChange}
-                className={`${inter.className} appearance-none bg-cinza_medio px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                className={`${inter.className & ''} appearance-none bg-cinza_medio px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     hasError ? 'border-vermelho text-vermelho placeholder-vermelho' : 
                     hasSuccess ? 'border-green-600 text-green-600 placeholder-green-600' :
                     'border-cinza placeholder-cinza_escuro'

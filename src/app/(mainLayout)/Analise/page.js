@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import ImagemTempoReal from '../../../components/ImagemTempoReal'
 import Button from '../../../components/Button'
 import Input from '../../../components/Input'
@@ -113,17 +113,32 @@ export default function Analise() {
         }, 100)
     }, [])
 
+    const webcamRef1 = useRef(null);
+    const webcamRef2 = useRef(null);
+
+      // Função para capturar uma foto (opcional, como no exemplo anterior)
+    const capture1 = useCallback(() => {
+        const imageSrc = webcamRef1.current.getScreenshot();
+        console.log(imageSrc); // Faça algo com a imagem, como exibi-la
+    }, [webcamRef1]);
+    const capture2 = useCallback(() => {
+        const imageSrc = webcamRef1.current.getScreenshot();
+        console.log(imageSrc); // Faça algo com a imagem, como exibi-la
+    }, [webcamRef2]);
+
     return (
         <>
         <div className='flex flex-col lg:flex-row h-[80vh] mx-4 sm:mx-8 lg:mx-16 gap-6'>
-            <div className='flex flex-col gap-6 h-full w-full lg:w-2/3'>
+            <div className='flex flex-col gap-6 h-full lg:w-2/3'>
                 <ImagemTempoReal
                     label={'Altura'}
                     imagem={''}
+                    webcamRef={webcamRef1}
                 />
                 <ImagemTempoReal
                     label={'Comprimento e Largura'}
                     imagem={''}
+                    webcamRef2={webcamRef2}
                 />
             </div>
             <div className='flex flex-col gap-6 w-full lg:w-1/2'>
@@ -241,6 +256,8 @@ export default function Analise() {
                             onClick={() => {
                                 // Função para capturar imagem
                                 console.log('Capturar imagem');
+                                capture1()
+                                capture2()
                             }}
                             aria-label="Capturar imagem"
                         >
