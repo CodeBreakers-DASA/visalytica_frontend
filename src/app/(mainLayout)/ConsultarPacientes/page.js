@@ -13,8 +13,6 @@ const mockPacientes = [
   { id: 5, nome: "Miguel Augusto", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
   { id: 6, nome: "Sebastian Silva Santos", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 2 },
   { id: 7, nome: "Antonia Aparecida", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
-  { id: 72, nome: "Antonia Aparecida", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
-  { id: 73, nome: "Antonia Aparecida", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
   { id: 8, nome: "José Silveira", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 4 }
 ];
 
@@ -67,7 +65,7 @@ export default function ConsultarPacientes() {
       </div>
       <div>
         <div className="max-w-7xl mx-auto mt-6">
-          <TabelaPacientes pacientes={pagePacientes} />
+          <TabelaPacientes pacientes={mockPacientes} />
         </div>
         <div className="flex items-center justify-end gap-5 mt-4">
           <IconSeta classe="cursor-pointer"/>
