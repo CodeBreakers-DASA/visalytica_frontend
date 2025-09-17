@@ -3,11 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
-export default function ImagemTempoReal({ label, widht, height, imagem }) {
+export default function ImagemTempoReal({ imagem, webcamRef }) {
 
     const [devices, setDevices] = useState([]);
     const [activeDeviceId, setActiveDeviceId] = useState(undefined);
-    const webcamRef = useRef(null);
+    
 
     // Função para lidar com a obtenção dos dispositivos de mídia
     const handleDevices = useCallback(
@@ -32,11 +32,7 @@ export default function ImagemTempoReal({ label, widht, height, imagem }) {
         });
     }, [handleDevices]);
 
-    // Função para capturar uma foto (opcional, como no exemplo anterior)
-    const capture = useCallback(() => {
-        const imageSrc = webcamRef.current.getScreenshot();
-        console.log(imageSrc); // Faça algo com a imagem, como exibi-la
-    }, [webcamRef]);
+  
 
     // Define as constraints para o componente Webcam
     const videoConstraints = {
@@ -49,36 +45,16 @@ export default function ImagemTempoReal({ label, widht, height, imagem }) {
 
 
     return (
-        <div className={`${!imagem && 'bg-gray-900'} w-full h-full relative rounded-2xl`}>
-            <h2>Seletor de Câmera</h2>
-            <div style={{ marginBottom: '10px' }}>
-                {devices.length > 0 ? (
-                    <select
-                        onChange={(e) => setActiveDeviceId(e.target.value)}
-                        value={activeDeviceId}
-                        style={{ padding: '8px', fontSize: '16px' }}
-                    >
-                        <option value="">Selecione uma Câmera</option>
-                        {devices.map((device, key) => (
-                            <option key={key} value={device.deviceId}>
-                                {device.label || `Câmera ${key + 1}`}
-                            </option>
-                        ))}
-                    </select>
-                ) : (
-                    <p>Nenhuma câmera encontrada ou permissão negada.</p>
-                )}
-            </div>
-
+        <div className={`${!imagem && 'bg-gray-900'} w-auto h-full relative rounded-2xl`}>
+            {/* <p className="mt-2 ml-5 text-white">{label}</p> */}
             <Webcam
                 audio={false}
                 ref={webcamRef}
                 screenshotFormat="image/jpeg"
                 videoConstraints={videoConstraints}
-                style={{ width: '100%', maxWidth: '600px', height: 'auto' }}
+                style={{ width: '600px', height: '100%' }}
+                className="rounded-2xl mx-auto"
             />
-
-            <p className="mt-3 ml-5 text-white">{label}</p>
         </div>
     )
 }
