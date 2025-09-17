@@ -10,7 +10,7 @@ export default function AcoesTabela({ pacienteId }) {
     <div className="flex justify-center items-center gap-2">
       {/* Botão de Visualizar/Exames (como link) */}
       <Link
-        href={`/pacientes/${pacienteId}/exames`}
+        href={`/pacientes/${pacienteId}`}
         className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
         aria-label="Visualizar Exames"
       >
