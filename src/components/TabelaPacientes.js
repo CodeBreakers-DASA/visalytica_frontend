@@ -3,7 +3,7 @@ import AcoesTabela from './AcoesTabela'
 
 
 export default function TabelaPacientes({ pacientes }) {
-  const headers = ['ID', 'Nome', 'CPF', 'Última atualização', 'Data criação', 'Exames', 'Ações'];
+  const headers = ['Nome', 'CPF', 'Última atualização', 'Data criação', 'Exames', 'Ações'];
 
   return (
     <div className="bg-white shadow-md rounded-xl border border-cinza overflow-hidden" >
@@ -21,8 +21,7 @@ export default function TabelaPacientes({ pacientes }) {
           <tbody>
             {pacientes.map((paciente) => (
               <tr key={paciente.id} className="border-cinza bg-white border-b hover:bg-cinza_escuro/30">
-                <td className="px-6 py-4 border-r font-medium ">{paciente.id}</td>
-                <td className="px-6 py-4 border-r">{paciente.nome}</td>
+                <td className="px-6 py-4 border-r font-medium">{paciente.nome}</td>
                 <td className="px-6 py-4 border-r">{paciente.cpf}</td>
                 <td className="px-6 py-4 border-r">{paciente.ultimaAtualizacao}</td>
                 <td className="px-6 py-4 border-r">{paciente.dataCriacao}</td>
