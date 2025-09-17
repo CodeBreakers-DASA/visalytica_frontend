@@ -8,16 +8,7 @@ import TabelaPacientes from "../../../components/TabelaPacientes";
 import IconSeta from "../../../components/IconSeta";
 
 
-const mockPacientes = [
-  { id: 1, nome: "Kimberly Maria Vieira", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
-  { id: 2, nome: "Angelina Queiroz", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 2 },
-  { id: 3, nome: "Milena Faria", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
-  { id: 4, nome: "Mario Antunes", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
-  { id: 5, nome: "Miguel Augusto", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
-  { id: 6, nome: "Sebastian Silva Santos", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 2 },
-  { id: 7, nome: "Antonia Aparecida", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
-  { id: 8, nome: "José Silveira", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 4 }
-];
+import mockPacientes from "../../../constants/Pacientes.json";
 
 export default function ConsultarPacientes() {
   const [termoPesquisa, setTermoPesquisa] = useState("");
@@ -90,13 +81,13 @@ export default function ConsultarPacientes() {
         </div>
         <div className="flex items-center justify-end gap-5 mt-4">
           <IconSeta cor="#CFCFCF" classe="cursor-pointer"/>
-          <Button classes={'w-[60px] h-[60px] bg-gradient-to-b from-azul to-azul_escuro rounded-2xl'}>
+          <Button classes={'w-[40px] h-[40px] bg-gradient-to-b from-azul to-azul_escuro rounded-2xl'}>
             1
           </Button>
           
           <span className="text-cinza_escuro text-xl font-medium px-2">...</span>
           
-          <Button classes={'w-[60px] h-[60px] bg-white border-2 border-cinza rounded-2xl text-cinza_escuro hover:bg-gray-50'}>
+          <Button classes={'w-[40px] h-[40px] bg-white border-2 border-cinza rounded-2xl text-cinza_escuro hover:bg-gray-50'}>
             36
           </Button>
 

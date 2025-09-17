@@ -34,7 +34,7 @@ export default function TabelaPacientes({ pacientes }) {
                   </Link>
                 </td>
                 <td className="px-6 py-4">
-                  <AcoesTabela pacienteId={paciente.id} />
+                  <AcoesTabela paciente={paciente} />
                 </td>
               </tr>
             ))}
