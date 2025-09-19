@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
+import ServerFrame from "./ServerFrame"
 
-export default function ImagemTempoReal({ imagem, webcamRef }) {
+export default function ImagemTempoReal({ imagem, label }) {
 
     const [devices, setDevices] = useState([]);
     const [activeDeviceId, setActiveDeviceId] = useState(undefined);
@@ -45,16 +46,17 @@ export default function ImagemTempoReal({ imagem, webcamRef }) {
 
 
     return (
-        <div className={`${!imagem && 'bg-gray-900'} w-auto h-full relative rounded-2xl`}>
-            {/* <p className="mt-2 ml-5 text-white">{label}</p> */}
-            <Webcam
+        <div className={`${!imagem && 'bg-gray-900'} flex flex-col items-center justify-between w-auto h-full relative rounded-2xl p-3`}>
+            <p className="text-white">{label}</p>
+            {/* <Webcam
                 audio={false}
                 ref={webcamRef}
                 screenshotFormat="image/jpeg"
                 videoConstraints={videoConstraints}
                 style={{ width: '600px', height: '100%' }}
                 className="rounded-2xl mx-auto"
-            />
+            /> */}
+            <ServerFrame/>
         </div>
     )
 }
