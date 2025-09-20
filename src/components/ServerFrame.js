@@ -5,18 +5,21 @@ import io from "socket.io-client";
 
 const socket = io("http://localhost:5000");
 
-export default function VideoReceiver() {
+export default function VideoReceiver({ camera }) { 
   // Envia webCam para servidor
 
   const videoRef = useRef(null);
   const socketRef = useRef(null);
 
   useEffect(() => {
-
+    // console.log(camera);
+    
+    // console.log(camera ? {deviceId: { exact: camera }} : "10ea8c4e4d884c33ee582f82100f1a48b1ae36c46c6080c4b248387defbc390e");
+    
     socketRef.current = io("http://localhost:5000");
     navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
+      .getUserMedia({ video: camera ? {deviceId: { exact: camera }} : true})
+      .then((stream) => {        
         videoRef.current.srcObject = stream;
       })
       .catch((err) => console.error("Erro câmera:", err));
@@ -27,14 +30,14 @@ export default function VideoReceiver() {
       const canvas = document.createElement("canvas");
       canvas.width = videoRef.current.videoWidth;
       canvas.height = videoRef.current.videoHeight;
-      console.log(canvas.width, canvas.height);
+      // console.log(canvas.width, canvas.height);
       
       const ctx = canvas.getContext("2d");
       ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
       const dataUrl = canvas.toDataURL("image/jpg");
-      socketRef.current.emit("frame", dataUrl);
-    }, 50); // 10 FPS
+      socketRef.current.emit("frame", { cameraId: camera, data: dataUrl });
+    }, 200); // 10 FPS
 
     return () => {
       clearInterval(sendFrames);
@@ -48,7 +51,8 @@ export default function VideoReceiver() {
 
   useEffect(() => {
     socket.on("server_frame", (data) => {
-      setFrame(data.frame);
+      console.log(data.cameraId)
+      data.cameraId == camera && setFrame(data.frame);
     });
   }, []);
 

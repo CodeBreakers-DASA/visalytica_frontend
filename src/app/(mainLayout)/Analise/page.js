@@ -26,13 +26,13 @@ export default function Analise() {
     useEffect(() => {
         async function getDevices() {
             try {
-               
+
                 await navigator.mediaDevices.getUserMedia({ video: true });
-                
+
                 const devicesList = await navigator.mediaDevices.enumerateDevices();
                 const videoDevicesList = devicesList.filter(device => device.kind === 'videoinput');
                 setVideoDevices(videoDevicesList);
-                
+
                 // seleciona automaticamente a DV20 USB CAMERA se existir (TEMOS QUE MUDAR DEPOIS PARA USAR A CAMERA DE CIMA)
                 const dv20 = videoDevicesList.find(d => d.label.includes('DV20 USB CAMERA'));
                 if (dv20) {
@@ -49,7 +49,7 @@ export default function Analise() {
 
     const handleInputChange = useCallback((field) => (e) => {
         let value = e.target.value;
-        
+
         // validação específica para cpf - apenas números
         if (field === 'cpf') {
             value = value.replace(/\D/g, '');
@@ -58,16 +58,16 @@ export default function Analise() {
             if (value.length > 7) value = value.slice(0, 7) + '.' + value.slice(7);
             if (value.length > 11) value = value.slice(0, 11) + '-' + value.slice(11);
         }
-        
+
         // validação para data de nascimento
         if (field === 'dataNascimento' && value) {
             const hoje = new Date();
             const dataNascimento = new Date(value);
             if (dataNascimento > hoje) {
-                return; 
+                return;
             }
         }
-        
+
         setFormData(prev => ({
             ...prev,
             [field]: value
@@ -99,12 +99,12 @@ export default function Analise() {
 
     // validação do formulário
     const isFormValid = useMemo(() => {
-        return formData.cpf.length >= 14 && 
-               formData.nomePaciente.trim() &&
-               formData.dataNascimento &&
-               formData.nomePeca.trim() &&
-               formData.dimensoes.trim() &&
-               formData.diagnostico.trim()
+        return formData.cpf.length >= 14 &&
+            formData.nomePaciente.trim() &&
+            formData.dataNascimento &&
+            formData.nomePeca.trim() &&
+            formData.dimensoes.trim() &&
+            formData.diagnostico.trim()
     }, [formData])
 
     const handleCloseQRReader = useCallback(() => {
@@ -116,234 +116,271 @@ export default function Analise() {
     const webcamRef1 = useRef(null);
     const webcamRef2 = useRef(null);
 
-      // Função para capturar uma foto (opcional, como no exemplo anterior)
+    // Função para capturar uma foto (opcional, como no exemplo anterior)
     const capture1 = useCallback(() => {
         const imageSrc = webcamRef1.current.getScreenshot();
         console.log(imageSrc); // Faça algo com a imagem, como exibi-la
     }, [webcamRef1]);
+
     const capture2 = useCallback(() => {
         const imageSrc = webcamRef1.current.getScreenshot();
         console.log(imageSrc); // Faça algo com a imagem, como exibi-la
     }, [webcamRef2]);
 
+    const [devices, setDevices] = useState([]);
+    const [selectedDevice1, setSelectedDevice1] = useState(null);
+    const [selectedDevice2, setSelectedDevice2] = useState(null);
+
+    useEffect(() => {
+        // Lista as câmeras disponíveis
+        navigator.mediaDevices.enumerateDevices().then((deviceInfos) => {
+            const videoDevices = deviceInfos.filter((device) => device.kind === "videoinput");
+            setDevices(videoDevices);
+
+            if (videoDevices.length > 0) {
+                setSelectedDevice1(videoDevices[0].deviceId); // escolhe a primeira por padrão
+                setSelectedDevice2(videoDevices[1].deviceId); // escolhe a primeira por padrão
+            }
+        });
+    }, []);
+
     return (
         <>
-        <div className='flex flex-col lg:flex-row h-[80vh] mx-4 sm:mx-8 lg:mx-16 gap-6'>
-            <div className='flex flex-col gap-6 h-full lg:w-2/3'>
-                <ImagemTempoReal
-                    label={'Altura'}
-                    imagem={''}
-                    webcamRef={webcamRef1}
-                />
-                <ImagemTempoReal
-                    label={'Comprimento e Largura'}
-                    imagem={''}
-                    webcamRef2={webcamRef2}
-                />
-            </div>
-            <div className='flex flex-col gap-6 w-full lg:w-1/2'>
-                
-                <CardInputs className='h-full w-full flex flex-col justify-between bg-cinza_claro rounded-2xl p-4 sm:p-6 border border-cinza'>
-                    <Input
-                        label={'CPF*'}
-                        placeHolder={'000.000.000-00'}
-                        value={formData.cpf}
-                        onChange={handleInputChange('cpf')}
-                        aria-label="CPF do paciente"
-                        aria-required="true"
-                    />
-                    <Input
-                        label={'Nome do paciente*'}
-                        placeHolder={'Nome e sobrenome'}
-                        value={formData.nomePaciente}
-                        onChange={handleInputChange('nomePaciente')}
-                        aria-label="Nome completo do paciente"
-                        aria-required="true"
-                    />
-                    <Input
-                        label={'Data de nascimento*'}
-                        placeHolder={'00/00/0000'}
-                        type='date'
-                        value={formData.dataNascimento}
-                        onChange={handleInputChange('dataNascimento')}
-                        max={new Date().toISOString().split('T')[0]}
-                        aria-label="Data de nascimento do paciente"
-                        aria-required="true"
-                    />
-                    <Input
-                        label={'Nome da peça*'}
-                        placeHolder={'Pulmão'}
-                        value={formData.nomePeca}
-                        onChange={handleInputChange('nomePeca')}
-                        aria-label="Nome da peça anatômica"
-                        aria-required="true"
-                    />
-                    <Input
-                        label={'Comprimento x Largura x Altura*'}
-                        placeHolder={'3,5 x 2,0 x 1,2 cm'}
-                        value={formData.dimensoes}
-                        onChange={handleInputChange('dimensoes')}
-                        aria-label="Dimensões da peça"
-                        aria-required="true"
-                    />
-                    <Input
-                        label={'Possível diagnóstico*'}
-                        placeHolder={'Carcinoma de pulmão'}
-                        value={formData.diagnostico}
-                        onChange={handleInputChange('diagnostico')}
-                        aria-label="Diagnóstico preliminar"
-                        aria-required="true"
-                    />
-                </CardInputs>
-                
-                {/* Container dos botões */}
-                <div className='space-y-3'>
-                    {/* Primeira linha: Cancelar, QR Code e Continuar */}
-                    <div className='flex flex-row gap-3'>
-                        <Link href='/Home' className='flex-1'>
-                            <Button classes={'p-4 py-4 px-6 bg-cinza_escuro hover:bg-gray-600 w-full rounded-xl transition-all duration-200'}>
-                                Cancelar
-                            </Button>
-                        </Link>
-                        
-                        <Button 
-                            classes={'p-4 py-4 px-4 bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul flex items-center justify-center relative group min-w-[56px] rounded-xl transition-all duration-200'} 
-                            onClick={handleQRScan}
-                            title="Ler QR Code"
-                            aria-label="Abrir leitor de QR Code"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-                                <path d="M0 9.375H9.375V0H0V9.375ZM3.125 3.125H6.25V6.25H3.125V3.125ZM12.5 0V9.375H21.875V0H12.5ZM18.75 6.25H15.625V3.125H18.75V6.25ZM0 21.875H9.375V12.5H0V21.875ZM3.125 15.625H6.25V18.75H3.125V15.625ZM20.3125 12.5H21.875V18.75H17.1875V17.1875H15.625V21.875H12.5V12.5H17.1875V14.0625H20.3125V12.5ZM20.3125 20.3125H21.875V21.875H20.3125V20.3125ZM17.1875 20.3125H18.75V21.875H17.1875V20.3125Z" fill="white" />
-                            </svg>
-                            <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                                Ler QR Code
-                            </div>
-                        </Button>
-                        
-                        <Link 
-                            href={{
-                                pathname: '/GeraPDF',
-                                query: {
-                                    cpf: formData.cpf,
-                                    nomePaciente: formData.nomePaciente,
-                                    dataNascimento: formData.dataNascimento,
-                                    nomePeca: formData.nomePeca,
-                                    dimensoes: formData.dimensoes,
-                                    diagnostico: formData.diagnostico,
-                                    observacoes: formData.observacoes
-                                }
-                            }} 
-                            className={`flex-1 ${!isFormValid ? 'pointer-events-none' : ''}`}
-                            aria-label="Continuar para geração do PDF"
-                        > 
-                            <Button 
-                                classes={`p-4 py-4 px-6 w-full rounded-xl transition-all duration-200 ${
-                                    isFormValid 
-                                        ? 'bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul' 
-                                        : 'bg-gray-400 cursor-not-allowed'
-                                }`}
-                                disabled={!isFormValid}
-                            >
-                                Continuar
-                            </Button>
-                        </Link>
-                    </div>
-                    
-                    {/* Segunda linha: Capturar imagem */}
-                    <div className='w-full'>
-                        <Button 
-                            classes={'p-4 py-4 px-6 bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul w-full rounded-xl transition-all duration-200'}
-                            onClick={() => {
-                                // Função para capturar imagem
-                                console.log('Capturar imagem');
-                                capture1()
-                                capture2()
-                            }}
-                            aria-label="Capturar imagem"
-                        >
-                            Capturar imagem
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {/* Modal de Leitura QR Code */}
-        {showQRReader && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4">
-                <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center w-full max-w-md relative">
-                    <button
-                        className="absolute top-2 right-2 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-azul"
-                        onClick={handleCloseQRReader}
-                        aria-label="Fechar leitor de QR Code"
+            <div className='flex flex-col lg:flex-row h-[80vh] mx-4 sm:mx-8 lg:mx-16 gap-6'>
+                <div className='absolute bottom-0'>
+                    <select
+                        onChange={(e) => setSelectedDevice1(e.target.value)}
+                        value={selectedDevice1 || ""}
                     >
-                        ✕
-                    </button>
-                    
-                    {videoDevices.length > 0 && (
-                        <>
-                            <label htmlFor="camera-select" className="mb-2 font-semibold">
-                                Selecione a câmera:
-                            </label>
-                            <select
-                                id="camera-select"
-                                className="mb-4 px-3 py-2 border rounded-md w-full focus:outline-none focus:ring-2 focus:ring-azul"
-                                value={selectedDeviceId}
-                                onChange={e => setSelectedDeviceId(e.target.value)}
-                                aria-label="Selecionar dispositivo de câmera"
-                            >
-                                {videoDevices.map(device => (
-                                    <option key={device.deviceId} value={device.deviceId}>
-                                        {device.label || `Câmera ${device.deviceId.slice(0, 8)}`}
-                                    </option>
-                                ))}
-                            </select>
-                        </>
-                    )}
-                    
-                    {selectedDeviceId ? (
-                        <SimpleQRReader
-                            key={selectedDeviceId} 
-                            constraints={{
-                                facingMode: 'environment',
-                                deviceId: selectedDeviceId ? { exact: selectedDeviceId } : undefined
-                            }}
-                            onRead={(value) => {
-                                let scannedData = {};
-                                try {
-                                    scannedData = JSON.parse(value);
-                                } catch {
-                                    scannedData = { cpf: value };
-                                }
-                                handleScanSuccess(scannedData);
-                            }}
-                            onClose={handleCloseQRReader}
-                        />
-                    ) : (
-                        <div className="text-center p-4">
-                            <p className="text-gray-600 mb-2">Nenhuma câmera detectada</p>
-                            <p className="text-sm text-gray-500">Verifique se a câmera está conectada e as permissões estão habilitadas</p>
-                        </div>
-                    )}
+                        {devices.map((device, index) => (
+                            <option key={device.deviceId} value={device.deviceId}>
+                                {device.label || `Câmera ${index + 1}`}
+                            </option>
+                        ))}
+                    </select>
+                    <select
+                        onChange={(e) => {setSelectedDevice2(e.target.value)}}
+                        value={selectedDevice2 || ""}
+                    >
+                        {devices.map((device, index) => (
+                            <option key={device.deviceId} value={device.deviceId}>
+                                {device.label || `Câmera ${index + 1}`}
+                            </option>
+                        ))}
+                    </select>
                 </div>
-            </div>
-        )}
+                <div className='flex flex-col gap-6 h-full lg:w-2/3'>
+                    <ImagemTempoReal
+                        label={'Altura'}
+                        selectedDevice={selectedDevice1}
+                    />
+                    <ImagemTempoReal
+                        label={'Comprimento e Largura'}
+                        selectedDevice={selectedDevice2}
+                    />
+                </div>
+                <div className='flex flex-col gap-6 w-full lg:w-1/2'>
 
-        {/* Toast Notification */}
-        {showToast && (
-            <div 
-                className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ease-in-out"
-                role="alert"
-                aria-live="polite"
-            >
-                <div className="flex items-center space-x-2">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Dados carregados via QR Code!</span>
+                    <CardInputs className='h-full w-full flex flex-col justify-between bg-cinza_claro rounded-2xl p-4 sm:p-6 border border-cinza'>
+                        <Input
+                            label={'CPF*'}
+                            placeHolder={'000.000.000-00'}
+                            value={formData.cpf}
+                            onChange={handleInputChange('cpf')}
+                            aria-label="CPF do paciente"
+                            aria-required="true"
+                        />
+                        <Input
+                            label={'Nome do paciente*'}
+                            placeHolder={'Nome e sobrenome'}
+                            value={formData.nomePaciente}
+                            onChange={handleInputChange('nomePaciente')}
+                            aria-label="Nome completo do paciente"
+                            aria-required="true"
+                        />
+                        <Input
+                            label={'Data de nascimento*'}
+                            placeHolder={'00/00/0000'}
+                            type='date'
+                            value={formData.dataNascimento}
+                            onChange={handleInputChange('dataNascimento')}
+                            max={new Date().toISOString().split('T')[0]}
+                            aria-label="Data de nascimento do paciente"
+                            aria-required="true"
+                        />
+                        <Input
+                            label={'Nome da peça*'}
+                            placeHolder={'Pulmão'}
+                            value={formData.nomePeca}
+                            onChange={handleInputChange('nomePeca')}
+                            aria-label="Nome da peça anatômica"
+                            aria-required="true"
+                        />
+                        <Input
+                            label={'Comprimento x Largura x Altura*'}
+                            placeHolder={'3,5 x 2,0 x 1,2 cm'}
+                            value={formData.dimensoes}
+                            onChange={handleInputChange('dimensoes')}
+                            aria-label="Dimensões da peça"
+                            aria-required="true"
+                        />
+                        <Input
+                            label={'Possível diagnóstico*'}
+                            placeHolder={'Carcinoma de pulmão'}
+                            value={formData.diagnostico}
+                            onChange={handleInputChange('diagnostico')}
+                            aria-label="Diagnóstico preliminar"
+                            aria-required="true"
+                        />
+                    </CardInputs>
+
+                    {/* Container dos botões */}
+                    <div className='space-y-3'>
+                        {/* Primeira linha: Cancelar, QR Code e Continuar */}
+                        <div className='flex flex-row gap-3'>
+                            <Link href='/Home' className='flex-1'>
+                                <Button classes={'p-4 py-4 px-6 bg-cinza_escuro hover:bg-gray-600 w-full rounded-xl transition-all duration-200'}>
+                                    Cancelar
+                                </Button>
+                            </Link>
+
+                            <Button
+                                classes={'p-4 py-4 px-4 bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul flex items-center justify-center relative group min-w-[56px] rounded-xl transition-all duration-200'}
+                                onClick={handleQRScan}
+                                title="Ler QR Code"
+                                aria-label="Abrir leitor de QR Code"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                                    <path d="M0 9.375H9.375V0H0V9.375ZM3.125 3.125H6.25V6.25H3.125V3.125ZM12.5 0V9.375H21.875V0H12.5ZM18.75 6.25H15.625V3.125H18.75V6.25ZM0 21.875H9.375V12.5H0V21.875ZM3.125 15.625H6.25V18.75H3.125V15.625ZM20.3125 12.5H21.875V18.75H17.1875V17.1875H15.625V21.875H12.5V12.5H17.1875V14.0625H20.3125V12.5ZM20.3125 20.3125H21.875V21.875H20.3125V20.3125ZM17.1875 20.3125H18.75V21.875H17.1875V20.3125Z" fill="white" />
+                                </svg>
+                                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                                    Ler QR Code
+                                </div>
+                            </Button>
+
+                            <Link
+                                href={{
+                                    pathname: '/GeraPDF',
+                                    query: {
+                                        cpf: formData.cpf,
+                                        nomePaciente: formData.nomePaciente,
+                                        dataNascimento: formData.dataNascimento,
+                                        nomePeca: formData.nomePeca,
+                                        dimensoes: formData.dimensoes,
+                                        diagnostico: formData.diagnostico,
+                                        observacoes: formData.observacoes
+                                    }
+                                }}
+                                className={`flex-1 ${!isFormValid ? 'pointer-events-none' : ''}`}
+                                aria-label="Continuar para geração do PDF"
+                            >
+                                <Button
+                                    classes={`p-4 py-4 px-6 w-full rounded-xl transition-all duration-200 ${isFormValid
+                                        ? 'bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul'
+                                        : 'bg-gray-400 cursor-not-allowed'
+                                        }`}
+                                    disabled={!isFormValid}
+                                >
+                                    Continuar
+                                </Button>
+                            </Link>
+                        </div>
+
+                        {/* Segunda linha: Capturar imagem */}
+                        <div className='w-full'>
+                            <Button
+                                classes={'p-4 py-4 px-6 bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul w-full rounded-xl transition-all duration-200'}
+                                onClick={() => {
+                                    // Função para capturar imagem
+                                    console.log('Capturar imagem');
+                                    capture1()
+                                    capture2()
+                                }}
+                                aria-label="Capturar imagem"
+                            >
+                                Capturar imagem
+                            </Button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        )}
+
+            {/* Modal de Leitura QR Code */}
+            {showQRReader && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4">
+                    <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center w-full max-w-md relative">
+                        <button
+                            className="absolute top-2 right-2 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-azul"
+                            onClick={handleCloseQRReader}
+                            aria-label="Fechar leitor de QR Code"
+                        >
+                            ✕
+                        </button>
+
+                        {videoDevices.length > 0 && (
+                            <>
+                                <label htmlFor="camera-select" className="mb-2 font-semibold">
+                                    Selecione a câmera:
+                                </label>
+                                <select
+                                    id="camera-select"
+                                    className="mb-4 px-3 py-2 border rounded-md w-full focus:outline-none focus:ring-2 focus:ring-azul"
+                                    value={selectedDeviceId}
+                                    onChange={e => setSelectedDeviceId(e.target.value)}
+                                    aria-label="Selecionar dispositivo de câmera"
+                                >
+                                    {videoDevices.map(device => (
+                                        <option key={device.deviceId} value={device.deviceId}>
+                                            {device.label || `Câmera ${device.deviceId.slice(0, 8)}`}
+                                        </option>
+                                    ))}
+                                </select>
+                            </>
+                        )}
+
+                        {selectedDeviceId ? (
+                            <SimpleQRReader
+                                key={selectedDeviceId}
+                                constraints={{
+                                    facingMode: 'environment',
+                                    deviceId: selectedDeviceId ? { exact: selectedDeviceId } : undefined
+                                }}
+                                onRead={(value) => {
+                                    let scannedData = {};
+                                    try {
+                                        scannedData = JSON.parse(value);
+                                    } catch {
+                                        scannedData = { cpf: value };
+                                    }
+                                    handleScanSuccess(scannedData);
+                                }}
+                                onClose={handleCloseQRReader}
+                            />
+                        ) : (
+                            <div className="text-center p-4">
+                                <p className="text-gray-600 mb-2">Nenhuma câmera detectada</p>
+                                <p className="text-sm text-gray-500">Verifique se a câmera está conectada e as permissões estão habilitadas</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* Toast Notification */}
+            {showToast && (
+                <div
+                    className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ease-in-out"
+                    role="alert"
+                    aria-live="polite"
+                >
+                    <div className="flex items-center space-x-2">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>Dados carregados via QR Code!</span>
+                    </div>
+                </div>
+            )}
         </>
     )
 }
