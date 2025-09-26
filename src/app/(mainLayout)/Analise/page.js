@@ -147,7 +147,7 @@ export default function Analise() {
     return (
         <>
             <div className='flex flex-col lg:flex-row h-[80vh] mx-4 sm:mx-8 lg:mx-16 gap-6'>
-                <div className='absolute bottom-0'>
+                <div className='hidden absolute bottom-0'>
                     <select
                         onChange={(e) => setSelectedDevice1(e.target.value)}
                         value={selectedDevice1 || ""}

@@ -5,7 +5,7 @@ import io from "socket.io-client";
 
 const socket = io("http://localhost:5000");
 
-export default function VideoReceiver({ camera }) { 
+export default function VideoReceiver({ camera }) {
   // Envia webCam para servidor
 
   const videoRef = useRef(null);
@@ -13,13 +13,13 @@ export default function VideoReceiver({ camera }) {
 
   useEffect(() => {
     // console.log(camera);
-    
+
     // console.log(camera ? {deviceId: { exact: camera }} : "10ea8c4e4d884c33ee582f82100f1a48b1ae36c46c6080c4b248387defbc390e");
-    
+
     socketRef.current = io("http://localhost:5000");
     navigator.mediaDevices
-      .getUserMedia({ video: camera ? {deviceId: { exact: camera }} : true})
-      .then((stream) => {        
+      .getUserMedia({ video: camera ? { deviceId: { exact: camera } } : true })
+      .then((stream) => {
         videoRef.current.srcObject = stream;
       })
       .catch((err) => console.error("Erro câmera:", err));
@@ -31,7 +31,7 @@ export default function VideoReceiver({ camera }) {
       canvas.width = videoRef.current.videoWidth;
       canvas.height = videoRef.current.videoHeight;
       // console.log(canvas.width, canvas.height);
-      
+
       const ctx = canvas.getContext("2d");
       ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
@@ -56,12 +56,13 @@ export default function VideoReceiver({ camera }) {
     });
   }, []);
 
+
   return (
     <div>
-      <video ref={videoRef} autoPlay playsInline className="hidden"/>
+      <video ref={videoRef} autoPlay playsInline className="hidden" />
       {
-        frame ? <img src={frame} alt="frame" className="h-[32vh] mx-auto"/> 
-        : <h3 className="text-white">Imagem não encontrada :(</h3>
+        frame ? <img src={frame} alt="frame" className="h-[32vh] mx-auto"/>
+          : <h3 className="text-white">Imagem não encontrada</h3>
       }
     </div>
   );

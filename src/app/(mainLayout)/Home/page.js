@@ -5,10 +5,10 @@ function HomeInicial() {
     return ( 
         <div>
             <Link href={'/ConsultarPacientes'}>
-                <CardHome nome='Consultar pacientes' alt=''/>
+                <CardHome nome='Consultar pacientes' alt='' imagem="./consultar.png"/>
             </Link>
             <Link href={'/Analise'}>
-                <CardHome invertido nome='Fazer análise' alt=''/>
+                <CardHome invertido nome='Fazer análise' alt='' imagem="./analise.png"/>
             </Link>
         </div>
      );
