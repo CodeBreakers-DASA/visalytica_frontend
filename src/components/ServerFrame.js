@@ -5,20 +5,17 @@ import io from "socket.io-client";
 
 const socket = io("http://localhost:5000");
 
-export default function VideoReceiver({ camera }) {
+export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas}) {
   // Envia webCam para servidor
 
-  const videoRef = useRef(null);
+  const videoRef = refVideo;
   const socketRef = useRef(null);
 
   useEffect(() => {
-    // console.log(camera);
-
-    // console.log(camera ? {deviceId: { exact: camera }} : "10ea8c4e4d884c33ee582f82100f1a48b1ae36c46c6080c4b248387defbc390e");
-
     socketRef.current = io("http://localhost:5000");
+    
     navigator.mediaDevices
-      .getUserMedia({ video: camera ? { deviceId: { exact: camera } } : true })
+      .getUserMedia({ video: camera ? { deviceId: { exact: camera.id } } : true })
       .then((stream) => {
         videoRef.current.srcObject = stream;
       })
@@ -30,13 +27,13 @@ export default function VideoReceiver({ camera }) {
       const canvas = document.createElement("canvas");
       canvas.width = videoRef.current.videoWidth;
       canvas.height = videoRef.current.videoHeight;
-      // console.log(canvas.width, canvas.height);
 
       const ctx = canvas.getContext("2d");
       ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
       const dataUrl = canvas.toDataURL("image/jpg");
-      socketRef.current.emit("frame", { cameraId: camera, data: dataUrl });
+      
+      socketRef.current.emit("frame", { cameraId: camera.id, data: dataUrl });
     }, 200); // 10 FPS
 
     return () => {
@@ -46,13 +43,30 @@ export default function VideoReceiver({ camera }) {
   }, []);
 
   // Pega webCam processado do servidor
-
   const [frame, setFrame] = useState("");
 
   useEffect(() => {
-    socket.on("server_frame", (data) => {
-      console.log(data.cameraId)
-      data.cameraId == camera && setFrame(data.frame);
+    socket.on("server_frame_yolo", (data) => {      
+      if (data.cameraId == camera.id) {
+        setFrame(data.frame)
+        frameCaptura(data.frame)
+
+        if(camera.posicao == `cima`){
+          if(data?.medidas[0][0]) {
+            data.medidas[0][0] < medidas.comprimento_cm ? medidas.comprimento_cm = data?.medidas[0][0] : ``          
+          } 
+          if(data?.medidas[0][1]) {
+            data.medidas[0][1] < medidas.largura_cm ? medidas.largura_cm = data?.medidas[0][1] : ``  
+          } 
+        } else {
+          if(data?.medidas[0][0]) {
+            data.medidas[0][0] < medidas.altura_cm ? medidas.altura_cm = data?.medidas[0][0] : `` 
+          } 
+        }
+            
+        // console.log(data.medidas);
+          
+      }
     });
   }, []);
 

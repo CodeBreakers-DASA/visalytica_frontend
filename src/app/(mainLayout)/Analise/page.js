@@ -116,20 +116,25 @@ export default function Analise() {
     const webcamRef1 = useRef(null);
     const webcamRef2 = useRef(null);
 
-    // Função para capturar uma foto (opcional, como no exemplo anterior)
-    const capture1 = useCallback(() => {
-        const imageSrc = webcamRef1.current.getScreenshot();
-        console.log(imageSrc); // Faça algo com a imagem, como exibi-la
-    }, [webcamRef1]);
+    const [webCamFrame1, setWebCamFrame] = useState("");
+    const [webCamFrame2, setWebCamFrame2] = useState("");
 
-    const capture2 = useCallback(() => {
-        const imageSrc = webcamRef1.current.getScreenshot();
-        console.log(imageSrc); // Faça algo com a imagem, como exibi-la
-    }, [webcamRef2]);
+    const [capturasImagens, setCapturaImagens] = useState({
+        captura1: "",
+        captura2: ""
+    })
+
+    const [medidas, setMedidas] = useState({
+        largura_cm: 10,
+        comprimento_cm: 10,
+        altura_cm: 10
+    })
 
     const [devices, setDevices] = useState([]);
     const [selectedDevice1, setSelectedDevice1] = useState(null);
     const [selectedDevice2, setSelectedDevice2] = useState(null);
+
+    const [status, setStatus] = useState(false)
 
     useEffect(() => {
         // Lista as câmeras disponíveis
@@ -138,8 +143,8 @@ export default function Analise() {
             setDevices(videoDevices);
 
             if (videoDevices.length > 0) {
-                setSelectedDevice1(videoDevices[0].deviceId); // escolhe a primeira por padrão
-                setSelectedDevice2(videoDevices[1].deviceId); // escolhe a primeira por padrão
+                setSelectedDevice1({posicao: "baixo", id: videoDevices[0].deviceId}); 
+                setSelectedDevice2({posicao: "cima", id: videoDevices[1].deviceId});
             }
         });
     }, []);
@@ -159,7 +164,7 @@ export default function Analise() {
                         ))}
                     </select>
                     <select
-                        onChange={(e) => {setSelectedDevice2(e.target.value)}}
+                        onChange={(e) => { setSelectedDevice2(e.target.value) }}
                         value={selectedDevice2 || ""}
                     >
                         {devices.map((device, index) => (
@@ -173,10 +178,18 @@ export default function Analise() {
                     <ImagemTempoReal
                         label={'Altura'}
                         selectedDevice={selectedDevice1}
+                        refVideo={webcamRef1}
+                        frameCaptura={setWebCamFrame}
+                        status={status}
+                        medidas={medidas}
                     />
                     <ImagemTempoReal
                         label={'Comprimento e Largura'}
                         selectedDevice={selectedDevice2}
+                        refVideo={webcamRef2}
+                        frameCaptura={setWebCamFrame2}
+                        status={status}
+                        medidas={medidas}
                     />
                 </div>
                 <div className='flex flex-col gap-6 w-full lg:w-1/2'>
@@ -219,10 +232,11 @@ export default function Analise() {
                         <Input
                             label={'Comprimento x Largura x Altura*'}
                             placeHolder={'3,5 x 2,0 x 1,2 cm'}
-                            value={formData.dimensoes}
+                            // value={formData.dimensoes}
                             onChange={handleInputChange('dimensoes')}
                             aria-label="Dimensões da peça"
                             aria-required="true"
+                            value={medidas.largura_cm ? `${medidas.comprimento_cm} x ${medidas.largura_cm} x ${medidas.altura_cm}` : "Medidas não encontradas"}
                         />
                         <Input
                             label={'Possível diagnóstico*'}
@@ -291,14 +305,15 @@ export default function Analise() {
                             <Button
                                 classes={'p-4 py-4 px-6 bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul w-full rounded-xl transition-all duration-200'}
                                 onClick={() => {
-                                    // Função para capturar imagem
-                                    console.log('Capturar imagem');
-                                    capture1()
-                                    capture2()
+                                    setStatus(!status)
+                                    setCapturaImagens({
+                                        captura1: webCamFrame1,
+                                        captura2: webCamFrame2,
+                                    })
                                 }}
                                 aria-label="Capturar imagem"
                             >
-                                Capturar imagem
+                                { status ? "Desfazer captura" : "Capturar imagem" }
                             </Button>
                         </div>
                     </div>
