@@ -1,5 +1,5 @@
 import "../globals.css"; 
-import logo from '../../assets/logoGradiente.svg'
+import logoVisalytica from '../../assets/logoVisalyticaGrad.svg'
 import logoDasa from '../../assets/logoDasa.svg'
 import Image from 'next/image'
 export default function RootLayout({ children }) {
@@ -20,8 +20,9 @@ export default function RootLayout({ children }) {
       <div className="flex flex-col justify-center items-center w-full">
         <div className="mt-auto flex flex-col items-center">
         <Image
-          src={logo}
+          src={logoVisalytica}
           alt="logo visalytica"
+          className="w-64 h-24"
           />
         <div className="mt-14 p-[30px] border border-azul rounded-[10px] w-96 shadow-[4px_4px_0_1px_#166DED]">
           {children}
