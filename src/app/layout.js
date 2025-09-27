@@ -4,7 +4,7 @@ import "./globals.css";
 import Providers from "../components/Providers";
 
 const inter = Inter({
-  weight: ["400", "600"],
+  weight: ["400", "600", "900"],
   subsets: ["latin"],
   display: "swap",
 });

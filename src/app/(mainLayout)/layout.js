@@ -5,10 +5,14 @@ import PrivateRoute from "../../components/PrivateRoute";
 export default function RootLayout({ children }) {
   return (
     <PrivateRoute> 
-      <main>
+      <div className="flex flex-col min-h-screen">
         <Hotbar />
-          {children}
-      </main>
+        <main className="flex-1 pt-[76px] max-h-full pb-6">
+          <div>
+            {children}
+          </div>
+        </main>
+      </div>
     </PrivateRoute>
   );
 }
