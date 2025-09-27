@@ -49,7 +49,7 @@ export default function Hotbar() {
         {onHover ? (
           <div
             onClick={handleLogout}
-            className="absolute flex items-center h-10 w-[150px] top-[70px] rounded-[10px] border border-cinza bg-white"
+            className="absolute flex items-center h-10 w-[150px] top-[65px] rounded-[10px] border border-cinza bg-white"
           >
             <div className="ml-4 mr-6">
               <svg
