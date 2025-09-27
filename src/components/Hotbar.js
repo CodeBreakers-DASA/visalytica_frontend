@@ -25,7 +25,7 @@ export default function Hotbar() {
   }
 
   return (
-    <div className="flex justify-between mx-12 my-8">
+    <div className="fixed top-0 left-0 right-0 z-50 flex bg-white h-[101px] items-center justify-between px-12 py-2">
       <div className="flex justify-between items-center gap-8">
         <Link href={"/Home"}>
           <Image
@@ -34,7 +34,7 @@ export default function Hotbar() {
             className="w-44"
           />
         </Link>
-        <div className="w-0.5 h-full bg-azul"></div>
+        <div className="w-0.5 h-[37px] bg-azul"></div>
         <Image src={LogoDasa} alt="Logo da Dasa" />
       </div>
       <div
