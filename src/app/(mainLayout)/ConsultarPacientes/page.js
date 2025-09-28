@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -7,24 +7,26 @@ import Button from "../../../components/Button";
 import TabelaPacientes from "../../../components/TabelaPacientes";
 import IconSeta from "../../../components/IconSeta";
 
-
 import mockPacientes from "../../../constants/Pacientes.json";
 
 export default function ConsultarPacientes() {
   const [termoPesquisa, setTermoPesquisa] = useState("");
 
-  // Filtra os pacientes baseado no termo de pesquisa
   const pacientesFiltrados = useMemo(() => {
     if (!termoPesquisa.trim()) {
       return mockPacientes;
     }
 
     const termo = termoPesquisa.toLowerCase().trim();
-    
-    return mockPacientes.filter(paciente => 
-      paciente.nome.toLowerCase().includes(termo) ||
-      paciente.cpf.replace(/[.-]/g, '').includes(termo.replace(/[.-]/g, '')) ||
-      termo.includes('peça') || termo.includes('peca') // Para buscar por "peça"
+
+    return mockPacientes.filter(
+      (paciente) =>
+        paciente.nome.toLowerCase().includes(termo) ||
+        paciente.cpf
+          .replace(/[.-]/g, "")
+          .includes(termo.replace(/[.-]/g, "")) ||
+        termo.includes("peça") ||
+        termo.includes("peca")
     );
   }, [termoPesquisa]);
 
@@ -51,14 +53,17 @@ export default function ConsultarPacientes() {
           <h3 className="text-lg">Voltar</h3>
         </Link>
         <div className="flex w-full gap-5">
-          <Input 
-            type="text" 
-            placeHolder="Pesquise por CPF, nome ou peça" 
+          <Input
+            type="text"
+            placeHolder="Pesquise por CPF, nome ou peça"
             value={termoPesquisa}
             onChange={handlePesquisaChange}
+            className="h-[50px]"
           />
           <Button
-            classes={"bg-gradient-to-b from-azul to-azul_escuro w-[60px] h-[60px] rounded-2xl"}
+            classes={
+              "bg-gradient-to-b from-azul to-azul_escuro w-[50px] h-[50px] rounded-2xl"
+            }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,18 +85,28 @@ export default function ConsultarPacientes() {
           <TabelaPacientes pacientes={pacientesFiltrados} />
         </div>
         <div className="flex items-center justify-end gap-5 mt-4">
-          <IconSeta cor="#CFCFCF" classe="cursor-pointer"/>
-          <Button classes={'w-[40px] h-[40px] bg-gradient-to-b from-azul to-azul_escuro rounded-2xl'}>
+          <IconSeta cor="#CFCFCF" classe="cursor-pointer" />
+          <Button
+            classes={
+              "w-[40px] h-[40px] bg-gradient-to-b from-azul to-azul_escuro rounded-2xl"
+            }
+          >
             1
           </Button>
-          
-          <span className="text-cinza_escuro text-xl font-medium px-2">...</span>
-          
-          <Button classes={'w-[40px] h-[40px] bg-white border-2 border-cinza rounded-2xl text-cinza_escuro hover:bg-gray-50'}>
+
+          <span className="text-cinza_escuro text-xl font-medium px-2">
+            ...
+          </span>
+
+          <Button
+            classes={
+              "w-[40px] h-[40px] bg-white border-2 border-cinza rounded-2xl text-cinza_escuro hover:bg-gray-50"
+            }
+          >
             36
           </Button>
 
-          <IconSeta cor="#CFCFCF" classe="rotate-180 cursor-pointer"/>
+          <IconSeta cor="#CFCFCF" classe="rotate-180 cursor-pointer" />
         </div>
       </div>
     </div>
