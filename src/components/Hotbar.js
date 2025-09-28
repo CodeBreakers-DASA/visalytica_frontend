@@ -35,7 +35,9 @@ export default function Hotbar() {
           />
         </Link>
         <div className="w-0.5 h-[37px] bg-azul"></div>
+        <a href="https://www.dasa.com.br" target="_blank" rel="noreferrer">
         <Image src={LogoDasa} alt="Logo da Dasa" />
+        </a>
       </div>
       <div
         className="flex items-center gap-3.5 cursor-pointer"
