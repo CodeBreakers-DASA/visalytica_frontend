@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Trash2, Pencil, Download } from "lucide-react";
+import { api } from "../services/api";
 
 export default function Popup({
   triggerText = "Abrir Popup",
@@ -8,12 +9,43 @@ export default function Popup({
   type = "delete", // delete | edit | download
   title,
   userName,
-  options = [], // usado no edit/download
+  paciente,
   onConfirm,
 }) {
+
+   const transformaDatas = (data) => {
+    // A data em formato ISO 8601
+    const dataISO = data;
+
+    // Cria um objeto Date
+    const data2 = new Date(dataISO);
+
+    // Formata para o padrão brasileiro (pt-BR)
+    // O timeZone 'America/Sao_Paulo' ajusta o horário UTC para o fuso local antes de pegar a data
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      timeZone: 'America/Sao_Paulo'
+    };
+
+    const dataFormatada = new Intl.DateTimeFormat('pt-BR', options).format(data2);
+
+    return dataFormatada
+  }
+
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [selected, setSelected] = useState(type === "download" ? [] : null);
+
+  const [examesPaciente, setExamePaciente] = useState([]);
+
+  const fetchExamesPaciente = async () => {
+    if(paciente){
+      const { data } = await api.get(`/pacientes/${paciente.cpf}`);
+      setExamePaciente(data.exames.lista)
+    }   
+  };  
 
   // Configurações por tipo
   const config = {
@@ -48,6 +80,7 @@ export default function Popup({
   const handleConfirm = () => {
     if (type === "delete") {
       onConfirm?.(reason);
+      
     } else {
       onConfirm?.(selected);
     }
@@ -57,7 +90,10 @@ export default function Popup({
   return (
     <div className="flex justify-center items-center">
       {/* Botão que abre */}
-      <button onClick={() => setOpen(true)} className={classTrigger}>
+      <button onClick={() => {
+        setOpen(true)
+        fetchExamesPaciente()
+      }} className={classTrigger}>
         {triggerText}
       </button>
 
@@ -89,7 +125,7 @@ export default function Popup({
 
             {(type === "edit" || type === "download") && (
               <div className="flex flex-col gap-2 mb-4">
-                {options.map((opt, index) => (
+                {examesPaciente.map((opt, index) => (
                   <button
                     key={index}
                     onClick={() => handleSelect(opt)}
@@ -103,7 +139,7 @@ export default function Popup({
                         : "bg-gray-100 hover:bg-gray-200"
                     }`}
                   >
-                    {opt}
+                    {transformaDatas(opt.data_atualizacao)} - {opt.nome_amostra} - {opt.medico.nome}
                   </button>
                 ))}
               </div>

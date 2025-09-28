@@ -15,7 +15,7 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas}
     socketRef.current = io("http://localhost:5000");
     
     navigator.mediaDevices
-      .getUserMedia({ video: camera ? { deviceId: { exact: camera.id } } : true })
+      .getUserMedia({ video: camera.id ? { deviceId: { exact: camera.id } } : true })
       .then((stream) => {
         videoRef.current.srcObject = stream;
       })

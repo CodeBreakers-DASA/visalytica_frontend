@@ -7,7 +7,7 @@ export default function ImagemTempoReal({ label, selectedDevice, refVideo, frame
             <div className="w-full flex justify-between items-center my-3">
                 <p className="text-white">{label}</p>
                     <p style={{backgroundColor: status ? "#439F57" : "#CFCFCF", color: status && "#fff"}} className={`px-5 rounded-md`}>
-                        {status ? "Salvo" : "Não salvo"}
+                        {status ? "Capturado" : "Não capturado"}
                     </p>
             </div>
             {selectedDevice && <ServerFrame camera={selectedDevice} refVideo={refVideo} frameCaptura={frameCaptura} medidas={medidas}/> }

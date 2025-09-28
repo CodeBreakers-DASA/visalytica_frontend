@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Input from "../../../../components/Input";
@@ -42,6 +42,7 @@ const gerarExames = (quantidade, pacienteId) => {
 };
 
 export default function PerfilPaciente() {
+
   const params = useParams();
   const pacienteId = parseInt(params.id);
   const [termoPesquisa, setTermoPesquisa] = useState("");

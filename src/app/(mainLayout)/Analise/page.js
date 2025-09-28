@@ -7,6 +7,7 @@ import Input from '../../../components/Input'
 import CardInputs from '../../../components/CardInputs'
 import SimpleQRReader from '../../../components/qr/SimpleQRReader'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Analise() {
     const [formData, setFormData] = useState({
@@ -134,6 +135,8 @@ export default function Analise() {
     const [selectedDevice1, setSelectedDevice1] = useState(null);
     const [selectedDevice2, setSelectedDevice2] = useState(null);
 
+    const [cameras, setCameras] = useState([0, 1]);
+
     const [status, setStatus] = useState(false)
 
     useEffect(() => {
@@ -143,38 +146,23 @@ export default function Analise() {
             setDevices(videoDevices);
 
             if (videoDevices.length > 0) {
-                setSelectedDevice1({posicao: "baixo", id: videoDevices[0].deviceId}); 
-                setSelectedDevice2({posicao: "cima", id: videoDevices[1].deviceId});
+                setSelectedDevice1({ posicao: "baixo", id: videoDevices[cameras[0]].deviceId });
+                setSelectedDevice2({ posicao: "cima", id: videoDevices[cameras[1]].deviceId });
             }
         });
-    }, []);
+    }, [cameras]);
+
+
+    const setInverteCameras = () => {
+        cameras[0] != 1 ? setCameras([1, 0]) : setCameras([0, 1])
+        console.log(`Camera mudada`);
+        
+    }
 
     return (
         <>
-            <div className='flex flex-col lg:flex-row h-[80vh] mx-4 sm:mx-8 lg:mx-16 gap-6'>
-                <div className='hidden absolute bottom-0'>
-                    <select
-                        onChange={(e) => setSelectedDevice1(e.target.value)}
-                        value={selectedDevice1 || ""}
-                    >
-                        {devices.map((device, index) => (
-                            <option key={device.deviceId} value={device.deviceId}>
-                                {device.label || `Câmera ${index + 1}`}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        onChange={(e) => { setSelectedDevice2(e.target.value) }}
-                        value={selectedDevice2 || ""}
-                    >
-                        {devices.map((device, index) => (
-                            <option key={device.deviceId} value={device.deviceId}>
-                                {device.label || `Câmera ${index + 1}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className='flex flex-col gap-6 h-full lg:w-2/3'>
+            <div className='flex flex-col lg:flex-row h-[85vh] mx-4 sm:mx-8 lg:mx-16 gap-6'>
+                <div className='flex flex-col h-full gap-5 lg:w-2/3'>
                     <ImagemTempoReal
                         label={'Altura'}
                         selectedDevice={selectedDevice1}
@@ -236,7 +224,7 @@ export default function Analise() {
                             onChange={handleInputChange('dimensoes')}
                             aria-label="Dimensões da peça"
                             aria-required="true"
-                            value={medidas.largura_cm ? `${medidas.comprimento_cm} x ${medidas.largura_cm} x ${medidas.altura_cm}` : "Medidas não encontradas"}
+                            value={medidas.largura_cm != 10 ? `${medidas.comprimento_cm} x ${medidas.largura_cm} x ${medidas.altura_cm}` : "Medidas não encontradas"}
                         />
                         <Input
                             label={'Possível diagnóstico*'}
@@ -313,7 +301,7 @@ export default function Analise() {
                                 }}
                                 aria-label="Capturar imagem"
                             >
-                                { status ? "Desfazer captura" : "Capturar imagem" }
+                                {status ? "Desfazer captura" : "Capturar imagem"}
                             </Button>
                         </div>
                     </div>
