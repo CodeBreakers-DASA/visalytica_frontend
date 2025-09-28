@@ -7,6 +7,7 @@ import Input from '../../../components/Input'
 import CardInputs from '../../../components/CardInputs'
 import SimpleQRReader from '../../../components/qr/SimpleQRReader'
 import Link from 'next/link'
+import { api } from '../../../services/api'
 
 export default function Analise() {
     const [formData, setFormData] = useState({
@@ -30,6 +31,18 @@ export default function Analise() {
     const [showToast, setShowToast] = useState(false)
     const [videoDevices, setVideoDevices] = useState([]);
     const [selectedDeviceId, setSelectedDeviceId] = useState('');
+
+    const buscaPaciente = async (cpf) => {
+        let data;
+        try {
+            data = await api.get(`/pacientes/${cpf}`);
+        } catch (e) {
+            return false
+        }
+        if (data) {
+            return data.data
+        }
+    }
 
     useEffect(() => {
         async function getDevices() {
@@ -55,13 +68,24 @@ export default function Analise() {
         getDevices();
     }, []);
 
-    const handleInputChange = useCallback((field) => (e) => {
+    const handleInputChange = useCallback((field) => async (e) => {
         let value = e.target.value;
 
         // validação específica para cpf - apenas números
         if (field === 'cpf') {
             value = value.replace(/\D/g, '');
             value = value.substring(0, 11);
+            if (value.length == 11) {
+                const paciente = await buscaPaciente(value)
+                if (paciente) {
+                    setFormData(prev => ({
+                        ...prev,
+                        nomePaciente: paciente.paciente.nome,
+                        dataNascimento: paciente.paciente.dataNascimento
+                    }))
+                    console.log(paciente.paciente.nome);
+                }
+            }
             if (value.length > 3) value = value.slice(0, 3) + '.' + value.slice(3);
             if (value.length > 7) value = value.slice(0, 7) + '.' + value.slice(7);
             if (value.length > 11) value = value.slice(0, 11) + '-' + value.slice(11);
@@ -129,8 +153,8 @@ export default function Analise() {
             formData.dataNascimento &&
             formData.nomePeca.trim() &&
             dimensoesValidas &&
-            formData.diagnostico.trim() && 
-            formData.imagens.captura1 != "" 
+            formData.diagnostico.trim() &&
+            formData.imagens.captura1 != ""
 
         );
     }, [formData]);
@@ -297,7 +321,7 @@ export default function Analise() {
                                         largura: formData.dimensoes.largura_cm,
                                         altura: formData.dimensoes.altura_cm,
                                         diagnostico: formData.diagnostico,
-                                        observacoes: formData.observacoes                                        
+                                        observacoes: formData.observacoes
                                     }
                                 }}
                                 className={`flex-1 ${!isFormValid ? 'pointer-events-none' : ''}`}
@@ -324,7 +348,7 @@ export default function Analise() {
                             <Button
                                 classes={'p-4 py-4 px-6 bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul w-full rounded-xl transition-all duration-200'}
                                 onClick={() => {
-                                    if (!status){
+                                    if (!status) {
                                         setStatus(!status)
                                         setCapturaImagens({
                                             captura1: webCamFrame1,
@@ -337,7 +361,7 @@ export default function Analise() {
                                                 captura2: webCamFrame2,
                                             }
                                         }))
-                                    } else{
+                                    } else {
                                         setStatus(!status)
                                         setCapturaImagens({
                                             captura1: "",
