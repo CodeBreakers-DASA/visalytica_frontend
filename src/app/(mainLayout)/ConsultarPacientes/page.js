@@ -97,7 +97,7 @@ export default function ConsultarPacientes() {
             mockPacientes[0] && <TabelaPacientes pacientes={pacientesFiltrados} />
           }
         </div>
-        <div className="flex items-center justify-end gap-5 mt-4">
+        <div className="flex items-center justify-end gap-5 py-4">
           <IconSeta cor="#CFCFCF" classe="cursor-pointer"/>
           <Button classes={'w-[40px] h-[40px] bg-gradient-to-b from-azul to-azul_escuro rounded-2xl'}>
             1
