@@ -1,15 +1,29 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import TabelaPacientes from "../../../components/TabelaPacientes";
 import IconSeta from "../../../components/IconSeta";
-
-import mockPacientes from "../../../constants/Pacientes.json";
+import { api } from "../../../services/api";
 
 export default function ConsultarPacientes() {
+
+  const [mockPacientes, setMockPacientes] = useState([])
+
+  const fetchPacientes = async () => {
+    const { data } = await api.get(`/pacientes/tabela/`);
+    setMockPacientes(data)
+  }; 
+
+  useEffect(() => {
+    fetchPacientes();
+  }, [])
+
+  console.log(mockPacientes);
+  
+
   const [termoPesquisa, setTermoPesquisa] = useState("");
 
   const pacientesFiltrados = useMemo(() => {
@@ -18,17 +32,13 @@ export default function ConsultarPacientes() {
     }
 
     const termo = termoPesquisa.toLowerCase().trim();
-
-    return mockPacientes.filter(
-      (paciente) =>
-        paciente.nome.toLowerCase().includes(termo) ||
-        paciente.cpf
-          .replace(/[.-]/g, "")
-          .includes(termo.replace(/[.-]/g, "")) ||
-        termo.includes("peça") ||
-        termo.includes("peca")
+    
+    return mockPacientes.filter(paciente => 
+      paciente.nome_paciente.toLowerCase().includes(termo) ||
+      paciente.cpf.replace(/[.-]/g, '').includes(termo.replace(/[.-]/g, '')) ||
+      termo.includes('peça') || termo.includes('peca') // Para buscar por "peça"
     );
-  }, [termoPesquisa]);
+  }, [mockPacientes, termoPesquisa]);
 
   const handlePesquisaChange = (e) => {
     setTermoPesquisa(e.target.value);
@@ -82,15 +92,13 @@ export default function ConsultarPacientes() {
       </div>
       <div>
         <div className="max-w-7xl mx-auto mt-6">
-          <TabelaPacientes pacientes={pacientesFiltrados} />
+          {
+            mockPacientes[0] && <TabelaPacientes pacientes={pacientesFiltrados} />
+          }
         </div>
-        <div className="flex items-center justify-end gap-5 mt-4">
-          <IconSeta cor="#CFCFCF" classe="cursor-pointer" />
-          <Button
-            classes={
-              "w-[40px] h-[40px] bg-gradient-to-b from-azul to-azul_escuro rounded-2xl"
-            }
-          >
+        <div className="flex items-center justify-end gap-5 py-4">
+          <IconSeta cor="#CFCFCF" classe="cursor-pointer"/>
+          <Button classes={'w-[40px] h-[40px] bg-gradient-to-b from-azul to-azul_escuro rounded-2xl'}>
             1
           </Button>
 

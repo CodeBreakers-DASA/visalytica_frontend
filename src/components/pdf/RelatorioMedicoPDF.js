@@ -254,17 +254,17 @@ export default function RelatorioMedicoPDF({ dados, configuracao = {} }) {
           <View style={styles.dadosContainer}>
             <View style={styles.row}>
               <Text style={styles.label}>Nome Completo:</Text>
-              <Text style={styles.value}>{dados.nomePaciente || 'Não informado'}</Text>
+              <Text style={styles.value}>{dados.paciente.nome || 'Não informado'}</Text>
             </View>
             
             <View style={styles.row}>
               <Text style={styles.label}>CPF:</Text>
-              <Text style={styles.value}>{dados.cpf || 'Não informado'}</Text>
+              <Text style={styles.value}>{dados.paciente.cpf || 'Não informado'}</Text>
             </View>
             
             <View style={styles.row}>
               <Text style={styles.label}>Data de Nascimento:</Text>
-              <Text style={styles.value}>{dados.dataNascimento || 'Não informado'}</Text>
+              <Text style={styles.value}>{dados.paciente.dataNascimento || 'Não informado'}</Text>
             </View>
           </View>
         </View>
@@ -275,12 +275,12 @@ export default function RelatorioMedicoPDF({ dados, configuracao = {} }) {
           <View style={styles.dadosContainer}>
             <View style={styles.row}>
               <Text style={styles.label}>Nome da Peça:</Text>
-              <Text style={styles.value}>{dados.nomePeca || 'Não informado'}</Text>
+              <Text style={styles.value}>{dados.nome_amostra || 'Não informado'}</Text>
             </View>
             
             <View style={styles.row}>
               <Text style={styles.label}>Dimensões (C x L x A):</Text>
-              <Text style={styles.value}>{dados.dimensoes || 'Não informado'}</Text>
+              <Text style={styles.value}>{`${dados.comprimento} x ${dados.largura} x ${dados.altura}` || 'Não informado'}</Text>
             </View>
           </View>
         </View>
@@ -290,7 +290,7 @@ export default function RelatorioMedicoPDF({ dados, configuracao = {} }) {
           <Text style={styles.sectionTitle}>DIAGNÓSTICO</Text>
           <View style={styles.diagnosticoBox}>
             <Text style={styles.diagnosticoText}>
-              {dados.diagnostico || 'Diagnóstico não informado'}
+              {dados.possivel_diagnostico || 'Diagnóstico não informado'}
             </Text>
           </View>
         </View>
@@ -300,9 +300,29 @@ export default function RelatorioMedicoPDF({ dados, configuracao = {} }) {
           <Text style={styles.sectionTitle}>OBSERVAÇÕES CLÍNICAS</Text>
           <View style={styles.observacoesBox}>
             <Text style={styles.observacoes}>
-              {dados.observacoes || 'Nenhuma observação adicional registrada.'}
+              {dados.observacao || 'Nenhuma observação adicional registrada.'}
             </Text>
           </View>
+        </View>
+
+        
+
+        {/* Seção das imagens capturadas */}
+        <View style={styles.assinaturaSection}>
+
+              {dados.imagensBase64[0] && (
+                  <View style={{ marginTop: 20 }}>
+                      <Text style={styles.sectionTitle}>Imagem lateral:</Text>
+                      <Image src={dados.imagensBase64[0]} style={{ width: 200, height: 200 }} />
+                  </View>
+              )}
+
+              {dados.imagensBase64[1] && (
+                  <View style={{ marginTop: 20 }}>
+                      <Text style={styles.sectionTitle}>Imagem superior:</Text>
+                      <Image src={dados.imagensBase64[1]} style={{ width: 200, height: 200 }} />
+                  </View>
+              )}
         </View>
 
         {/* Seção de Assinatura */}

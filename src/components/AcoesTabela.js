@@ -2,22 +2,8 @@
 
 import { Pencil, Trash2, Upload } from "lucide-react";
 import Popup from "./Popup.js";
-import { useEffect, useState } from "react";
-
 
 export default function AcoesTabela({ paciente }) {
-
-  const [examePaciente, setExamePaciente] = useState([]);
-
-  useEffect(() => {
-    if (paciente?.exames) {
-      setExamePaciente(
-        paciente.exames.map(
-          (exame) => `${exame.dataRealizacao} - ${exame.peca} - ${exame.medico}`
-        )
-      );
-    }
-  }, [paciente]);
 
   return (
     <div className="flex justify-center items-center gap-2">
@@ -28,8 +14,8 @@ export default function AcoesTabela({ paciente }) {
         classTrigger="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
         type="download"
         title="Qual análise de"
-        userName="Kimberly Maria Vieira"
-        options={examePaciente}
+        userName={paciente.nome_paciente}
+        paciente={paciente}
         onConfirm={(opt) => console.log("Baixar:", opt)}
       />
 
@@ -39,8 +25,8 @@ export default function AcoesTabela({ paciente }) {
         classTrigger="p-2 bg-yellow-400 text-white rounded-md hover:bg-yellow-500 transition-colors"
         type="edit"
         title="Qual análise de"
-        userName="Kimberly Maria Vieira"
-        options={examePaciente}
+        userName={paciente.nome_paciente}
+        paciente={paciente}
         onConfirm={(opt) => console.log("Selecionado:", opt)}
       />
 
@@ -49,8 +35,9 @@ export default function AcoesTabela({ paciente }) {
         triggerText={<Trash2 size={18} />}
         classTrigger="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
         type="delete"
-        title="Você deseja solicitar a exclusão permanentemente?"
+        title={`Você deseja solicitar a exclusão permanentemente do ${paciente.nome_paciente}`}
         onConfirm={(reason) => console.log("Motivo:", reason)}
+        paciente={paciente}
       />
     </div>
   );

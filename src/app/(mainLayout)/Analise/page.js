@@ -14,8 +14,16 @@ export default function Analise() {
         nomePaciente: '',
         dataNascimento: '',
         nomePeca: '',
-        dimensoes: '',
-        diagnostico: ''
+        dimensoes: {
+            largura_cm: 0,
+            comprimento_cm: 0,
+            altura_cm: 0
+        },
+        diagnostico: '',
+        imagens: {
+            captura1: "",
+            captura2: ""
+        }
     })
 
     const [showQRReader, setShowQRReader] = useState(false)
@@ -68,6 +76,10 @@ export default function Analise() {
             }
         }
 
+        if (field == 'dimensoes') {
+            value = medidas
+        }
+
         setFormData(prev => ({
             ...prev,
             [field]: value
@@ -97,15 +109,31 @@ export default function Analise() {
         }
     }, [])
 
+
     // validação do formulário
     const isFormValid = useMemo(() => {
-        return formData.cpf.length >= 14 &&
+        const dimensoesValidas = (
+            formData.dimensoes &&
+            (
+                typeof formData.dimensoes === "object"
+                    ? formData.dimensoes.largura_cm > 0 &&
+                    formData.dimensoes.comprimento_cm > 0 &&
+                    formData.dimensoes.altura_cm > 0
+                    : !formData.dimensoes.toLowerCase().includes("medidas não encontradas")
+            )
+        );
+
+        return (
+            formData.cpf.length >= 14 &&
             formData.nomePaciente.trim() &&
             formData.dataNascimento &&
             formData.nomePeca.trim() &&
-            formData.dimensoes.trim() &&
-            formData.diagnostico.trim()
-    }, [formData])
+            dimensoesValidas &&
+            formData.diagnostico.trim() && 
+            formData.imagens.captura1 != "" 
+
+        );
+    }, [formData]);
 
     const handleCloseQRReader = useCallback(() => {
         setShowQRReader(false)
@@ -119,20 +147,22 @@ export default function Analise() {
     const [webCamFrame1, setWebCamFrame] = useState("");
     const [webCamFrame2, setWebCamFrame2] = useState("");
 
-    const [capturasImagens, setCapturaImagens] = useState({
+    const [capturaImagens, setCapturaImagens] = useState({
         captura1: "",
         captura2: ""
     })
 
     const [medidas, setMedidas] = useState({
-        largura_cm: 10,
-        comprimento_cm: 10,
-        altura_cm: 10
+        largura_cm: 0,
+        comprimento_cm: 0,
+        altura_cm: 0
     })
 
     const [devices, setDevices] = useState([]);
     const [selectedDevice1, setSelectedDevice1] = useState(null);
     const [selectedDevice2, setSelectedDevice2] = useState(null);
+
+    const [cameras, setCameras] = useState([0, 1]);
 
     const [status, setStatus] = useState(false)
 
@@ -143,38 +173,21 @@ export default function Analise() {
             setDevices(videoDevices);
 
             if (videoDevices.length > 0) {
-                setSelectedDevice1({posicao: "baixo", id: videoDevices[0].deviceId}); 
-                setSelectedDevice2({posicao: "cima", id: videoDevices[1].deviceId});
+                setSelectedDevice1({ posicao: "baixo", id: videoDevices[cameras[0]].deviceId });
+                setSelectedDevice2({ posicao: "cima", id: videoDevices[cameras[1]].deviceId });
             }
         });
-    }, []);
+    }, [cameras]);
+
+    useEffect(() => {
+        medidas.comprimento_cm != 0 ? formData.dimensoes = medidas : ``;
+        // console.log(formData);
+    })
 
     return (
         <>
-            <div className='flex flex-col lg:flex-row h-[80vh] mx-4 sm:mx-8 lg:mx-16 gap-6'>
-                <div className='hidden absolute bottom-0'>
-                    <select
-                        onChange={(e) => setSelectedDevice1(e.target.value)}
-                        value={selectedDevice1 || ""}
-                    >
-                        {devices.map((device, index) => (
-                            <option key={device.deviceId} value={device.deviceId}>
-                                {device.label || `Câmera ${index + 1}`}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        onChange={(e) => { setSelectedDevice2(e.target.value) }}
-                        value={selectedDevice2 || ""}
-                    >
-                        {devices.map((device, index) => (
-                            <option key={device.deviceId} value={device.deviceId}>
-                                {device.label || `Câmera ${index + 1}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className='flex flex-col gap-6 h-full lg:w-2/3'>
+            <div className='flex flex-col lg:flex-row h-[85vh] mx-4 sm:mx-8 lg:mx-16 gap-6'>
+                <div className='flex flex-col h-full gap-5 lg:w-2/3'>
                     <ImagemTempoReal
                         label={'Altura'}
                         selectedDevice={selectedDevice1}
@@ -236,7 +249,7 @@ export default function Analise() {
                             onChange={handleInputChange('dimensoes')}
                             aria-label="Dimensões da peça"
                             aria-required="true"
-                            value={medidas.largura_cm ? `${medidas.comprimento_cm} x ${medidas.largura_cm} x ${medidas.altura_cm}` : "Medidas não encontradas"}
+                            value={formData.dimensoes.largura_cm != 0 ? `${formData.dimensoes.comprimento_cm} x ${formData.dimensoes.largura_cm} x ${formData.dimensoes.altura_cm}` : "Medidas não encontradas"}
                         />
                         <Input
                             label={'Possível diagnóstico*'}
@@ -253,7 +266,7 @@ export default function Analise() {
                         {/* Primeira linha: Cancelar, QR Code e Continuar */}
                         <div className='flex flex-row gap-3'>
                             <Link href='/Home' className='flex-1'>
-                                <Button classes={'p-4 py-4 px-6 bg-cinza_escuro hover:bg-gray-600 w-full rounded-xl transition-all duration-200'}>
+                                <Button classes={'p-4 py-4 bg-gray-400 px-6 hover:bg-gray-600 w-full rounded-xl transition-all duration-200'}>
                                     Cancelar
                                 </Button>
                             </Link>
@@ -280,13 +293,19 @@ export default function Analise() {
                                         nomePaciente: formData.nomePaciente,
                                         dataNascimento: formData.dataNascimento,
                                         nomePeca: formData.nomePeca,
-                                        dimensoes: formData.dimensoes,
+                                        comprimento: formData.dimensoes.comprimento_cm,
+                                        largura: formData.dimensoes.largura_cm,
+                                        altura: formData.dimensoes.altura_cm,
                                         diagnostico: formData.diagnostico,
-                                        observacoes: formData.observacoes
+                                        observacoes: formData.observacoes                                        
                                     }
                                 }}
                                 className={`flex-1 ${!isFormValid ? 'pointer-events-none' : ''}`}
                                 aria-label="Continuar para geração do PDF"
+                                onClick={() => {
+                                    localStorage.setItem("ImagemCapturada1", formData.imagens.captura1)
+                                    localStorage.setItem("ImagemCapturada2", formData.imagens.captura2)
+                                }}
                             >
                                 <Button
                                     classes={`p-4 py-4 px-6 w-full rounded-xl transition-all duration-200 ${isFormValid
@@ -305,15 +324,37 @@ export default function Analise() {
                             <Button
                                 classes={'p-4 py-4 px-6 bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul w-full rounded-xl transition-all duration-200'}
                                 onClick={() => {
-                                    setStatus(!status)
-                                    setCapturaImagens({
-                                        captura1: webCamFrame1,
-                                        captura2: webCamFrame2,
-                                    })
+                                    if (!status){
+                                        setStatus(!status)
+                                        setCapturaImagens({
+                                            captura1: webCamFrame1,
+                                            captura2: webCamFrame2,
+                                        })
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            imagens: {
+                                                captura1: webCamFrame1,
+                                                captura2: webCamFrame2,
+                                            }
+                                        }))
+                                    } else{
+                                        setStatus(!status)
+                                        setCapturaImagens({
+                                            captura1: "",
+                                            captura2: "",
+                                        })
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            imagens: {
+                                                captura1: "",
+                                                captura2: "",
+                                            }
+                                        }))
+                                    }
                                 }}
                                 aria-label="Capturar imagem"
                             >
-                                { status ? "Desfazer captura" : "Capturar imagem" }
+                                {status ? "Desfazer captura" : "Capturar imagem"}
                             </Button>
                         </div>
                     </div>
