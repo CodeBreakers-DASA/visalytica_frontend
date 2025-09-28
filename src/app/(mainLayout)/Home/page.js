@@ -1,17 +1,24 @@
-import Link from 'next/link';
-import CardHome from '../../../components/CardHome'
+import Link from "next/link";
+import CardHome from "../../../components/CardHome";
 
 function HomeInicial() {
-    return ( 
-        <div>
-            <Link href={'/ConsultarPacientes'}>
-                <CardHome nome='Consultar pacientes' alt=''/>
-            </Link>
-            <Link href={'/Analise'}>
-                <CardHome invertido nome='Fazer análise' alt=''/>
-            </Link>
-        </div>
-     );
+  return (
+    <div>
+      <CardHome
+        href={"/Analise"}
+        invertido
+        nome="Fazer análise"
+        alt=""
+        imagem="./analise.png"
+      />
+      <CardHome
+        href={"/ConsultarPacientes"}
+        nome="Consultar pacientes"
+        alt=""
+        imagem="./consultar.png"
+      />
+    </div>
+  );
 }
 
 export default HomeInicial;

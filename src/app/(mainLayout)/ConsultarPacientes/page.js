@@ -1,3 +1,6 @@
+'use client'
+
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
@@ -5,25 +8,29 @@ import TabelaPacientes from "../../../components/TabelaPacientes";
 import IconSeta from "../../../components/IconSeta";
 
 
-const mockPacientes = [
-  { id: 1, nome: "Kimberly Maria Vieira", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
-  { id: 2, nome: "Angelina Queiroz", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 2 },
-  { id: 3, nome: "Milena Faria", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
-  { id: 4, nome: "Mario Antunes", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
-  { id: 5, nome: "Miguel Augusto", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 1 },
-  { id: 6, nome: "Sebastian Silva Santos", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 2 },
-  { id: 7, nome: "Antonia Aparecida", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 3 },
-  { id: 8, nome: "José Silveira", cpf: "152.654.258-20", ultimaAtualizacao: "05/90/2215", dataCriacao: "05/90/2215", examesCount: 4 }
-];
+import mockPacientes from "../../../constants/Pacientes.json";
 
 export default function ConsultarPacientes() {
+  const [termoPesquisa, setTermoPesquisa] = useState("");
 
-  // Comentado pois está em prototipagem
+  // Filtra os pacientes baseado no termo de pesquisa
+  const pacientesFiltrados = useMemo(() => {
+    if (!termoPesquisa.trim()) {
+      return mockPacientes;
+    }
 
-  // for (let index = 0; index = 8; index++) {
-  //   var pagePacientes = [];
-  //   pagePacientes.push(mockPacientes[index])
-  // }
+    const termo = termoPesquisa.toLowerCase().trim();
+    
+    return mockPacientes.filter(paciente => 
+      paciente.nome.toLowerCase().includes(termo) ||
+      paciente.cpf.replace(/[.-]/g, '').includes(termo.replace(/[.-]/g, '')) ||
+      termo.includes('peça') || termo.includes('peca') // Para buscar por "peça"
+    );
+  }, [termoPesquisa]);
+
+  const handlePesquisaChange = (e) => {
+    setTermoPesquisa(e.target.value);
+  };
 
   return (
     <div className="h-[80vh] mx-12 gap-6">
@@ -44,9 +51,14 @@ export default function ConsultarPacientes() {
           <h3 className="text-lg">Voltar</h3>
         </Link>
         <div className="flex w-full gap-5">
-          <Input type="text" placeHolder="Pesquise por CPF, nome ou peça" />
+          <Input 
+            type="text" 
+            placeHolder="Pesquise por CPF, nome ou peça" 
+            value={termoPesquisa}
+            onChange={handlePesquisaChange}
+          />
           <Button
-            classes={"bg-gradient-to-b from-azul to-azul_escuro my-2 px-3"}
+            classes={"bg-gradient-to-b from-azul to-azul_escuro w-[60px] h-[60px] rounded-2xl"}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -65,23 +77,21 @@ export default function ConsultarPacientes() {
       </div>
       <div>
         <div className="max-w-7xl mx-auto mt-6">
-          <TabelaPacientes pacientes={mockPacientes} />
+          <TabelaPacientes pacientes={pacientesFiltrados} />
         </div>
         <div className="flex items-center justify-end gap-5 mt-4">
-          <IconSeta classe="cursor-pointer"/>
-          <Button classes={'w-10 h-10 bg-gradient-to-b from-azul to-azul_escuro'}>
+          <IconSeta cor="#CFCFCF" classe="cursor-pointer"/>
+          <Button classes={'w-[40px] h-[40px] bg-gradient-to-b from-azul to-azul_escuro rounded-2xl'}>
             1
           </Button>
-          {
-            mockPacientes.length > 8 ? 
-              <Button classes={'w-10 h-10 bg-gradient-to-b from-azul to-azul_escuro'}>
-                2
-              </Button>
-            : ''
-          }
+          
+          <span className="text-cinza_escuro text-xl font-medium px-2">...</span>
+          
+          <Button classes={'w-[40px] h-[40px] bg-white border-2 border-cinza rounded-2xl text-cinza_escuro hover:bg-gray-50'}>
+            36
+          </Button>
 
-          <IconSeta classe="rotate-180 cursor-pointer"/>
-
+          <IconSeta cor="#CFCFCF" classe="rotate-180 cursor-pointer"/>
         </div>
       </div>
     </div>

@@ -1,12 +1,13 @@
-import { Inter } from 'next/font/google'
-import { Toaster } from 'react-hot-toast'
+import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import Providers from "../components/Providers";
 
 const inter = Inter({
-  weight: ['400', '600'],
-  subsets: ['latin'],
-  display: 'swap'
-})
+  weight: ["400", "600", "900"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata = {
   title: "Visalityca",
@@ -17,29 +18,31 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-br" className={inter.className}>
       <body>
-        {children}
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 3000,
-            style: {
-              background: '#16a34a',
-              color: '#fff',
-              fontFamily: 'Inter, sans-serif',
-              fontWeight: '500',
-            },
-            success: {
+        <Providers>
+          {children}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 3000,
               style: {
-                background: '#16a34a',
+                background: "#16a34a",
+                color: "#fff",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: "500",
               },
-            },
-            error: {
-              style: {
-                background: '#DD2020',
+              success: {
+                style: {
+                  background: "#16a34a",
+                },
               },
-            },
-          }}
-        />
+              error: {
+                style: {
+                  background: "#DD2020",
+                },
+              },
+            }}
+          />
+        </Providers>
       </body>
     </html>
   );
