@@ -210,7 +210,7 @@ export default function RelatorioMedicoPDF({ dados, configuracao = {} }) {
     // MELHORIA IMPORTANTE: Implementar integração com sistema de autenticação
     // Deve puxar automaticamente os dados do médico logado do sistema
     // Exemplo: const { user } = useAuth(); medico: user.nome, crm: user.crm
-    medico: configuracao.medico || 'Dr. João Silva', // Nome do médico logado exemplo
+    medico: configuracao.medico || 'Dr. Carlos Silva', // Nome do médico logado exemplo
     crm: configuracao.crm || 'CRM-SP 123456', // CRM do médico logado exemplo 
     especialidade: configuracao.especialidade || 'Patologista',
     ...configuracao
@@ -229,7 +229,7 @@ export default function RelatorioMedicoPDF({ dados, configuracao = {} }) {
           <View style={styles.logoContainer}>
             {/* Logos da Visalytica e Dasa */}
             <View style={styles.logosRow}>
-              <Image src="/LogoVisalytica.png" style={PDF_LAYOUT.logo.visalytica} />
+              <Image src="/LogoVisalyticaAzulClaro.png" style={PDF_LAYOUT.logo.visalytica} />
               <View style={styles.logoSeparator}></View>
               <Image src="/LogoDasa.png" style={PDF_LAYOUT.logo.dasa} />
             </View>
@@ -325,7 +325,7 @@ export default function RelatorioMedicoPDF({ dados, configuracao = {} }) {
         {/* Rodapé */}
         <View style={styles.footer}>
           <View style={styles.footerLogos}>
-            <Image src="/LogoVisalytica.png" style={PDF_LAYOUT.logo.visalyticaFooter} />
+            <Image src="/LogoVisalyticaAzulClaro.png" style={PDF_LAYOUT.logo.visalyticaFooter} />
             <View style={styles.footerLogoSeparator}></View>
             <Image src="/LogoDasa.png" style={PDF_LAYOUT.logo.dasaFooter} />
           </View>
