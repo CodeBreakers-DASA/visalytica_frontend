@@ -47,8 +47,8 @@ export const PDF_LAYOUT = {
     padding: 40,
   },
   logo: {
-    visalytica: { width: 146, height: 38 },
-    dasa: { width: 51, height: 31 },
+    visalytica: { width: 170, height: 38 },
+    dasa: { width: 32, height: 20 },
     visalyticaFooter: { width: 73, height: 19 },
     dasaFooter: { width: 25, height: 18 },
   },

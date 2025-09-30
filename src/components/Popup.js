@@ -1,7 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Trash2, Pencil, Download } from "lucide-react";
 import { api } from "../services/api";
+import { pdf } from "@react-pdf/renderer";
+import DownloadPDF from "./pdf/DownloadPDF"; // seu componente PDF
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Popup({
   triggerText = "Abrir Popup",
@@ -12,47 +16,39 @@ export default function Popup({
   paciente,
   onConfirm,
 }) {
-
-   const transformaDatas = (data) => {
-    // A data em formato ISO 8601
-    const dataISO = data;
-
-    // Cria um objeto Date
-    const data2 = new Date(dataISO);
-
-    // Formata para o padrão brasileiro (pt-BR)
-    // O timeZone 'America/Sao_Paulo' ajusta o horário UTC para o fuso local antes de pegar a data
+  const transformaDatas = (data) => {
+    const data2 = new Date(data);
     const options = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      timeZone: 'America/Sao_Paulo'
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      timeZone: "America/Sao_Paulo",
     };
-
-    const dataFormatada = new Intl.DateTimeFormat('pt-BR', options).format(data2);
-
-    return dataFormatada
-  }
+    return new Intl.DateTimeFormat("pt-BR", options).format(data2);
+  };
 
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [selected, setSelected] = useState(type === "download" ? [] : null);
-
   const [examesPaciente, setExamePaciente] = useState([]);
+  const [dadosPaciente, setDadosPaciente] = useState();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const fetchExamesPaciente = async () => {
-    if(paciente){
+    if (paciente) {
       const { data } = await api.get(`/pacientes/${paciente.cpf}`);
-      setExamePaciente(data.exames.lista)
-    }   
-  };  
+      setExamePaciente(data.exames.lista);
+      setDadosPaciente(data.paciente);
+    }
+  };
 
   // Configurações por tipo
   const config = {
     delete: {
       icon: <Trash2 size={40} className="text-red-600" />,
       confirmText: "Solicitar",
-      confirmColor: "bg-red-600 hover:bg-red-700",
+      confirmColor: "bg-red-600 hover:bg-red-700 text-white",
     },
     edit: {
       icon: <Pencil size={40} className="text-yellow-500" />,
@@ -61,7 +57,7 @@ export default function Popup({
     },
     download: {
       icon: <Download size={40} className="text-blue-600" />,
-      confirmText: "Download",
+      confirmText: loading ? "Gerando..." : "Download",
       confirmColor: "bg-blue-600 hover:bg-blue-700 text-white",
     },
   };
@@ -77,11 +73,77 @@ export default function Popup({
     }
   };
 
+  // Download do PDF
+  const handleDownload = async (exame) => {
+    console.log(exame);
+
+    try {
+      setLoading(true);
+      const blob = await pdf(
+        <DownloadPDF dados={exame} configuracao={{}} />
+      ).toBlob();
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `analise-${exame.nomeAmostra}-${dadosPaciente.nome}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Erro ao gerar PDF:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEdit = async (exame) => {
+    router.push(
+      `/GeraPDF?${new URLSearchParams({
+        cpf: exame.paciente.cpf,
+        nomePaciente: exame.paciente.nome,
+        dataNascimento: exame.paciente.dataNascimento,
+        nomePeca: exame.nomeAmostra,
+        comprimento: exame.comprimento,
+        largura: exame.largura,
+        altura: exame.altura,
+        diagnostico: exame.possivelDiagnostico,
+        observacoes: exame.observacoes,
+        modo: "edit",
+        id: exame.id,
+      }).toString()}`
+    );
+  };
+
+  const handleDelete = async (cpf, justificativa) => {
+    console.log(justificativa);
+
+    try {
+      const { data } = await api.delete(`/pacientes/${cpf}`, {
+        data: {
+          justificativa: justificativa,
+        },
+      });
+      console.log(data);
+      toast.success("Solicitação de exclusão enviada")
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleConfirm = () => {
     if (type === "delete") {
+      handleDelete(dadosPaciente.cpf, reason);
       onConfirm?.(reason);
-      
-    } else {
+    } else if (type === "edit") {
+      onConfirm?.(selected);
+      handleEdit({ ...selected, paciente: dadosPaciente });
+    } else if (type === "download") {
+      // Gera e baixa os PDFs selecionados
+      selected.forEach((exame) =>
+        handleDownload({ ...exame, paciente: dadosPaciente })
+      );
       onConfirm?.(selected);
     }
     setOpen(false);
@@ -90,10 +152,13 @@ export default function Popup({
   return (
     <div className="flex justify-center items-center">
       {/* Botão que abre */}
-      <button onClick={() => {
-        setOpen(true)
-        fetchExamesPaciente()
-      }} className={classTrigger}>
+      <button
+        onClick={() => {
+          setOpen(true);
+          fetchExamesPaciente();
+        }}
+        className={classTrigger}
+      >
         {triggerText}
       </button>
 
@@ -139,7 +204,8 @@ export default function Popup({
                         : "bg-gray-100 hover:bg-gray-200"
                     }`}
                   >
-                    {transformaDatas(opt.data_atualizacao)} - {opt.nome_amostra} - {opt.medico.nome}
+                    {transformaDatas(opt.dataAtualizacao)} - {opt.nomeAmostra} -{" "}
+                    {opt.medico.nome}
                   </button>
                 ))}
               </div>
@@ -158,11 +224,10 @@ export default function Popup({
                 disabled={
                   (type === "delete" && !reason.trim()) ||
                   (type === "edit" && !selected) ||
-                  (type === "download" && selected.length === 0)
+                  (type === "download" && selected.length === 0) ||
+                  loading
                 }
-                className={`flex-1 py-2 rounded-lg transition ${
-                  config[type].confirmColor
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
+                className={`flex-1 py-2 rounded-lg transition ${config[type].confirmColor} disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {config[type].confirmText}
               </button>
