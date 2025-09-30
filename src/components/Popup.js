@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Trash2, Pencil, Download } from "lucide-react";
 import { api } from "../services/api";
 import { pdf } from "@react-pdf/renderer";
 import DownloadPDF from "./pdf/DownloadPDF"; // seu componente PDF
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Popup({
   triggerText = "Abrir Popup",
@@ -115,8 +116,25 @@ export default function Popup({
     );
   };
 
+  const handleDelete = async (cpf, justificativa) => {
+    console.log(justificativa);
+
+    try {
+      const { data } = await api.delete(`/pacientes/${cpf}`, {
+        data: {
+          justificativa: justificativa,
+        },
+      });
+      console.log(data);
+      toast.success("Solicitação de exclusão enviada")
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleConfirm = () => {
     if (type === "delete") {
+      handleDelete(dadosPaciente.cpf, reason);
       onConfirm?.(reason);
     } else if (type === "edit") {
       onConfirm?.(selected);
