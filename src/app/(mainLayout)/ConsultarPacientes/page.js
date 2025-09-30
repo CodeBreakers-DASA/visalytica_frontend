@@ -24,8 +24,7 @@ export default function ConsultarPacientes() {
     fetchPacientes();
   }, [page])
 
-  console.log(mockPacientes);
-
+  // console.log(mockPacientes);
 
   const [termoPesquisa, setTermoPesquisa] = useState("");
 
