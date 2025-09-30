@@ -48,7 +48,7 @@ export default function Popup({
     delete: {
       icon: <Trash2 size={40} className="text-red-600" />,
       confirmText: "Solicitar",
-      confirmColor: "bg-red-600 hover:bg-red-700",
+      confirmColor: "bg-red-600 hover:bg-red-700 text-white",
     },
     edit: {
       icon: <Pencil size={40} className="text-yellow-500" />,

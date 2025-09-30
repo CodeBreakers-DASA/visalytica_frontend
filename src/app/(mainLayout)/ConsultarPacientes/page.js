@@ -10,20 +10,19 @@ import { api } from "../../../services/api";
 import Image from "next/image";
 
 export default function ConsultarPacientes() {
-
-  const [mockPacientes, setMockPacientes] = useState([])
-  const [meta, setMeta] = useState({})
-  const [page, setPage] = useState(1)
+  const [mockPacientes, setMockPacientes] = useState([]);
+  const [meta, setMeta] = useState({});
+  const [page, setPage] = useState(1);
 
   const fetchPacientes = async () => {
     const { data } = await api.get(`/pacientes/tabela?page=${page}&limit=8`);
-    setMockPacientes(data.items)
-    setMeta(data.meta)
+    setMockPacientes(data.items);
+    setMeta(data.meta);
   };
 
   useEffect(() => {
     fetchPacientes();
-  }, [page])
+  }, [page]);
 
   // console.log(mockPacientes);
 
@@ -36,10 +35,14 @@ export default function ConsultarPacientes() {
 
     const termo = termoPesquisa.toLowerCase().trim();
 
-    return mockPacientes.filter(paciente =>
-      paciente.nome_paciente.toLowerCase().includes(termo) ||
-      paciente.cpf.replace(/[.-]/g, '').includes(termo.replace(/[.-]/g, '')) ||
-      termo.includes('peça') || termo.includes('peca') // Para buscar por "peça"
+    return mockPacientes.filter(
+      (paciente) =>
+        paciente.nome_paciente.toLowerCase().includes(termo) ||
+        paciente.cpf
+          .replace(/[.-]/g, "")
+          .includes(termo.replace(/[.-]/g, "")) ||
+        termo.includes("peça") ||
+        termo.includes("peca") // Para buscar por "peça"
     );
   }, [mockPacientes, termoPesquisa]);
 
@@ -95,11 +98,15 @@ export default function ConsultarPacientes() {
       </div>
       <div>
         <div className="max-w-7xl mx-auto mt-6">
-          {
-            mockPacientes[0] && <TabelaPacientes pacientes={pacientesFiltrados} />
-          }
+          {mockPacientes[0] ? (
+            <>
+              <TabelaPacientes pacientes={pacientesFiltrados} />
+              <BotoesPaginacao meta={meta} page={page} setPage={setPage} />
+            </>
+          ) : (
+            <h2 className="w-full text-azul text-center font-semibold text-2xl">Carregando tabela...</h2>
+          )}
         </div>
-        {meta && <BotoesPaginacao meta={meta} page={page} setPage={setPage}/>}
       </div>
     </div>
   );
