@@ -302,7 +302,7 @@ export default function RelatorioMedicoPDF({ dados, configuracao = {} }) {
                     <Text style={styles.sectionTitle}>OBSERVAÇÕES CLÍNICAS</Text>
                     <View style={styles.observacoesBox}>
                         <Text style={styles.observacoes}>
-                            {dados.observacao || 'Nenhuma observação adicional registrada.'}
+                            {dados.observacoes || 'Nenhuma observação adicional registrada.'}
                         </Text>
                     </View>
                 </View>

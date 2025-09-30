@@ -7,6 +7,7 @@ import Button from "../../../components/Button";
 import TabelaPacientes from "../../../components/TabelaPacientes";
 import BotoesPaginacao from "../../../components/BotoesPaginacao";
 import { api } from "../../../services/api";
+import Image from "next/image";
 
 export default function ConsultarPacientes() {
 

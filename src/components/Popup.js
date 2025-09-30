@@ -4,6 +4,7 @@ import { Trash2, Pencil, Download } from "lucide-react";
 import { api } from "../services/api";
 import { pdf } from "@react-pdf/renderer";
 import DownloadPDF from "./pdf/DownloadPDF"; // seu componente PDF
+import { useRouter } from "next/navigation";
 
 export default function Popup({
   triggerText = "Abrir Popup",
@@ -29,14 +30,15 @@ export default function Popup({
   const [reason, setReason] = useState("");
   const [selected, setSelected] = useState(type === "download" ? [] : null);
   const [examesPaciente, setExamePaciente] = useState([]);
-  const [dadosPaciente, setDadosPaciente] = useState()
+  const [dadosPaciente, setDadosPaciente] = useState();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const fetchExamesPaciente = async () => {
     if (paciente) {
       const { data } = await api.get(`/pacientes/${paciente.cpf}`);
       setExamePaciente(data.exames.lista);
-      setDadosPaciente(data.paciente)
+      setDadosPaciente(data.paciente);
     }
   };
 
@@ -73,7 +75,7 @@ export default function Popup({
   // Download do PDF
   const handleDownload = async (exame) => {
     console.log(exame);
-    
+
     try {
       setLoading(true);
       const blob = await pdf(
@@ -95,14 +97,35 @@ export default function Popup({
     }
   };
 
+  const handleEdit = async (exame) => {
+    router.push(
+      `/GeraPDF?${new URLSearchParams({
+        cpf: exame.paciente.cpf,
+        nomePaciente: exame.paciente.nome,
+        dataNascimento: exame.paciente.dataNascimento,
+        nomePeca: exame.nomeAmostra,
+        comprimento: exame.comprimento,
+        largura: exame.largura,
+        altura: exame.altura,
+        diagnostico: exame.possivelDiagnostico,
+        observacoes: exame.observacoes,
+        modo: "edit",
+        id: exame.id,
+      }).toString()}`
+    );
+  };
+
   const handleConfirm = () => {
     if (type === "delete") {
       onConfirm?.(reason);
     } else if (type === "edit") {
       onConfirm?.(selected);
+      handleEdit({ ...selected, paciente: dadosPaciente });
     } else if (type === "download") {
       // Gera e baixa os PDFs selecionados
-      selected.forEach((exame) => handleDownload({...exame, paciente: dadosPaciente}));
+      selected.forEach((exame) =>
+        handleDownload({ ...exame, paciente: dadosPaciente })
+      );
       onConfirm?.(selected);
     }
     setOpen(false);
@@ -186,9 +209,7 @@ export default function Popup({
                   (type === "download" && selected.length === 0) ||
                   loading
                 }
-                className={`flex-1 py-2 rounded-lg transition ${
-                  config[type].confirmColor
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
+                className={`flex-1 py-2 rounded-lg transition ${config[type].confirmColor} disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {config[type].confirmText}
               </button>
