@@ -5,24 +5,26 @@ import Link from "next/link";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import TabelaPacientes from "../../../components/TabelaPacientes";
-import IconSeta from "../../../components/IconSeta";
+import BotoesPaginacao from "../../../components/BotoesPaginacao";
 import { api } from "../../../services/api";
+import Image from "next/image";
 
 export default function ConsultarPacientes() {
-
-  const [mockPacientes, setMockPacientes] = useState([])
+  const [mockPacientes, setMockPacientes] = useState([]);
+  const [meta, setMeta] = useState({});
+  const [page, setPage] = useState(1);
 
   const fetchPacientes = async () => {
-    const { data } = await api.get(`/pacientes/tabela/`);
-    setMockPacientes(data)
-  }; 
+    const { data } = await api.get(`/pacientes/tabela?page=${page}&limit=8`);
+    setMockPacientes(data.items);
+    setMeta(data.meta);
+  };
 
   useEffect(() => {
     fetchPacientes();
-  }, [])
+  }, [page]);
 
-  console.log(mockPacientes);
-  
+  // console.log(mockPacientes);
 
   const [termoPesquisa, setTermoPesquisa] = useState("");
 
@@ -32,11 +34,15 @@ export default function ConsultarPacientes() {
     }
 
     const termo = termoPesquisa.toLowerCase().trim();
-    
-    return mockPacientes.filter(paciente => 
-      paciente.nome_paciente.toLowerCase().includes(termo) ||
-      paciente.cpf.replace(/[.-]/g, '').includes(termo.replace(/[.-]/g, '')) ||
-      termo.includes('peça') || termo.includes('peca') // Para buscar por "peça"
+
+    return mockPacientes.filter(
+      (paciente) =>
+        paciente.nome_paciente.toLowerCase().includes(termo) ||
+        paciente.cpf
+          .replace(/[.-]/g, "")
+          .includes(termo.replace(/[.-]/g, "")) ||
+        termo.includes("peça") ||
+        termo.includes("peca") // Para buscar por "peça"
     );
   }, [mockPacientes, termoPesquisa]);
 
@@ -92,29 +98,14 @@ export default function ConsultarPacientes() {
       </div>
       <div>
         <div className="max-w-7xl mx-auto mt-6">
-          {
-            mockPacientes[0] && <TabelaPacientes pacientes={pacientesFiltrados} />
-          }
-        </div>
-        <div className="flex items-center justify-end gap-5 py-4">
-          <IconSeta cor="#CFCFCF" classe="cursor-pointer"/>
-          <Button classes={'w-[40px] h-[40px] bg-gradient-to-b from-azul to-azul_escuro rounded-2xl'}>
-            1
-          </Button>
-
-          <span className="text-cinza_escuro text-xl font-medium px-2">
-            ...
-          </span>
-
-          <Button
-            classes={
-              "w-[40px] h-[40px] bg-white border-2 border-cinza rounded-2xl text-cinza_escuro hover:bg-gray-50"
-            }
-          >
-            36
-          </Button>
-
-          <IconSeta cor="#CFCFCF" classe="rotate-180 cursor-pointer" />
+          {mockPacientes[0] ? (
+            <>
+              <TabelaPacientes pacientes={pacientesFiltrados} />
+              <BotoesPaginacao meta={meta} page={page} setPage={setPage} />
+            </>
+          ) : (
+            <h2 className="w-full text-azul text-center font-semibold text-2xl">Carregando tabela...</h2>
+          )}
         </div>
       </div>
     </div>

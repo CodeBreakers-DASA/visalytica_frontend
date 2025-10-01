@@ -290,13 +290,13 @@ export default function Analise() {
                         {/* Primeira linha: Cancelar, QR Code e Continuar */}
                         <div className='flex flex-row gap-3'>
                             <Link href='/Home' className='flex-1'>
-                                <Button classes={'p-4 py-4 bg-gray-400 px-6 hover:bg-gray-600 w-full rounded-xl transition-all duration-200'}>
+                                <Button classes={'text-white p-4 py-4 bg-gray-400 px-6 hover:bg-gray-600 w-full rounded-xl transition-all duration-200'}>
                                     Cancelar
                                 </Button>
                             </Link>
 
                             <Button
-                                classes={'p-4 py-4 px-4 bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul flex items-center justify-center relative group min-w-[56px] rounded-xl transition-all duration-200'}
+                                classes={'p-4 py-4 px-4 bg-gradient-to-r from-azul to-azul_escuro hover:opacity-90 flex items-center justify-center relative group min-w-[56px] rounded-xl transition-all duration-2000'}
                                 onClick={handleQRScan}
                                 title="Ler QR Code"
                                 aria-label="Abrir leitor de QR Code"
@@ -332,8 +332,8 @@ export default function Analise() {
                                 }}
                             >
                                 <Button
-                                    classes={`p-4 py-4 px-6 w-full rounded-xl transition-all duration-200 ${isFormValid
-                                        ? 'bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul'
+                                    classes={`text-white p-4 py-4 px-6 w-full rounded-xl transition-all duration-200 ${isFormValid
+                                        ? 'bg-gradient-to-r from-azul to-azul_escuro hover:opacity-90 '
                                         : 'bg-gray-400 cursor-not-allowed'
                                         }`}
                                     disabled={!isFormValid}
@@ -346,7 +346,7 @@ export default function Analise() {
                         {/* Segunda linha: Capturar imagem */}
                         <div className='w-full'>
                             <Button
-                                classes={'p-4 py-4 px-6 bg-gradient-to-r from-azul to-azul_escuro hover:from-azul_escuro hover:to-azul w-full rounded-xl transition-all duration-200'}
+                                classes={'text-white p-4 py-4 px-6 bg-gradient-to-r from-azul to-azul_escuro hover:opacity-90 w-full rounded-xl transition-all duration-200'}
                                 onClick={() => {
                                     if (!status) {
                                         setStatus(!status)

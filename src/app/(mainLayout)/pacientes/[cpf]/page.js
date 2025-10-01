@@ -16,6 +16,7 @@ const fetchPacienteDetails = async ({ queryKey }) => {
   const [_key, cpf] = queryKey;
   if (!cpf) return null;
   const { data } = await api.get(`/pacientes/${cpf}`);
+  // console.log(data);
   return data;
 };
 
@@ -31,6 +32,8 @@ export default function PerfilPaciente() {
   });
 
   const paciente = data?.paciente;
+  console.log(paciente);
+  
   const examesPaciente = data?.exames?.lista || [];
 
   const examesFiltrados = useMemo(() => {
@@ -186,7 +189,7 @@ export default function PerfilPaciente() {
               <CardExame
                 key={exame.id}
                 exame={exame}
-                pacienteId={paciente.id}
+                paciente={paciente}
               />
             ))}
           </div>
