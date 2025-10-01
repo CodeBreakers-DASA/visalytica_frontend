@@ -12,7 +12,7 @@ function HomeInicial() {
         <h1 className="mb-2 text-center text-3xl font-bold text-azul">
           DASHBOARD
         </h1>
-        <div className="flex-1">
+        <div className="flex-1 justify-center items-center flex">
           <DashboardLoader />
         </div>
       </div>
