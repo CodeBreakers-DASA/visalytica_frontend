@@ -1,24 +1,27 @@
 import Link from "next/link";
-function CardHome({ nome, imagem, alt, invertido = false, href = "#" }) {
+import Image from 'next/image';
+function CardHome({ nome, imagem, alt, href = "#" }) {
   return (
-    <Link href={href}
-    className="flex justify-center mx-28 mt-12" >
-      <div
-        style={{ flexDirection: !invertido ? "row-reverse" : "" }}
-        className="w-full h-[calc(40vh-32px)] min-h-60 p-8 flex justify-between items-center shadow-[0_0_7px_2px] shadow-black/25 rounded-[42px] gap-4 transition-transform duration-300 ease-in-out hover:scale-[1.02] cursor-pointer"
-      >
-        <div className="w-1/2 h-full rounded-3xl my-auto">
-          <img
-            src={imagem}
-            alt={alt}
-            className="h-full rounded-[30px] w-full object-cover"
-          ></img>
+  <Link href={href} className="flex flex-1 justify-center">
+      {/* O container interno ocupa toda a altura do Link */}
+      <div className="flex h-full w-full cursor-pointer flex-col items-center justify-between gap-4 rounded-[42px] border-2 border-cinza p-8 transition-transform duration-300 ease-in-out hover:scale-[1.02]">
+        
+        {/* 2. O container da imagem agora é flexível (flex-1) em vez de ter altura fixa */}
+        <div className="relative flex-1 w-full">
+          <Image
+            src={imagem} // Use a prop 'imagem' que você está passando
+            alt={alt}     // Use a prop 'alt'
+            fill={true}
+            style={{
+              objectFit: "cover",
+              borderRadius: "22px",
+            }}
+          />
         </div>
-        <div className=" w-1/2 flex justify-center items-center">
-          <h2 className="text-4xl 850:text-5xl lg:text-6xl uppercase text-azul font-black text-center flex flex-col gap-2 items-center">
-            {nome.split(" ").map((palavra, index) => (
-              <span key={index}>{palavra}</span>
-            ))}
+        
+        <div className="flex justify-center items-center">
+          <h2 className="text-4xl uppercase text-azul font-black text-center 850:text-5xl lg:text-[36px]">
+            {nome}
           </h2>
         </div>
       </div>
