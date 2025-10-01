@@ -184,7 +184,7 @@ export default function PerfilPaciente() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 justify-items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 justify-items-center mb-4">
             {examesFiltrados.map((exame) => (
               <CardExame
                 key={exame.id}

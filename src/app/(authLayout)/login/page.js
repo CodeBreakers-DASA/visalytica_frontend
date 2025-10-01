@@ -78,7 +78,7 @@ function Login() {
               : "text-azul"
           }`}
         >
-          Esqueceu a senha ou não tem login?
+          Esqueceu a senha ou não tem login? Contate o admin.
         </a>
 
         <div className="w-full flex justify-center ">
