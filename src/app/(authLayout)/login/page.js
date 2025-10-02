@@ -48,9 +48,11 @@ function Login() {
 
   return (
     <>
-      <div className="flex flex-col w-full space-y-2">
+      <div className="flex flex-col w-full space-y-2 xs:space-y-3 sm:space-y-4">
         <div className="flex w-full justify-center">
-          <h1 className="text-2xl w-fit font-bold ...">Login</h1>
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl w-fit font-bold ...">
+            Login
+          </h1>
         </div>
         <Input
           label={"Usuário"}
@@ -70,7 +72,7 @@ function Login() {
           hasSuccess={mutation.isSuccess}
         />
         <a
-          className={`text-xs font-medium ${
+          className={`text-xs xs:text-sm sm:text-base font-medium ${
             mutation.isError
               ? "text-vermelho"
               : mutation.isSuccess
@@ -84,7 +86,7 @@ function Login() {
         <div className="w-full flex justify-center ">
           <Button
             classes={
-              "bg-gradient-to-r from-azul to-azul_escuro w-fit py-2.5 px-16 !mt-2.5"
+              "bg-gradient-to-r from-azul to-azul_escuro w-fit py-2.5 xs:py-3 sm:py-3.5 px-16 xs:px-18 sm:px-20 !mt-2.5 text-sm xs:text-base rounded-md xs:rounded-lg sm:rounded-xl"
             }
             onClick={handleLogin}
             disabled={mutation.isPending}
