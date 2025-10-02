@@ -262,7 +262,7 @@ const SimpleQRReader = ({ constraints, onRead, onClose }) => {
 
   if (manualMode) {
     return (
-      <div className="flex flex-col items-center justify-center p-4 space-y-4">
+      <div className="flex flex-col items-center justify-center p-3 xs:p-4 space-y-3 xs:space-y-4">
         <h2 className="text-lg font-bold mb-2">Inserir Dados Manualmente</h2>
 
         <div className="w-full max-w-xs space-y-3">
@@ -306,7 +306,7 @@ const SimpleQRReader = ({ constraints, onRead, onClose }) => {
 
   if (imageMode) {
     return (
-      <div className="flex flex-col items-center justify-center p-4 space-y-4">
+      <div className="flex flex-col items-center justify-center p-3 xs:p-4 space-y-3 xs:space-y-4">
         <h2 className="text-lg font-bold mb-2">Upload de Imagem QR Code</h2>
 
         <div className="w-full max-w-xs space-y-3">
@@ -366,12 +366,12 @@ const SimpleQRReader = ({ constraints, onRead, onClose }) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col items-center justify-center p-3 xs:p-4">
       {isLoading && (
         <div className="mb-2 text-blue-600 text-sm">Carregando câmera...</div>
       )}
 
-      <div className="relative w-48 h-48 bg-black rounded-lg overflow-hidden">
+      <div className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 bg-black rounded-lg overflow-hidden">
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
