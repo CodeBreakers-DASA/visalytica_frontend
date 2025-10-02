@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +11,7 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import CardExame from "../../../../components/CardExame";
 import { Frown } from "lucide-react";
+import BotoesPaginacao from "@/components/BotoesPaginacao";
 
 const fetchPacienteDetails = async ({ queryKey }) => {
   const [_key, cpf] = queryKey;
@@ -24,6 +25,9 @@ export default function PerfilPaciente() {
   const params = useParams();
   const pacienteCpf = params.cpf;
   const [termoPesquisa, setTermoPesquisa] = useState("");
+  const [exames, setExames] = useState(undefined);
+  const [page, setPage] = useState(1);
+  const [meta, setMeta] = useState();
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["pacienteDetails", pacienteCpf],
@@ -32,23 +36,19 @@ export default function PerfilPaciente() {
   });
 
   const paciente = data?.paciente;
-  console.log(paciente);
-  
-  const examesPaciente = data?.exames?.lista || [];
 
-  const examesFiltrados = useMemo(() => {
-    if (!termoPesquisa.trim()) {
-      return examesPaciente;
-    }
-    const termo = termoPesquisa.toLowerCase().trim();
-    return examesPaciente.filter(
-      (exame) =>
-        exame.medico.nome.toLowerCase().includes(termo) ||
-        exame.nome_amostra.toLowerCase().includes(termo) ||
-        exame.possivel_diagnostico.toLowerCase().includes(termo) ||
-        exame.id.includes(termo)
+  const fetchPacienteExames = async (termoPesquisa, page) => {
+    const { data } = await api.get(
+      `/pacientes/${pacienteCpf}?page=${page}&limit=3&search=${termoPesquisa}`
     );
-  }, [examesPaciente, termoPesquisa]);
+    console.log(data);
+    setMeta(data?.exames?.meta);
+    setExames(data?.exames?.lista || []);
+  };
+
+  useEffect(() => {
+    fetchPacienteExames(termoPesquisa, page);
+  }, [termoPesquisa, page]);
 
   const formatarCPF = (cpf) => {
     if (!cpf) return "";
@@ -185,16 +185,18 @@ export default function PerfilPaciente() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 justify-items-center mb-4">
-            {examesFiltrados.map((exame) => (
-              <CardExame
-                key={exame.id}
-                exame={exame}
-                paciente={paciente}
-              />
-            ))}
+            {exames &&
+              exames.map((exame) => (
+                <CardExame key={exame.id} exame={exame} paciente={paciente} />
+              ))}
           </div>
+          {
+            meta && (
+              <BotoesPaginacao meta={meta} setPage={setPage} page={page} />
+            )
+          }
 
-          {examesFiltrados.length === 0 && (
+          {exames && exames.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500 text-lg">
                 {termoPesquisa
