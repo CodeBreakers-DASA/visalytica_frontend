@@ -1,26 +1,28 @@
 import Link from "next/link";
 import Image from 'next/image';
+
 function CardHome({ nome, imagem, alt, href = "#" }) {
   return (
-  <Link href={href} className="flex flex-1 justify-center">
-      {/* O container interno ocupa toda a altura do Link */}
-      <div className="flex h-full w-full cursor-pointer flex-col items-center justify-between gap-4 rounded-[42px] border-2 border-cinza p-8 transition-transform duration-300 ease-in-out hover:scale-[1.02]">
+    <Link href={href} className="flex flex-1 justify-center">
+      <div className="flex h-full w-full cursor-pointer flex-col items-center justify-between gap-3 xs:gap-4 sm:gap-4 md:gap-4 rounded-2xl xs:rounded-3xl sm:rounded-3xl md:rounded-[42px] border-2 border-cinza p-4 xs:p-5 sm:p-6 md:p-8 transition-transform duration-300 ease-in-out hover:scale-[1.02] min-h-[200px] xs:min-h-[220px] sm:min-h-[250px] md:min-h-[280px] lg:min-h-[300px]">
         
-        {/* 2. O container da imagem agora é flexível (flex-1) em vez de ter altura fixa */}
-        <div className="relative flex-1 w-full">
+        {/* Imagem */}
+        <div className="relative flex-1 w-full min-h-[120px] xs:min-h-[130px] sm:min-h-[150px] md:min-h-[170px] lg:min-h-[180px]">
           <Image
-            src={imagem} // Use a prop 'imagem' que você está passando
-            alt={alt}     // Use a prop 'alt'
+            src={imagem}
+            alt={alt}
             fill={true}
             style={{
               objectFit: "cover",
-              borderRadius: "22px",
+              borderRadius: "16px",
             }}
+            className="xs:rounded-[18px] sm:rounded-2xl md:rounded-[22px]"
           />
         </div>
         
-        <div className="flex justify-center items-center">
-          <h2 className="text-4xl uppercase text-azul font-black text-center 850:text-5xl lg:text-[36px]">
+        {/* Título */}
+        <div className="flex justify-center items-center px-2">
+          <h2 className="text-xl xs:text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[36px] uppercase text-azul font-black text-center leading-tight">
             {nome}
           </h2>
         </div>

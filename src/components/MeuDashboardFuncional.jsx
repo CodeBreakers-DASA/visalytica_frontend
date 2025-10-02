@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react"; // NOVO
+import { useEffect, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -83,54 +83,72 @@ export default function MeuDashboardFuncional() {
   }, [isAuthLoading, user]);
 
   if (isAuthLoading || isDataLoading) {
-    return <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    return (
+      <div className="flex justify-center items-center w-full h-full min-h-[200px] xs:min-h-[250px] sm:min-h-[300px]">
+        <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
   }
+
   return (
-    <div className="flex flex-col h-full w-full mx-auto">
-      <Card className="flex flex-1 flex-col">
-        <CardHeader>
-          <CardDescription className="text-base">
+    <div className="flex flex-col h-full w-full mx-auto gap-2 xs:gap-3 sm:gap-4">
+      
+      {/* Primeiro Card - Análises do Usuário */}
+      <Card className="flex flex-1 flex-col min-h-[180px] xs:min-h-[200px] sm:min-h-[220px] md:min-h-[250px]">
+        <CardHeader className="pb-2 xs:pb-3 sm:pb-4">
+          <CardDescription className="text-xs xs:text-sm sm:text-base">
             Análises feita por{" "}
             <span className="font-bold text-azul">
               {user?.nome || "usuário"}
             </span>
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1">
+        <CardContent className="flex-1 p-2 xs:p-3 sm:p-4 pt-0">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={analiseData}>
+            <BarChart data={analiseData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={12}
+                fontSize={10}
+                className="xs:text-xs sm:text-sm"
                 tickLine={false}
                 axisLine={false}
               />
               <YAxis
                 stroke="#888"
-                fontSize={12}
+                fontSize={10}
+                className="xs:text-xs sm:text-sm"
                 tickLine={false}
                 axisLine={false}
               />
-              <Tooltip />
-              <Bar dataKey="value" fill="#79ABF5" radius={[10, 10, 10, 10]} />
+              <Tooltip 
+                contentStyle={{ 
+                  fontSize: '12px',
+                  padding: '8px',
+                  borderRadius: '8px',
+                  border: '1px solid #ccc'
+                }}
+              />
+              <Bar dataKey="value" fill="#79ABF5" radius={[6, 6, 6, 6]} className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]" />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
-      <span className="border-b border-cinza w-4/5 self-center" />
+      {/* Divisor */}
+      <span className="border-b border-cinza w-3/4 xs:w-4/5 self-center my-1 xs:my-2" />
 
-      <Card className="flex flex-1 flex-col">
-        <CardHeader>
-          <CardDescription className="text-base">
+      {/* Segundo Card - Comparativo */}
+      <Card className="flex flex-1 flex-col min-h-[180px] xs:min-h-[200px] sm:min-h-[220px] md:min-h-[250px]">
+        <CardHeader className="pb-2 xs:pb-3 sm:pb-4">
+          <CardDescription className="text-xs xs:text-sm sm:text-base">
             Comparativo: <span className="font-bold text-azul">Visalytica</span>{" "}
             x medições manuais
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1">
+        <CardContent className="flex-1 p-2 xs:p-3 sm:p-4 pt-0">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={comparativoData}>
+            <BarChart data={comparativoData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
               <defs>
                 <linearGradient id="gradienteBarra" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#2A279C" />
@@ -140,23 +158,40 @@ export default function MeuDashboardFuncional() {
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={12}
+                fontSize={10}
+                className="xs:text-xs sm:text-sm"
                 tickLine={false}
                 axisLine={false}
               />
               <YAxis
                 stroke="#888"
-                fontSize={12}
+                fontSize={10}
+                className="xs:text-xs sm:text-sm"
                 tickLine={false}
                 axisLine={false}
               />
-              <Tooltip />
-              <Legend iconType="circle" />
-              <Bar dataKey="manual" fill="#959CA6" radius={[10, 10, 10, 10]} />
+              <Tooltip 
+                contentStyle={{ 
+                  fontSize: '12px',
+                  padding: '8px',
+                  borderRadius: '8px',
+                  border: '1px solid #ccc'
+                }}
+              />
+              <Legend 
+                iconType="circle" 
+                wrapperStyle={{ 
+                  fontSize: '11px',
+                  paddingTop: '8px'
+                }}
+                className="xs:text-xs sm:text-sm"
+              />
+              <Bar dataKey="manual" fill="#959CA6" radius={[6, 6, 6, 6]} className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]" />
               <Bar
                 dataKey="visalytica"
                 fill="url(#gradienteBarra)"
-                radius={[10, 10, 10, 10]}
+                radius={[6, 6, 6, 6]}
+                className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]"
               />
             </BarChart>
           </ResponsiveContainer>
