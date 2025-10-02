@@ -16,7 +16,7 @@ export default function Button({
         transition-all duration-200 ease-in-out
         hover:scale-105 active:scale-95
         disabled:opacity-50 disabled:cursor-not-allowed
-        text-white font-medium
+        font-medium
         text-xs xs:text-sm sm:text-base
         py-2 xs:py-2.5 sm:py-3
         px-3 xs:px-4 sm:px-5
