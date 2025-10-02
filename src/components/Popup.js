@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Trash2, Pencil, Download } from "lucide-react";
 import { api } from "../services/api";
 import { pdf } from "@react-pdf/renderer";
-import DownloadPDF from "./pdf/DownloadPDF"; 
+import DownloadPDF from "./pdf/DownloadPDF";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -18,7 +18,12 @@ export default function Popup({
 }) {
   const transformaDatas = (data) => {
     const data2 = new Date(data);
-    const options = { year: "numeric", month: "2-digit", day: "2-digit", timeZone: "America/Sao_Paulo" };
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      timeZone: "America/Sao_Paulo",
+    };
     return new Intl.DateTimeFormat("pt-BR", options).format(data2);
   };
 
@@ -38,7 +43,9 @@ export default function Popup({
   const fetchExamesPaciente = async (reset = false) => {
     if (!paciente) return;
     try {
-      const { data } = await api.get(`/pacientes/${paciente.cpf}?page=${reset ? 1 : page}&limit=10`);
+      const { data } = await api.get(
+        `/pacientes/${paciente.cpf}?page=${reset ? 1 : page}&limit=10`
+      );
       if (reset) {
         setExamesPaciente(data.exames.lista);
       } else {
@@ -89,7 +96,9 @@ export default function Popup({
   const handleDownload = async (exame) => {
     try {
       setLoading(true);
-      const blob = await pdf(<DownloadPDF dados={exame} configuracao={{}} />).toBlob();
+      const blob = await pdf(
+        <DownloadPDF dados={exame} configuracao={{}} />
+      ).toBlob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -111,7 +120,9 @@ export default function Popup({
     } else if (type === "edit") {
       onConfirm?.(selected);
     } else if (type === "download") {
-      selected.forEach((exame) => handleDownload({ ...exame, paciente: dadosPaciente }));
+      selected.forEach((exame) =>
+        handleDownload({ ...exame, paciente: dadosPaciente })
+      );
       onConfirm?.(selected);
     }
     setOpen(false);
@@ -119,28 +130,32 @@ export default function Popup({
 
   return (
     <div className="flex justify-center items-center">
-      <button
-        onClick={() => setOpen(true)}
-        className={classTrigger}
-      >
+      <button onClick={() => setOpen(true)} className={classTrigger}>
         {triggerText}
       </button>
 
       {open && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-xl shadow-lg w-[400px] text-center">
-            
             {/* Ícone */}
             <div className="flex justify-center mb-4">
-              {type === "delete" && <Trash2 size={40} className="text-red-600" />}
-              {type === "edit" && <Pencil size={40} className="text-yellow-500" />}
-              {type === "download" && <Download size={40} className="text-blue-600" />}
+              {type === "delete" && (
+                <Trash2 size={40} className="text-red-600" />
+              )}
+              {type === "edit" && (
+                <Pencil size={40} className="text-yellow-500" />
+              )}
+              {type === "download" && (
+                <Download size={40} className="text-blue-600" />
+              )}
             </div>
 
             {/* Texto */}
             <p className="text-lg font-medium mb-4">
               {title}{" "}
-              {userName && <span className="text-blue-600 font-semibold">{userName}</span>}
+              {userName && (
+                <span className="text-blue-600 font-semibold">{userName}</span>
+              )}
             </p>
 
             {type === "delete" && (
@@ -162,6 +177,7 @@ export default function Popup({
                       ref={isLast ? lastExamRef : null}
                       key={index}
                       onClick={() => handleSelect(opt)}
+                      disabled={type === "edit" && !opt.canEdit}
                       className={`px-3 py-2 rounded-lg border text-sm transition ${
                         type === "download"
                           ? selected.includes(opt)
@@ -170,13 +186,16 @@ export default function Popup({
                           : selected === opt
                           ? "bg-yellow-100 border-yellow-400 text-yellow-800"
                           : "bg-gray-100 hover:bg-gray-200"
-                      }`}
+                      }disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-200`}
                     >
-                      {transformaDatas(opt.dataAtualizacao)} - {opt.nomeAmostra} - {opt.medico.nome}
+                      {transformaDatas(opt.dataAtualizacao)} - {opt.nomeAmostra}{" "}
+                      - {opt.medico.nome}
                     </button>
                   );
                 })}
-                {loading && <p className="text-gray-500 text-sm">Carregando...</p>}
+                {loading && (
+                  <p className="text-gray-500 text-sm">Carregando...</p>
+                )}
               </div>
             )}
 
@@ -204,7 +223,13 @@ export default function Popup({
                     : "bg-blue-600 hover:bg-blue-700 text-white"
                 } disabled:opacity-50 disabled:cursor-not-allowed`}
               >
-                {loading ? "Carregando..." : type === "delete" ? "Solicitar" : type === "edit" ? "Continuar" : "Download"}
+                {loading
+                  ? "Carregando..."
+                  : type === "delete"
+                  ? "Solicitar"
+                  : type === "edit"
+                  ? "Continuar"
+                  : "Download"}
               </button>
             </div>
           </div>
