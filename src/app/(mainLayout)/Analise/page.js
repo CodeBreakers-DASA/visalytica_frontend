@@ -197,8 +197,8 @@ export default function Analise() {
             setDevices(videoDevices);
 
             if (videoDevices.length > 0) {
-                setSelectedDevice1({ posicao: "baixo", id: videoDevices[cameras[0]].deviceId });
-                setSelectedDevice2({ posicao: "cima", id: videoDevices[cameras[1]].deviceId });
+                setSelectedDevice1({ posicao: "baixo", id: videoDevices[cameras[1]].deviceId });
+                setSelectedDevice2({ posicao: "cima", id: videoDevices[cameras[0]].deviceId });
             }
         });
     }, [cameras]);

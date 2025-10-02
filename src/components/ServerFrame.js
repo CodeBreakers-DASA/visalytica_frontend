@@ -35,7 +35,7 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas 
 
       frameCaptura(dataUrl)
 
-      socketRef.current.emit("frame", { cameraId: camera.id, data: dataUrl });
+      socketRef.current.emit("frame", { cameraId: camera.id, data: dataUrl, posicao: camera.posicao });
     }, 200); // 10 FPS
 
     return () => {
@@ -62,7 +62,7 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas 
           }
         } else if(data.medidas[0]) {
           if (data?.medidas[0][0]) {
-            data.medidas[0][0] < medidas.altura_cm || medidas.altura_cm == 0 ? medidas.altura_cm = data?.medidas[0][0] : ``
+            data.medidas[0][0] < medidas.altura_cm || medidas.altura_cm == 0 ? medidas.altura_cm = data?.medidas[0][1] : ``
           }
         }
 
