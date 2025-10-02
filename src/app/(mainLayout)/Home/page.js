@@ -6,7 +6,7 @@ import MeuDashboardFuncional from "../../../components/MeuDashboardFuncional";
 
 function HomeInicial() {
   return (
-    <div className="flex min-h-[calc(100vh-100px)] w-full gap-4 sm:gap-6 lg:gap-8 py-4 sm:py-6 flex-col lg:flex-row">
+    <div className="flex min-h-[calc(100vh-150px)] w-full gap-4 sm:gap-6 lg:gap-8 py-4 sm:py-6 flex-col lg:flex-row">
       
       {/* Dashboard - Mobile: ordem 2, Desktop: ordem 1 */}
       <div className="flex flex-1 lg:flex-[2] flex-col rounded-2xl sm:rounded-3xl lg:rounded-[42px] border-2 border-cinza p-4 sm:p-6 lg:p-8 xl:px-16 order-2 lg:order-1">

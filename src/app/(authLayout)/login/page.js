@@ -86,7 +86,7 @@ function Login() {
         <div className="w-full flex justify-center ">
           <Button
             classes={
-              "bg-gradient-to-r from-azul to-azul_escuro w-fit py-2.5 xs:py-3 sm:py-3.5 px-16 xs:px-18 sm:px-20 !mt-2.5 text-sm xs:text-base rounded-md xs:rounded-lg sm:rounded-xl"
+              "text-white bg-gradient-to-r from-azul to-azul_escuro w-fit py-2.5 xs:py-3 sm:py-3.5 px-16 xs:px-18 sm:px-20 !mt-2.5 text-sm xs:text-base rounded-md xs:rounded-lg sm:rounded-xl"
             }
             onClick={handleLogin}
             disabled={mutation.isPending}
