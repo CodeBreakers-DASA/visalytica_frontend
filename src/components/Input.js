@@ -5,43 +5,28 @@ import { twMerge } from 'tailwind-merge';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Input({ 
-  label, 
-  placeHolder, 
-  className = "", 
-  type = "text", 
-  value, 
-  onChange, 
-  hasError, 
-  hasSuccess, 
-  ...props 
-}) {
-  return (
-    <div className={`flex flex-col w-full ${label ? 'gap-1.5 xs:gap-2' : ''}`}>
-      <label className={twMerge(
-        'text-sm xs:text-base font-medium',
-        inter.className,
-        hasError ? 'text-vermelho' : 
-        hasSuccess ? 'text-green-600' : ''
-      )}>{label}</label>
-      <input
-        type={type}
-        placeholder={placeHolder}
-        value={value}
-        onChange={onChange}
-        className={twMerge(`
-          w-full 
-          h-[40px] xs:h-[42px] sm:h-[45px] md:h-[48px] lg:h-[50px]
-          px-3 xs:px-3.5 sm:px-4 md:px-4 lg:px-5
-          text-xs xs:text-sm sm:text-base
-          border border-cinza 
-          rounded-lg xs:rounded-lg sm:rounded-xl md:rounded-2xl
-          focus:outline-none focus:ring-2 focus:ring-azul focus:border-transparent
-          placeholder:text-cinza_escuro
-          transition-all duration-200
-        `, className)}
-        {...props}
-      />
-    </div>
-  );
+function Input({ label, placeHolder, type = 'text', value, defaultValue, disabled, onChange, hasError, hasSuccess, className, ...props }) {
+    return (
+        <div className={`flex flex-col w-full ${label ? 'gap-2 ' : ''}`}>
+            <label className={
+                hasError ? 'text-vermelho' : 
+                hasSuccess ? 'text-green-600' : ''
+            }>{label}</label>
+            <input
+                disabled={disabled}
+                type={type} 
+                placeholder={placeHolder}
+                value={value}
+                defaultValue={defaultValue}
+                onChange={onChange}
+                className={twMerge( 'appearance-none bg-cinza_medio px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-[15px] font-medium placeholder:text-cinza placeholder:text-[15px] placeholder:font-medium', inter.className,
+                    hasError ? 'border-vermelho text-vermelho placeholder:text-vermelho' : 
+                    hasSuccess ? 'border-green-600 text-green-600 placeholder:text-green-600' :
+                    'border-cinza', className    )}
+                {...props}
+            />
+        </div>
+    );
 }
+
+export default Input;

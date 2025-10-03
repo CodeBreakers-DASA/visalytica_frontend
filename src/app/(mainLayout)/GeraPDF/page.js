@@ -153,37 +153,37 @@ function GeraPDF() {
   };
 
   return (
-    <div className="flex flex-col xl:flex-row min-h-screen bg-gray-50 p-2 md:p-4 lg:p-6 xl:p-8 gap-4 md:gap-6">
-      <div className="flex flex-col w-full xl:flex-1 h-[400px] md:h-[500px] lg:h-[600px] xl:h-[80vh]">
+    <div className="flex flex-col xl:flex-row min-h-screen bg-gray-50 p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 gap-3 xs:gap-4 sm:gap-5 md:gap-6">
+      <div className="flex flex-col w-full xl:flex-1 h-[300px] xs:h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] xl:h-[80vh]">
         {/* Preview do PDF */}
-        <div className="bg-[#252525] rounded-lg flex items-center justify-center h-full">
+        <div className="bg-[#252525] rounded-lg xs:rounded-xl sm:rounded-2xl flex items-center justify-center h-full shadow-lg">
           {loading ? (
-            <div className="text-white text-center p-4">
-              <div className="animate-spin w-8 h-8 border-4 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
-              <p className="text-sm md:text-base">Gerando PDF...</p>
+            <div className="text-white text-center p-3 xs:p-4">
+              <div className="animate-spin w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 border-3 xs:border-4 border-white border-t-transparent rounded-full mx-auto mb-3 xs:mb-4"></div>
+              <p className="text-xs xs:text-sm sm:text-base">Gerando PDF...</p>
             </div>
           ) : pdfUrl ? (
-            <div className="w-[100%] md:w-[90%] lg:w-[80%] xl:w-[80%] h-[85%] md:h-[90%] lg:h-[93%] flex items-center justify-center overflow-hidden relative">
+            <div className="w-[95%] xs:w-[96%] sm:w-[92%] md:w-[90%] lg:w-[85%] xl:w-[80%] h-[85%] xs:h-[87%] sm:h-[90%] md:h-[92%] lg:h-[93%] flex items-center justify-center overflow-hidden relative">
               <div className="w-full h-full overflow-hidden relative">
                 <iframe
                   src={
                     pdfUrl +
                     "#view=FitH&toolbar=0&navpanes=0&scrollbar=0&page=1&zoom=FitH"
                   }
-                  className="w-[97%] h-full rounded-lg bg-white absolute right-[-20px] border-0"
+                  className="w-[97%] h-full rounded-md xs:rounded-lg sm:rounded-xl bg-white absolute right-[-10px] xs:right-[-15px] sm:right-[-20px] border-0"
                   title="Preview do PDF"
                 />
               </div>
             </div>
           ) : (
-            <div className="text-white text-center p-4">
-              <p className="text-base md:text-lg">Preview do PDF</p>
-              <p className="text-xs md:text-sm opacity-70 mt-2">Visalytica ©</p>
+            <div className="text-white text-center p-3 xs:p-4">
+              <p className="text-sm xs:text-base sm:text-lg md:text-xl">Preview do PDF</p>
+              <p className="text-xs xs:text-sm sm:text-base opacity-70 mt-1 xs:mt-2">Visalytica ©</p>
             </div>
           )}
         </div>
       </div>
-      <div className="flex flex-col w-full xl:w-1/2 xl:max-w-lg h-[400px] md:h-[500px] lg:h-[600px] xl:h-[80vh] gap-4 md:gap-5 justify-between">
+      <div className="flex flex-col w-full xl:w-1/2 xl:max-w-lg h-auto xl:h-[80vh] gap-3 xs:gap-4 sm:gap-5 md:gap-6 justify-between">
         <CardInputs>
           <Input
             label={"Nome do Paciente*"}

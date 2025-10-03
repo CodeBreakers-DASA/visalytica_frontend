@@ -91,8 +91,8 @@ export default function MeuDashboardFuncional() {
 
   if (isAuthLoading || isDataLoading) {
     return (
-      <div className="flex justify-center items-center w-full h-full min-h-[200px] xs:min-h-[250px] sm:min-h-[300px]">
-        <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center w-full h-full min-h-[200px] xs:min-h-[240px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[360px] xl:min-h-[420px]">
+        <div className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 border-2 xs:border-[2.5px] sm:border-3 md:border-[3.5px] lg:border-4 border-azul border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -108,7 +108,7 @@ export default function MeuDashboardFuncional() {
             </span>
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1 p-2 xs:p-3 sm:p-4 pt-0">
+        <CardContent className="flex-1 p-1 xs:p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 pt-0">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={analiseData}
@@ -117,17 +117,20 @@ export default function MeuDashboardFuncional() {
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={7}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 7 }}
               />
               <YAxis
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={7}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 7 }}
+                width={30}
               />
               <Tooltip
                 contentStyle={{
@@ -136,6 +139,8 @@ export default function MeuDashboardFuncional() {
                   borderRadius: "8px",
                   border: "1px solid #ccc",
                 }}
+                className="xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm"
+                animationDuration={150}
               />
               <Bar
                 dataKey="value"
@@ -156,7 +161,7 @@ export default function MeuDashboardFuncional() {
             Tempo Médio de Análise por Mês
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1 p-2 xs:p-3 sm:p-4 pt-0">
+        <CardContent className="flex-1 p-1 xs:p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 pt-0">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={tempoMedioData}
@@ -171,15 +176,16 @@ export default function MeuDashboardFuncional() {
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={7}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 7 }}
               />
               <YAxis
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={7}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={formatTimeFromMinutes}
@@ -199,6 +205,8 @@ export default function MeuDashboardFuncional() {
                 fill="url(#gradienteBarra)"
                 radius={[6, 6, 6, 6]}
                 className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]"
+                animationDuration={600}
+                animationBegin={100}
               />
             </BarChart>
           </ResponsiveContainer>

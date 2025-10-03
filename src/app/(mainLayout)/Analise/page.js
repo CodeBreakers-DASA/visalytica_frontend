@@ -213,8 +213,8 @@ export default function Analise() {
 
     return (
         <>
-            <div className='flex flex-col lg:flex-row h-[85vh] mx-4 sm:mx-8 lg:mx-16 gap-6'>
-                <div className='flex flex-col h-full gap-5 lg:w-2/3'>
+            <div className='flex flex-col lg:flex-row min-h-[calc(100vh-120px)] xs:min-h-[calc(100vh-125px)] sm:min-h-[calc(100vh-135px)] md:min-h-[calc(100vh-145px)] lg:min-h-[calc(100vh-151px)] mx-2 xs:mx-3 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-12 gap-3 xs:gap-4 sm:gap-5 md:gap-6'>
+                <div className='flex flex-col h-full gap-3 xs:gap-4 sm:gap-5 lg:w-2/3 xl:w-3/5'>
                     <ImagemTempoReal
                         label={'Altura'}
                         selectedDevice={selectedDevice1}
@@ -235,9 +235,9 @@ export default function Analise() {
                         qr={!showQRReader}
                     />
                 </div>
-                <div className='flex flex-col gap-6 w-full lg:w-1/2'>
+                <div className='flex flex-col gap-4 xs:gap-5 sm:gap-6 w-full lg:w-1/2 xl:w-2/5'>
 
-                    <CardInputs className='h-full w-full flex flex-col justify-between bg-cinza_claro rounded-2xl p-4 sm:p-6 border border-cinza'>
+                    <CardInputs className='h-full w-full flex flex-col justify-between bg-cinza_claro rounded-xl xs:rounded-2xl sm:rounded-2xl md:rounded-3xl p-3 xs:p-4 sm:p-5 md:p-6 border border-cinza gap-3 xs:gap-4 sm:gap-5'>
                         <Input
                             label={'CPF*'}
                             placeHolder={'000.000.000-00'}
@@ -292,22 +292,22 @@ export default function Analise() {
                     </CardInputs>
 
                     {/* Container dos botões */}
-                    <div className='space-y-3'>
+                    <div className='space-y-2 xs:space-y-3'>
                         {/* Primeira linha: Cancelar, QR Code e Continuar */}
-                        <div className='flex flex-row gap-3'>
+                        <div className='flex flex-row gap-2 xs:gap-3'>
                             <Link href='/Home' className='flex-1'>
-                                <Button classes={'text-white p-4 py-4 bg-gray-400 px-6 hover:bg-gray-600 w-full rounded-xl transition-all duration-200'}>
+                                <Button classes={'text-white p-2 xs:p-3 sm:p-4 py-2 xs:py-3 sm:py-4 bg-gray-400 px-3 xs:px-4 sm:px-6 hover:bg-gray-600 w-full rounded-lg xs:rounded-xl transition-all duration-200 text-sm xs:text-base'}>
                                     Cancelar
                                 </Button>
                             </Link>
 
                             <Button
-                                classes={'p-4 py-4 px-4 bg-gradient-to-r from-azul to-azul_escuro hover:opacity-90 flex items-center justify-center relative group min-w-[56px] rounded-xl transition-all duration-2000'}
+                                classes={'p-2 xs:p-3 sm:p-4 py-2 xs:py-3 sm:py-4 px-2 xs:px-3 sm:px-4 bg-gradient-to-r from-azul to-azul_escuro hover:opacity-90 flex items-center justify-center relative group min-w-[44px] xs:min-w-[50px] sm:min-w-[56px] rounded-lg xs:rounded-xl transition-all duration-200'}
                                 onClick={handleQRScan}
                                 title="Ler QR Code"
                                 aria-label="Abrir leitor de QR Code"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 22 22" fill="none" aria-hidden="true" className="xs:w-5 xs:h-5 sm:w-[22px] sm:h-[22px]">
                                     <path d="M0 9.375H9.375V0H0V9.375ZM3.125 3.125H6.25V6.25H3.125V3.125ZM12.5 0V9.375H21.875V0H12.5ZM18.75 6.25H15.625V3.125H18.75V6.25ZM0 21.875H9.375V12.5H0V21.875ZM3.125 15.625H6.25V18.75H3.125V15.625ZM20.3125 12.5H21.875V18.75H17.1875V17.1875H15.625V21.875H12.5V12.5H17.1875V14.0625H20.3125V12.5ZM20.3125 20.3125H21.875V21.875H20.3125V20.3125ZM17.1875 20.3125H18.75V21.875H17.1875V20.3125Z" fill="white" />
                                 </svg>
                                 <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
@@ -339,7 +339,7 @@ export default function Analise() {
                                 }}
                             >
                                 <Button
-                                    classes={`text-white p-4 py-4 px-6 w-full rounded-xl transition-all duration-200 ${isFormValid
+                                    classes={`text-white p-2 xs:p-3 sm:p-4 py-2 xs:py-3 sm:py-4 px-3 xs:px-4 sm:px-6 w-full rounded-lg xs:rounded-xl transition-all duration-200 text-sm xs:text-base ${isFormValid
                                         ? 'bg-gradient-to-r from-azul to-azul_escuro hover:opacity-90 '
                                         : 'bg-gray-400 cursor-not-allowed'
                                         }`}
