@@ -5,7 +5,6 @@ import { api } from "../services/api";
 import { pdf } from "@react-pdf/renderer";
 import DownloadPDF from "./pdf/DownloadPDF";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 
 export default function Popup({
   triggerText = "Abrir Popup",
@@ -96,8 +95,9 @@ export default function Popup({
   const handleDownload = async (exame) => {
     try {
       setLoading(true);
+      const { data } = await api.get('/auth/perfil');
       const blob = await pdf(
-        <DownloadPDF dados={exame} configuracao={{}} />
+        <DownloadPDF dados={exame} medico={data}/>
       ).toBlob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
