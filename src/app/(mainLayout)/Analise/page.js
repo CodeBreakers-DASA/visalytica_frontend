@@ -265,6 +265,7 @@ export default function Analise() {
                             max={new Date().toISOString().split('T')[0]}
                             aria-label="Data de nascimento do paciente"
                             aria-required="true"
+                            className={'w-full'}
                         />
                         <Input
                             label={'Nome da peça*'}
