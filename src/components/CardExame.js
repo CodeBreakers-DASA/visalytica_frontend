@@ -5,16 +5,17 @@ import { pdf } from "@react-pdf/renderer";
 import DownloadPDF from "./pdf/DownloadPDF";
 import { useRouter } from "next/navigation";
 import Popup from "./Popup";
+import { api } from "@/services/api";
 
-export default function CardExame({ exame, paciente }) {
+export default function CardExame({ exame, paciente, medico }) {
   const router = useRouter();
 
   const handleDownload = async () => {
     console.log(exame);
-
+    
     try {
       const blob = await pdf(
-        <DownloadPDF dados={{ ...exame, paciente }} configuracao={{}} />
+        <DownloadPDF dados={{ ...exame, paciente }} medico={medico} />
       ).toBlob();
 
       const url = URL.createObjectURL(blob);

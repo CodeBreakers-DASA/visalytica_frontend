@@ -27,6 +27,7 @@ export default function PerfilPaciente() {
   const [exames, setExames] = useState(undefined);
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState();
+  const [medico, setMedico] = useState("")
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["pacienteDetails", pacienteCpf],
@@ -44,6 +45,15 @@ export default function PerfilPaciente() {
     setMeta(data?.exames?.meta);
     setExames(data?.exames?.lista || []);
   };
+
+  const fetchMedico = async () => {
+    const { data } = await api.get(`/auth/perfil`)
+    setMedico(data)
+  }
+
+  useEffect(() => {
+    fetchMedico()
+  }, [medico])
 
   useEffect(() => {
     fetchPacienteExames(termoPesquisa, page);
@@ -192,7 +202,7 @@ export default function PerfilPaciente() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xs:gap-8 sm:gap-10 lg:gap-12 justify-items-center mb-4">
             {exames &&
               exames.map((exame) => (
-                <CardExame key={exame.id} exame={exame} paciente={paciente} />
+                <CardExame key={exame.id} exame={exame} paciente={paciente} medico={medico} />
               ))}
           </div>
           {
