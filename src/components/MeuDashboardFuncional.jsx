@@ -117,19 +117,15 @@ export default function MeuDashboardFuncional() {
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={12}
-                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
+                className="text-sm"
                 tickLine={false}
                 axisLine={false}
-                tick={{ fontSize: 12 }}
               />
               <YAxis
                 stroke="#888"
-                fontSize={12}
-                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
+                className="text-sm"
                 tickLine={false}
                 axisLine={false}
-                tick={{ fontSize: 12 }}
                 width={30}
               />
               <Tooltip
@@ -139,7 +135,7 @@ export default function MeuDashboardFuncional() {
                   borderRadius: "8px",
                   border: "1px solid #ccc",
                 }}
-                className="xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm"
+                className="text-sm"
                 animationDuration={150}
               />
               <Bar
@@ -176,16 +172,13 @@ export default function MeuDashboardFuncional() {
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={12}
-                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
+                className="text-sm"
                 tickLine={false}
                 axisLine={false}
-                tick={{ fontSize: 12 }}
               />
               <YAxis
                 stroke="#888"
-                fontSize={12}
-                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
+                className="text-sm"
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={formatTimeFromMinutes}
