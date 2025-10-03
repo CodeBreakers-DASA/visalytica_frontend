@@ -47,29 +47,32 @@ export default function Hotbar() {
       
       {/* User Section */}
       <div
-        className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-3 xl:gap-3.5 cursor-pointer"
+        className="relative"
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}
       >
-        <Image 
-          src={IconePessoa} 
-          alt="Icone de uma pessoa" 
-        />
-        
-        <h3 className="text-azul text-xs xs:text-sm sm:text-base font-semibold">
-          Olá, 
-          <span className="hidden sm:inline ml-1">{auth.user.nome}</span>
-          <span className="sm:hidden ml-1">{auth.user.nome.split(' ')[0]}</span>
-        </h3>
+        {/* User Section (Trigger) - eventos de hover foram REMOVIDOS daqui */}
+        <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-3 xl:gap-3.5 cursor-pointer">
+          <Image 
+            src={IconePessoa} 
+            alt="Icone de uma pessoa" 
+          />
+          
+          <h3 className="text-azul text-xs xs:text-sm sm:text-base font-semibold">
+            Olá, 
+            <span className="ml-1">{auth.user.nome.split(' ')[0]}</span>
+          </h3>
+        </div>
         
         {/* Dropdown Logout */}
-        {onHover ? (
+        {onHover && (
           <div
             onClick={handleLogout}
-            className="absolute flex items-center md:top-[65px] h-10  w-[90px] md:w-[150px] right-[10px] top-[55px] md:right-[25px] rounded-[10px] border border-cinza bg-white"
+            // 2. POSIÇÃO AJUSTADA para ficar relativa ao novo container pai
+            className="absolute top-[15px] right-0 md:right-[-20px] mt-2 flex items-center h-10 w-[90px] md:w-[150px] rounded-[10px] border border-cinza bg-white cursor-pointer"
           >
             <div className="ml-4 mr-2 md:mr-6">
-               <svg
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
                 height="10"
@@ -85,8 +88,6 @@ export default function Hotbar() {
             </div>
             <p className="text-azul font-semibold text-xs xs:text-sm">Sair</p>
           </div>
-        ) : (
-          ""
         )}
       </div>
     </div>
