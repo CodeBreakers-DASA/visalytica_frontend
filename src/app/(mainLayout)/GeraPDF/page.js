@@ -31,6 +31,7 @@ function GeraPDF() {
       cpf: "",
       dataNascimento: "",
     },
+    inicio_analise: ""
   });
 
   const [pdfUrl, setPdfUrl] = useState(null);
@@ -73,6 +74,7 @@ function GeraPDF() {
         cpf: searchParams.get("cpf") || "",
         dataNascimento: searchParams.get("dataNascimento") || "",
       },
+      inicio_analise: searchParams.get("inicio_analise")
     });
     setModo(searchParams.get("modo") || "normal");
   }, [searchParams]);

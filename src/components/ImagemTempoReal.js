@@ -1,6 +1,6 @@
 import ServerFrame from "./ServerFrame"
 
-export default function ImagemTempoReal({ label, selectedDevice, refVideo, frameCaptura, medidas, status = false }) {
+export default function ImagemTempoReal({ label, selectedDevice, refVideo, frameCaptura, medidas, status = false, qr }) {
     
     return (
         <div className={`bg-gray-900 flex flex-col items-center justify-between w-auto h-full relative rounded-xl xs:rounded-2xl px-3 xs:px-4 sm:px-5 pb-2 xs:pb-3`}>
@@ -10,7 +10,7 @@ export default function ImagemTempoReal({ label, selectedDevice, refVideo, frame
                     {status ? "Capturado" : "Não capturado"}
                 </p>
             </div>
-            {selectedDevice && <ServerFrame camera={selectedDevice} refVideo={refVideo} frameCaptura={frameCaptura} medidas={medidas}/> }
+            {selectedDevice && <ServerFrame camera={selectedDevice} refVideo={refVideo} frameCaptura={frameCaptura} medidas={medidas} qr={qr}/> }
         </div>
     )
 }
