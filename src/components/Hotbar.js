@@ -47,30 +47,29 @@ export default function Hotbar() {
       
       {/* User Section */}
       <div
-        className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-3 xl:gap-3.5 cursor-pointer relative"
+        className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-3 xl:gap-3.5 cursor-pointer"
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}
       >
         <Image 
           src={IconePessoa} 
           alt="Icone de uma pessoa" 
-          className="w-4 h-4 xs:w-5 xs:h-5 sm:w-5.5 sm:h-5.5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8" 
         />
         
-        <h3 className="text-azul text-xs xs:text-sm sm:text-base md:text-lg font-semibold hidden xs:block">
+        <h3 className="text-azul text-xs xs:text-sm sm:text-base font-semibold">
           Olá, 
           <span className="hidden sm:inline ml-1">{auth.user.nome}</span>
           <span className="sm:hidden ml-1">{auth.user.nome.split(' ')[0]}</span>
         </h3>
         
         {/* Dropdown Logout */}
-        {onHover && (
+        {onHover ? (
           <div
             onClick={handleLogout}
-            className="absolute flex items-center h-7 xs:h-8 sm:h-9 md:h-10 w-[90px] xs:w-[100px] sm:w-[110px] md:w-[120px] lg:w-[140px] xl:w-[150px] top-[30px] xs:top-[35px] sm:top-[40px] md:top-[45px] lg:top-[55px] xl:top-[65px] right-0 rounded-[6px] xs:rounded-[8px] sm:rounded-[10px] border border-cinza bg-white shadow-lg"
+            className="absolute flex items-center md:top-[65px] h-10  w-[90px] md:w-[150px] right-[10px] top-[55px] md:right-[25px] rounded-[10px] border border-cinza bg-white"
           >
-            <div className="ml-1.5 xs:ml-2 sm:ml-2.5 md:ml-3 lg:ml-4 mr-2 xs:mr-3 sm:mr-4 md:mr-4 lg:mr-6">
-              <svg
+            <div className="ml-4 mr-2 md:mr-6">
+               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
                 height="10"
@@ -86,6 +85,8 @@ export default function Hotbar() {
             </div>
             <p className="text-azul font-semibold text-xs xs:text-sm">Sair</p>
           </div>
+        ) : (
+          ""
         )}
       </div>
     </div>
