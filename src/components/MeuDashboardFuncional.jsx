@@ -84,71 +84,88 @@ export default function MeuDashboardFuncional() {
 
   if (isAuthLoading || isDataLoading) {
     return (
-      <div className="flex justify-center items-center w-full h-full min-h-[200px] xs:min-h-[250px] sm:min-h-[300px]">
-        <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center w-full h-full min-h-[200px] xs:min-h-[240px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[360px] xl:min-h-[420px]">
+        <div className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 border-2 xs:border-[2.5px] sm:border-3 md:border-[3.5px] lg:border-4 border-azul border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-full w-full mx-auto gap-2 xs:gap-3 sm:gap-4">
+    <div className="flex flex-col h-full w-full mx-auto gap-1.5 xs:gap-2 sm:gap-2.5 md:gap-3 lg:gap-4 xl:gap-5">
       
       {/* Primeiro Card - Análises do Usuário */}
-      <Card className="flex flex-1 flex-col min-h-[180px] xs:min-h-[200px] sm:min-h-[220px] md:min-h-[250px]">
-        <CardHeader className="pb-2 xs:pb-3 sm:pb-4">
-          <CardDescription className="text-xs xs:text-sm sm:text-base">
+      <Card className="flex flex-1 flex-col min-h-[140px] xs:min-h-[160px] sm:min-h-[180px] md:min-h-[200px] lg:min-h-[220px] xl:min-h-[240px] shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 rounded-lg xs:rounded-xl sm:rounded-2xl">
+        <CardHeader className="pb-1 xs:pb-1.5 sm:pb-2 md:pb-2.5 lg:pb-3 p-1.5 xs:p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-5">
+          <CardDescription className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-medium leading-tight text-gray-600">
             Análises feita por{" "}
             <span className="font-bold text-azul">
               {user?.nome || "usuário"}
             </span>
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1 p-2 xs:p-3 sm:p-4 pt-0">
+        <CardContent className="flex-1 p-1 xs:p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 pt-0">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={analiseData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+            <BarChart data={analiseData} margin={{ top: 10, right: 15, left: 10, bottom: 10 }} className="text-xs">
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={7}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 7 }}
               />
               <YAxis
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={7}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 7 }}
+                width={30}
               />
               <Tooltip 
                 contentStyle={{ 
-                  fontSize: '12px',
-                  padding: '8px',
-                  borderRadius: '8px',
-                  border: '1px solid #ccc'
+                  fontSize: '8px',
+                  padding: '3px 5px',
+                  borderRadius: '4px',
+                  border: '1px solid #ddd',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+                  backgroundColor: 'white'
                 }}
+                className="xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm"
+                animationDuration={150}
               />
-              <Bar dataKey="value" fill="#79ABF5" radius={[6, 6, 6, 6]} className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]" />
+              <Bar 
+                dataKey="value" 
+                fill="#79ABF5" 
+                radius={[1, 1, 1, 1]} 
+                className="xs:radius-[2,2,2,2] sm:radius-[3,3,3,3] md:radius-[4,4,4,4] lg:radius-[5,5,5,5] xl:radius-[6,6,6,6]"
+                animationDuration={600}
+                animationBegin={0}
+                maxBarSize={window.innerWidth < 640 ? 15 : window.innerWidth < 768 ? 20 : 25}
+              />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
-      {/* Divisor */}
-      <span className="border-b border-cinza w-3/4 xs:w-4/5 self-center my-1 xs:my-2" />
+      {/* Divisor ultra-responsivo */}
+      <div className="flex justify-center my-0.5 xs:my-1 sm:my-1.5 md:my-2">
+        <span className="border-b border-gray-300 w-1/2 xs:w-2/3 sm:w-3/4 md:w-4/5 lg:w-3/4 xl:w-2/3" />
+      </div>
 
       {/* Segundo Card - Comparativo */}
-      <Card className="flex flex-1 flex-col min-h-[180px] xs:min-h-[200px] sm:min-h-[220px] md:min-h-[250px]">
-        <CardHeader className="pb-2 xs:pb-3 sm:pb-4">
-          <CardDescription className="text-xs xs:text-sm sm:text-base">
+      <Card className="flex flex-1 flex-col min-h-[140px] xs:min-h-[160px] sm:min-h-[180px] md:min-h-[200px] lg:min-h-[220px] xl:min-h-[240px] shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 rounded-lg xs:rounded-xl sm:rounded-2xl">
+        <CardHeader className="pb-1 xs:pb-1.5 sm:pb-2 md:pb-2.5 lg:pb-3 p-1.5 xs:p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-5">
+          <CardDescription className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-medium leading-tight text-gray-600">
             Comparativo: <span className="font-bold text-azul">Visalytica</span>{" "}
             x medições manuais
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1 p-2 xs:p-3 sm:p-4 pt-0">
+        <CardContent className="flex-1 p-1 xs:p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 pt-0">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={comparativoData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+            <BarChart data={comparativoData} margin={{ top: 10, right: 15, left: 10, bottom: 10 }}>
               <defs>
                 <linearGradient id="gradienteBarra" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#2A279C" />
@@ -158,40 +175,58 @@ export default function MeuDashboardFuncional() {
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={7}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 7 }}
               />
               <YAxis
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={7}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 7 }}
+                width={30}
               />
               <Tooltip 
                 contentStyle={{ 
-                  fontSize: '12px',
-                  padding: '8px',
-                  borderRadius: '8px',
-                  border: '1px solid #ccc'
+                  fontSize: '8px',
+                  padding: '3px 5px',
+                  borderRadius: '4px',
+                  border: '1px solid #ddd',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+                  backgroundColor: 'white'
                 }}
+                className="text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm"
+                animationDuration={150}
               />
               <Legend 
                 iconType="circle" 
                 wrapperStyle={{ 
-                  fontSize: '11px',
-                  paddingTop: '8px'
+                  fontSize: '8px',
+                  paddingTop: '2px'
                 }}
-                className="xs:text-xs sm:text-sm"
+                className="text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm"
               />
-              <Bar dataKey="manual" fill="#959CA6" radius={[6, 6, 6, 6]} className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]" />
+              <Bar 
+                dataKey="manual" 
+                fill="#959CA6" 
+                radius={[1, 1, 1, 1]} 
+                className="xs:radius-[2,2,2,2] sm:radius-[3,3,3,3] md:radius-[4,4,4,4] lg:radius-[5,5,5,5]"
+                animationDuration={600}
+                animationBegin={0}
+                maxBarSize={window.innerWidth < 640 ? 12 : window.innerWidth < 768 ? 16 : 20}
+              />
               <Bar
                 dataKey="visalytica"
                 fill="url(#gradienteBarra)"
-                radius={[6, 6, 6, 6]}
-                className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]"
+                radius={[1, 1, 1, 1]}
+                className="xs:radius-[2,2,2,2] sm:radius-[3,3,3,3] md:radius-[4,4,4,4] lg:radius-[5,5,5,5]"
+                animationDuration={600}
+                animationBegin={100}
+                maxBarSize={window.innerWidth < 640 ? 12 : window.innerWidth < 768 ? 16 : 20}
               />
             </BarChart>
           </ResponsiveContainer>
