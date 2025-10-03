@@ -107,7 +107,9 @@ function Login() {
         {/* Botão Entrar */}
         <div className="w-full flex justify-center">
           <Button
-            classes="bg-gradient-to-r from-azul to-azul_escuro text-white font-bold rounded-xl text-[12px] xs:text-[13px] sm:text-[15px] w-[130px] xs:w-[150px] sm:w-[175px] h-[28px] xs:h-[32px] sm:h-[38px] flex items-center justify-center"
+            classes={
+              "bg-gradient-to-r from-azul to-azul_escuro w-fit py-2.5 px-16 !mt-2.5 text-white"
+            }
             onClick={handleLogin}
             disabled={mutation.isPending}
           >
