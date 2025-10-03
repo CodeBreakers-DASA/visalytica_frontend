@@ -9,7 +9,7 @@ function HomeInicial() {
     <div className="flex min-h-[calc(100vh-110px)] xs:min-h-[calc(100vh-115px)] sm:min-h-[calc(100vh-125px)] md:min-h-[calc(100vh-135px)] lg:min-h-[calc(100vh-145px)] xl:min-h-[calc(100vh-151px)] w-full gap-2 xs:gap-3 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8 py-2 xs:py-3 sm:py-4 md:py-5 lg:py-6 flex-col lg:flex-row">
       
       {/* Dashboard - Mobile: ordem 2, Desktop: ordem 1 */}
-      <div className="flex flex-1 lg:flex-[2.2] xl:flex-[2.5] flex-col rounded-lg xs:rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[42px] border-2 border-cinza p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 order-2 lg:order-1 shadow-sm hover:shadow-lg transition-all duration-300 bg-white">
+      <div className="flex flex-1 lg:flex-[2.2] xl:flex-[2.5] flex-col rounded-2xl xs:rounded-3xl sm:rounded-3xl md:rounded-[42px]  border-2 border-cinza p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 order-2 lg:order-1 shadow-sm hover:shadow-lg transition-all duration-300 bg-white">
         <h1 className="mb-2 xs:mb-3 sm:mb-4 md:mb-5 lg:mb-6 text-center text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-azul tracking-wide">
           DASHBOARD
         </h1>
