@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -11,12 +11,12 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import CardExame from "../../../../components/CardExame";
 import { Frown } from "lucide-react";
+import BotoesPaginacao from "@/components/BotoesPaginacao";
 
 const fetchPacienteDetails = async ({ queryKey }) => {
   const [_key, cpf] = queryKey;
   if (!cpf) return null;
   const { data } = await api.get(`/pacientes/${cpf}`);
-  // console.log(data);
   return data;
 };
 
@@ -24,6 +24,9 @@ export default function PerfilPaciente() {
   const params = useParams();
   const pacienteCpf = params.cpf;
   const [termoPesquisa, setTermoPesquisa] = useState("");
+  const [exames, setExames] = useState(undefined);
+  const [page, setPage] = useState(1);
+  const [meta, setMeta] = useState();
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["pacienteDetails", pacienteCpf],
@@ -32,23 +35,19 @@ export default function PerfilPaciente() {
   });
 
   const paciente = data?.paciente;
-  console.log(paciente);
-  
-  const examesPaciente = data?.exames?.lista || [];
 
-  const examesFiltrados = useMemo(() => {
-    if (!termoPesquisa.trim()) {
-      return examesPaciente;
-    }
-    const termo = termoPesquisa.toLowerCase().trim();
-    return examesPaciente.filter(
-      (exame) =>
-        exame.medico.nome.toLowerCase().includes(termo) ||
-        exame.nome_amostra.toLowerCase().includes(termo) ||
-        exame.possivel_diagnostico.toLowerCase().includes(termo) ||
-        exame.id.includes(termo)
+  const fetchPacienteExames = async (termoPesquisa, page) => {
+    const { data } = await api.get(
+      `/pacientes/${pacienteCpf}?page=${page}&limit=3&search=${termoPesquisa}`
     );
-  }, [examesPaciente, termoPesquisa]);
+    console.log(data);
+    setMeta(data?.exames?.meta);
+    setExames(data?.exames?.lista || []);
+  };
+
+  useEffect(() => {
+    fetchPacienteExames(termoPesquisa, page);
+  }, [termoPesquisa, page]);
 
   const formatarCPF = (cpf) => {
     if (!cpf) return "";
@@ -65,23 +64,27 @@ export default function PerfilPaciente() {
   const handlePesquisaChange = (e) => {
     setTermoPesquisa(e.target.value);
   };
+
   if (isLoading) {
     return (
-      <div className="text-center p-12">Carregando dados do paciente...</div>
+      <div className="text-center p-8 xs:p-10 sm:p-12">
+        <div className="w-8 h-8 xs:w-10 xs:h-10 sm:w-12 sm:h-12 border-4 border-azul border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-sm xs:text-base">Carregando dados do paciente...</p>
+      </div>
     );
   }
 
   if (!paciente) {
     return (
-      <div className="h-[80vh] mx-12 flex items-center justify-center">
+      <div className="h-[80vh] mx-4 xs:mx-6 sm:mx-8 md:mx-12 flex items-center justify-center">
         <div className="text-center flex flex-col items-center">
-          <Frown className="size-10 text-gray-600 mb-4" />
-          <h2 className="text-2xl font-bold text-gray-600 mb-4">
+          <Frown className="size-8 xs:size-10 text-gray-600 mb-3 xs:mb-4" />
+          <h2 className="text-xl xs:text-2xl font-bold text-gray-600 mb-3 xs:mb-4">
             Paciente não encontrado
           </h2>
           <Link
             href="/ConsultarPacientes"
-            className="text-azul hover:underline"
+            className="text-azul hover:underline text-sm xs:text-base"
           >
             Voltar para lista de pacientes
           </Link>
@@ -92,24 +95,25 @@ export default function PerfilPaciente() {
 
   if (isError) {
     return (
-      <div className="text-center p-12 text-red-500">
-        Erro ao buscar dados: {error.message}
+      <div className="text-center p-8 xs:p-10 sm:p-12 text-red-500">
+        <p className="text-sm xs:text-base">Erro ao buscar dados: {error.message}</p>
       </div>
     );
   }
 
   return (
     <PrivateRoute>
-      <div className="h-[80vh] mx-12 gap-6">
-        <div className="w-full flex justify-start mb-6">
+      <div className="h-[80vh] mx-3 xs:mx-4 sm:mx-6 md:mx-8 lg:mx-12 gap-4 xs:gap-5 sm:gap-6">
+        <div className="w-full flex justify-start mb-4 xs:mb-5 sm:mb-6">
           <Link
-            className="flex text-azul items-center gap-2"
+            className="flex text-azul items-center gap-1.5 xs:gap-2"
             href={"/ConsultarPacientes"}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width="18"
+              height="18"
+              className="xs:w-[20px] xs:h-[20px]"
               viewBox="0 0 20 20"
               fill="none"
             >
@@ -118,32 +122,32 @@ export default function PerfilPaciente() {
                 fill="#166DED"
               />
             </svg>
-            <h3 className="text-lg">Voltar</h3>
+            <h3 className="text-base xs:text-lg">Voltar</h3>
           </Link>
         </div>
 
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-black mb-6">DADOS PACIENTE</h1>
+        <div className="mb-6 xs:mb-7 sm:mb-8">
+          <h1 className="text-2xl xs:text-3xl font-bold text-black mb-4 xs:mb-5 sm:mb-6">DADOS PACIENTE</h1>
           <div>
-            <h2 className="text-2xl font-semibold text-azul mb-4">
+            <h2 className="text-xl xs:text-2xl font-semibold text-azul mb-3 xs:mb-4">
               {paciente.nome}
             </h2>
-            <div className="space-y-2">
+            <div className="space-y-1.5 xs:space-y-2">
               <div>
-                <span className="text-azul font-bold text-base">ID: </span>
-                <span className="text-black text-base">{paciente.id}</span>
+                <span className="text-azul font-bold text-sm xs:text-base">ID: </span>
+                <span className="text-black text-sm xs:text-base">{paciente.id}</span>
               </div>
               <div>
-                <span className="text-azul font-bold text-base">CPF: </span>
-                <span className="text-black text-base">
+                <span className="text-azul font-bold text-sm xs:text-base">CPF: </span>
+                <span className="text-black text-sm xs:text-base">
                   {formatarCPF(paciente.cpf)}
                 </span>
               </div>
               <div>
-                <span className="text-azul font-bold text-base">
+                <span className="text-azul font-bold text-sm xs:text-base">
                   Data de nascimento:{" "}
                 </span>
-                <span className="text-black text-base">
+                <span className="text-black text-sm xs:text-base">
                   {formatarDataNascimento(paciente.dataNascimento)}
                 </span>
               </div>
@@ -152,26 +156,27 @@ export default function PerfilPaciente() {
         </div>
 
         <div>
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-black">EXAMES</h1>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 xs:mb-5 sm:mb-6 gap-3 sm:gap-4">
+            <h1 className="text-2xl xs:text-3xl font-bold text-black">EXAMES</h1>
 
-            <div className="flex gap-5 w-1/2 items-center">
+            <div className="flex gap-3 xs:gap-4 sm:gap-5 w-full sm:w-1/2 items-center">
               <Input
                 type="text"
                 placeHolder="Pesquise por ID, Dr(a), peça ou diagnóstico"
                 value={termoPesquisa}
                 onChange={handlePesquisaChange}
-                className="h-[60px]"
+                className="h-[50px] xs:h-[55px] sm:h-[60px]"
               />
               <Button
                 classes={
-                  "bg-gradient-to-b from-azul to-azul_escuro min-w-[60px] h-[60px] rounded-2xl"
+                  "bg-gradient-to-b from-azul to-azul_escuro min-w-[50px] xs:min-w-[55px] sm:min-w-[60px] h-[50px] xs:h-[55px] sm:h-[60px] rounded-xl xs:rounded-2xl"
                 }
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
+                  width="20"
+                  height="20"
+                  className="xs:w-[22px] xs:h-[22px] sm:w-[25px] sm:h-[25px]"
                   viewBox="0 0 25 25"
                   fill="none"
                 >
@@ -184,19 +189,21 @@ export default function PerfilPaciente() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 justify-items-center">
-            {examesFiltrados.map((exame) => (
-              <CardExame
-                key={exame.id}
-                exame={exame}
-                paciente={paciente}
-              />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xs:gap-8 sm:gap-10 lg:gap-12 justify-items-center mb-4">
+            {exames &&
+              exames.map((exame) => (
+                <CardExame key={exame.id} exame={exame} paciente={paciente} />
+              ))}
           </div>
+          {
+            meta && (
+              <BotoesPaginacao meta={meta} setPage={setPage} page={page} />
+            )
+          }
 
-          {examesFiltrados.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">
+          {exames && exames.length === 0 && (
+            <div className="text-center py-8 xs:py-10 sm:py-12">
+              <p className="text-gray-500 text-base xs:text-lg">
                 {termoPesquisa
                   ? "Nenhum exame encontrado com os critérios de busca."
                   : "Este paciente ainda não possui exames cadastrados."}

@@ -13,38 +13,21 @@ export default function ConsultarPacientes() {
   const [mockPacientes, setMockPacientes] = useState([]);
   const [meta, setMeta] = useState({});
   const [page, setPage] = useState(1);
+  const [termoPesquisa, setTermoPesquisa] = useState("");
 
   const fetchPacientes = async () => {
-    const { data } = await api.get(`/pacientes/tabela?page=${page}&limit=8`);
-    setMockPacientes(data.items);
-    setMeta(data.meta);
+    try{
+      const { data } = await api.get(`/pacientes/tabela?page=${page}&limit=8&search=${termoPesquisa}`);
+      setMockPacientes(data.items);
+      setMeta(data.meta);
+    } catch(e){
+      console.log(e);
+    }
   };
 
   useEffect(() => {
     fetchPacientes();
-  }, [page]);
-
-  // console.log(mockPacientes);
-
-  const [termoPesquisa, setTermoPesquisa] = useState("");
-
-  const pacientesFiltrados = useMemo(() => {
-    if (!termoPesquisa.trim()) {
-      return mockPacientes;
-    }
-
-    const termo = termoPesquisa.toLowerCase().trim();
-
-    return mockPacientes.filter(
-      (paciente) =>
-        paciente.nome_paciente.toLowerCase().includes(termo) ||
-        paciente.cpf
-          .replace(/[.-]/g, "")
-          .includes(termo.replace(/[.-]/g, "")) ||
-        termo.includes("peça") ||
-        termo.includes("peca") // Para buscar por "peça"
-    );
-  }, [mockPacientes, termoPesquisa]);
+  }, [page, termoPesquisa]);
 
   const handlePesquisaChange = (e) => {
     setTermoPesquisa(e.target.value);
@@ -100,11 +83,15 @@ export default function ConsultarPacientes() {
         <div className="max-w-7xl mx-auto mt-6">
           {mockPacientes[0] ? (
             <>
-              <TabelaPacientes pacientes={pacientesFiltrados} />
+              <TabelaPacientes pacientes={mockPacientes} />
               <BotoesPaginacao meta={meta} page={page} setPage={setPage} />
             </>
           ) : (
-            <h2 className="w-full text-azul text-center font-semibold text-2xl">Carregando tabela...</h2>
+            <h2 className="w-full text-azul text-center text-2xl">
+              {
+                meta?.itemCount != 0 ? "Carregando pacientes..." : "Paciente não encontrado"
+              }
+            </h2>
           )}
         </div>
       </div>

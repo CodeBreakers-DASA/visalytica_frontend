@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-
 import LogoVisalytica from "../assets/logoVisalyticaAzulClaro.svg";
 import LogoDasa from "../../public/LogoDasa.svg";
 import IconePessoa from "../../public/IconePessoa.svg";
@@ -25,39 +24,57 @@ export default function Hotbar() {
   }
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex bg-white h-[101px] items-center justify-between px-12 py-2">
-      <div className="flex justify-between items-center gap-8">
+    <div className="fixed top-0 left-0 right-0 z-50 flex h-[60px] xs:h-[70px] sm:h-[80px] md:h-[90px] lg:h-[101px] items-center justify-between px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 py-1 xs:py-1.5 sm:py-2 bg-white shadow-sm">
+      
+      {/* Logo Section */}
+      <div className="flex justify-between items-center gap-1 xs:gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8">
         <Link href={"/Home"}>
           <Image
             src={LogoVisalytica}
             alt="Logo da Visalytica"
-            className="w-44"
+            className="w-20 xs:w-24 sm:w-28 md:w-32 lg:w-36 xl:w-44"
           />
         </Link>
-        <div className="w-0.5 h-[37px] bg-azul"></div>
+        <div className="w-0.5 h-[18px] xs:h-[20px] sm:h-[22px] md:h-[25px] lg:h-[30px] xl:h-[37px] bg-azul"></div>
         <a href="https://www.dasa.com.br" target="_blank" rel="noreferrer">
-        <Image src={LogoDasa} alt="Logo da Dasa" />
+          <Image 
+            src={LogoDasa} 
+            alt="Logo da Dasa" 
+            className="h-4 xs:h-5 sm:h-5.5 md:h-6 lg:h-7 xl:h-8 w-auto" 
+          />
         </a>
       </div>
+      
+      {/* User Section */}
       <div
-        className="flex items-center gap-3.5 cursor-pointer"
+        className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-3 xl:gap-3.5 cursor-pointer relative"
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}
       >
-        <Image src={IconePessoa} alt="Icone de uma pessoa" />
-        <h3 className="text-azul text-lg font-semibold">
-          Olá, {auth.user.nome}
+        <Image 
+          src={IconePessoa} 
+          alt="Icone de uma pessoa" 
+          className="w-4 h-4 xs:w-5 xs:h-5 sm:w-5.5 sm:h-5.5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8" 
+        />
+        
+        <h3 className="text-azul text-xs xs:text-sm sm:text-base md:text-lg font-semibold hidden xs:block">
+          Olá, 
+          <span className="hidden sm:inline ml-1">{auth.user.nome}</span>
+          <span className="sm:hidden ml-1">{auth.user.nome.split(' ')[0]}</span>
         </h3>
-        {onHover ? (
+        
+        {/* Dropdown Logout */}
+        {onHover && (
           <div
             onClick={handleLogout}
-            className="absolute flex items-center h-10 w-[150px] top-[65px] rounded-[10px] border border-cinza bg-white"
+            className="absolute flex items-center h-7 xs:h-8 sm:h-9 md:h-10 w-[90px] xs:w-[100px] sm:w-[110px] md:w-[120px] lg:w-[140px] xl:w-[150px] top-[30px] xs:top-[35px] sm:top-[40px] md:top-[45px] lg:top-[55px] xl:top-[65px] right-0 rounded-[6px] xs:rounded-[8px] sm:rounded-[10px] border border-cinza bg-white shadow-lg"
           >
-            <div className="ml-4 mr-6">
+            <div className="ml-1.5 xs:ml-2 sm:ml-2.5 md:ml-3 lg:ml-4 mr-2 xs:mr-3 sm:mr-4 md:mr-4 lg:mr-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="17"
+                width="12"
+                height="10"
+                className="xs:w-[14px] xs:h-[11px] sm:w-[16px] sm:h-[12px] md:w-[18px] md:h-[14px] lg:w-[20px] lg:h-[15px] xl:w-[22px] xl:h-[17px]"
                 viewBox="0 0 22 17"
                 fill="none"
               >
@@ -67,10 +84,8 @@ export default function Hotbar() {
                 />
               </svg>
             </div>
-            <p className="text-azul font-semibold">Sair</p>
+            <p className="text-azul font-semibold text-xs xs:text-sm">Sair</p>
           </div>
-        ) : (
-          ""
         )}
       </div>
     </div>

@@ -1,7 +1,8 @@
-import "../globals.css"; 
-import logoVisalytica from '../../assets/logoVisalyticaGrad.svg'
-import logoDasa from '../../assets/logoDasa.svg'
-import Image from 'next/image'
+import "../globals.css";
+import logoVisalytica from "../../assets/logoVisalyticaGrad.svg";
+import logoDasa from "../../assets/logoDasa.svg";
+import Image from "next/image";
+
 export default function RootLayout({ children }) {
   return (
     <main className="flex flex-col lg:flex-row min-h-screen">
@@ -40,10 +41,13 @@ export default function RootLayout({ children }) {
         
         {/* DASA Logo - hidden on mobile, visible on lg+ */}
         <div className="hidden lg:block mt-auto mb-8">
-          <Image
-            src={logoDasa}
-            alt="logo dasa"
-          />
+          <a href="https://www.dasa.com.br" target="_blank" rel="noreferrer">
+            <Image
+              src={logoDasa}
+              alt="logo dasa"
+              className="w-auto h-6"
+            />
+          </a>
         </div>
       </div>
     </main>
