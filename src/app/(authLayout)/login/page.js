@@ -91,7 +91,7 @@ function Login() {
             href="#"
             className="text-azul font-medium text-[10px] xs:text-[11px] sm:text-xs hover:underline"
           >
-            Esqueceu a senha ou não tem login?
+            Esqueceu a senha ou não tem login? Contate o admin
           </a>
         </div>
 
