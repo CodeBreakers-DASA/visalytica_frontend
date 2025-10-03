@@ -9,6 +9,8 @@ import SimpleQRReader from '../../../components/qr/SimpleQRReader'
 import Link from 'next/link'
 import { api } from '../../../services/api'
 
+const dataAtual = new Date();
+
 export default function Analise() {
     const [formData, setFormData] = useState({
         cpf: '',
@@ -24,7 +26,8 @@ export default function Analise() {
         imagens: {
             captura1: "",
             captura2: ""
-        }
+        },
+        inicio_analise: dataAtual.toISOString()
     })
 
     const [showQRReader, setShowQRReader] = useState(false)
@@ -197,8 +200,8 @@ export default function Analise() {
             setDevices(videoDevices);
 
             if (videoDevices.length > 0) {
-                setSelectedDevice1({ posicao: "baixo", id: videoDevices[cameras[0]].deviceId });
-                setSelectedDevice2({ posicao: "cima", id: videoDevices[cameras[1]].deviceId });
+                setSelectedDevice1({ posicao: "baixo", id: videoDevices[cameras[1]].deviceId });
+                setSelectedDevice2({ posicao: "cima", id: videoDevices[cameras[0]].deviceId });
             }
         });
     }, [cameras]);
@@ -215,11 +218,13 @@ export default function Analise() {
                     <ImagemTempoReal
                         label={'Altura'}
                         selectedDevice={selectedDevice1}
-                        refVideo={webcamRef1}
+                        refVideo={!showQRReader ? webcamRef1 : null}
                         frameCaptura={setWebCamFrame}
                         status={status}
                         medidas={medidas}
+                        qr={!showQRReader}
                     />
+
                     <ImagemTempoReal
                         label={'Comprimento e Largura'}
                         selectedDevice={selectedDevice2}
@@ -227,6 +232,7 @@ export default function Analise() {
                         frameCaptura={setWebCamFrame2}
                         status={status}
                         medidas={medidas}
+                        qr={!showQRReader}
                     />
                 </div>
                 <div className='flex flex-col gap-6 w-full lg:w-1/2'>
@@ -321,7 +327,8 @@ export default function Analise() {
                                         largura: formData.dimensoes.largura_cm,
                                         altura: formData.dimensoes.altura_cm,
                                         diagnostico: formData.diagnostico,
-                                        observacoes: formData.observacoes
+                                        observacoes: formData.observacoes,
+                                        inicio_analise: formData.inicio_analise
                                     }
                                 }}
                                 className={`flex-1 ${!isFormValid ? 'pointer-events-none' : ''}`}
@@ -423,7 +430,7 @@ export default function Analise() {
                                 key={selectedDeviceId}
                                 constraints={{
                                     facingMode: 'environment',
-                                    deviceId: selectedDeviceId ? { exact: selectedDeviceId } : undefined
+                                    deviceId: selectedDeviceId ? { exact: selectedDeviceId } : true
                                 }}
                                 onRead={(value) => {
                                     let scannedData = {};
