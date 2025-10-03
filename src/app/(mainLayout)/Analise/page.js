@@ -114,8 +114,16 @@ export default function Analise() {
     }, [])
 
     const handleQRScan = useCallback(() => {
-        setShowQRReader(true)
-    }, [])
+        // parar captura das outras cameras
+        if (webcamRef1.current?.srcObject) {
+            webcamRef1.current.srcObject.getTracks().forEach(track => track.stop());
+        }
+        if (webcamRef2.current?.srcObject) {
+            webcamRef2.current.srcObject.getTracks().forEach(track => track.stop());
+        }
+
+        setShowQRReader(true);
+    }, []);
 
     const handleScanSuccess = useCallback((scannedData) => {
         try {
@@ -162,11 +170,34 @@ export default function Analise() {
         );
     }, [formData]);
 
+    const [selectedDevice1, setSelectedDevice1] = useState(null);
+    const [selectedDevice2, setSelectedDevice2] = useState(null);
+
+
     const handleCloseQRReader = useCallback(() => {
-        setShowQRReader(false)
-        setTimeout(() => {
-        }, 100)
-    }, [])
+        setShowQRReader(false);
+
+        // reativar cameras depois que fechar o leitor
+        setTimeout(async () => {
+            try {
+                if (selectedDevice1?.id) {
+                    const stream1 = await navigator.mediaDevices.getUserMedia({
+                        video: { deviceId: { exact: selectedDevice1.id } }
+                    });
+                    if (webcamRef1.current) webcamRef1.current.srcObject = stream1;
+                }
+
+                if (selectedDevice2?.id) {
+                    const stream2 = await navigator.mediaDevices.getUserMedia({
+                        video: { deviceId: { exact: selectedDevice2.id } }
+                    });
+                    if (webcamRef2.current) webcamRef2.current.srcObject = stream2;
+                }
+            } catch (err) {
+                console.error("Erro ao reativar cameras:", err);
+            }
+        }, 300); // pequeno delay pro QR Reader liberar a câmera
+    }, [selectedDevice1, selectedDevice2]);
 
     const webcamRef1 = useRef(null);
     const webcamRef2 = useRef(null);
@@ -186,8 +217,6 @@ export default function Analise() {
     })
 
     const [devices, setDevices] = useState([]);
-    const [selectedDevice1, setSelectedDevice1] = useState(null);
-    const [selectedDevice2, setSelectedDevice2] = useState(null);
 
     const [cameras, setCameras] = useState([0, 1]);
 
@@ -239,61 +268,61 @@ export default function Analise() {
                     <div className='overflow-y-auto'>
 
 
-                    <CardInputs className='h-full w-full flex flex-col justify-between bg-cinza_claro rounded-2xl p-4 sm:p-6 border border-cinza '>
-                        <Input
-                            label={'CPF*'}
-                            placeHolder={'000.000.000-00'}
-                            value={formData.cpf}
-                            onChange={handleInputChange('cpf')}
-                            aria-label="CPF do paciente"
-                            aria-required="true"
-                        />
-                        <Input
-                            label={'Nome do paciente*'}
-                            placeHolder={'Nome e sobrenome'}
-                            value={formData.nomePaciente}
-                            onChange={handleInputChange('nomePaciente')}
-                            aria-label="Nome completo do paciente"
-                            aria-required="true"
-                        />
-                        <Input
-                            label={'Data de nascimento*'}
-                            placeHolder={'00/00/0000'}
-                            type='date'
-                            value={formData.dataNascimento}
-                            onChange={handleInputChange('dataNascimento')}
-                            max={new Date().toISOString().split('T')[0]}
-                            aria-label="Data de nascimento do paciente"
-                            aria-required="true"
-                            className={'w-full'}
-                        />
-                        <Input
-                            label={'Nome da peça*'}
-                            placeHolder={'Pulmão'}
-                            value={formData.nomePeca}
-                            onChange={handleInputChange('nomePeca')}
-                            aria-label="Nome da peça anatômica"
-                            aria-required="true"
-                        />
-                        <Input
-                            label={'Comprimento x Largura x Altura*'}
-                            placeHolder={'3,5 x 2,0 x 1,2 cm'}
-                            // value={formData.dimensoes}
-                            onChange={handleInputChange('dimensoes')}
-                            aria-label="Dimensões da peça"
-                            aria-required="true"
-                            value={formData.dimensoes.largura_cm != 0 ? `${formData.dimensoes.comprimento_cm} x ${formData.dimensoes.largura_cm} x ${formData.dimensoes.altura_cm}` : "Medidas não encontradas"}
-                        />
-                        <Input
-                            label={'Possível diagnóstico*'}
-                            placeHolder={'Carcinoma de pulmão'}
-                            value={formData.diagnostico}
-                            onChange={handleInputChange('diagnostico')}
-                            aria-label="Diagnóstico preliminar"
-                            aria-required="true"
-                        />
-                    </CardInputs>
-                                        </div>
+                        <CardInputs className='h-full w-full flex flex-col justify-between bg-cinza_claro rounded-2xl p-4 sm:p-6 border border-cinza '>
+                            <Input
+                                label={'CPF*'}
+                                placeHolder={'000.000.000-00'}
+                                value={formData.cpf}
+                                onChange={handleInputChange('cpf')}
+                                aria-label="CPF do paciente"
+                                aria-required="true"
+                            />
+                            <Input
+                                label={'Nome do paciente*'}
+                                placeHolder={'Nome e sobrenome'}
+                                value={formData.nomePaciente}
+                                onChange={handleInputChange('nomePaciente')}
+                                aria-label="Nome completo do paciente"
+                                aria-required="true"
+                            />
+                            <Input
+                                label={'Data de nascimento*'}
+                                placeHolder={'00/00/0000'}
+                                type='date'
+                                value={formData.dataNascimento}
+                                onChange={handleInputChange('dataNascimento')}
+                                max={new Date().toISOString().split('T')[0]}
+                                aria-label="Data de nascimento do paciente"
+                                aria-required="true"
+                                className={'w-full'}
+                            />
+                            <Input
+                                label={'Nome da peça*'}
+                                placeHolder={'Pulmão'}
+                                value={formData.nomePeca}
+                                onChange={handleInputChange('nomePeca')}
+                                aria-label="Nome da peça anatômica"
+                                aria-required="true"
+                            />
+                            <Input
+                                label={'Comprimento x Largura x Altura*'}
+                                placeHolder={'3,5 x 2,0 x 1,2 cm'}
+                                // value={formData.dimensoes}
+                                onChange={handleInputChange('dimensoes')}
+                                aria-label="Dimensões da peça"
+                                aria-required="true"
+                                value={formData.dimensoes.largura_cm != 0 ? `${formData.dimensoes.comprimento_cm} x ${formData.dimensoes.largura_cm} x ${formData.dimensoes.altura_cm}` : "Medidas não encontradas"}
+                            />
+                            <Input
+                                label={'Possível diagnóstico*'}
+                                placeHolder={'Carcinoma de pulmão'}
+                                value={formData.diagnostico}
+                                onChange={handleInputChange('diagnostico')}
+                                aria-label="Diagnóstico preliminar"
+                                aria-required="true"
+                            />
+                        </CardInputs>
+                    </div>
 
                     {/* Container dos botões */}
                     <div className='space-y-2 xs:space-y-3'>
