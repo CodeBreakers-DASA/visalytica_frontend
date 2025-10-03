@@ -153,7 +153,7 @@ function GeraPDF() {
   };
 
   return (
-    <div className="flex flex-col xl:flex-row min-h-screen bg-gray-50 p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 gap-3 xs:gap-4 sm:gap-5 md:gap-6">
+    <div className="flex flex-col xl:flex-row p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 gap-3 xs:gap-4 sm:gap-5 md:gap-6">
       <div className="flex flex-col w-full xl:flex-1 h-[300px] xs:h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] xl:h-[80vh]">
         {/* Preview do PDF */}
         <div className="bg-[#252525] rounded-lg xs:rounded-xl sm:rounded-2xl flex items-center justify-center h-full shadow-lg">
@@ -183,7 +183,8 @@ function GeraPDF() {
           )}
         </div>
       </div>
-      <div className="flex flex-col w-full xl:w-1/2 xl:max-w-lg h-auto xl:h-[80vh] gap-3 xs:gap-4 sm:gap-5 md:gap-6 justify-between">
+      <div className="flex flex-col w-full xl:w-1/2 xl:max-w-lg h-auto gap-2 justify-between">
+        <div className="overflow-y-auto">
         <CardInputs>
           <Input
             label={"Nome do Paciente*"}
@@ -248,6 +249,7 @@ function GeraPDF() {
             />
           </div>
         </CardInputs>
+          </div>
 
         {/* Container dos botões responsivo */}
         <div className="mt-auto space-y-3 md:space-y-4">
@@ -257,7 +259,7 @@ function GeraPDF() {
               <Link href="/Analise">
                 <Button
                   classes={
-                    "w-full h-10 sm:h-12 md:h-14 lg:h-16 bg-cinza_escuro flex items-center justify-center rounded-xl transition-all duration-200"
+                    "w-full h-10 sm:h-12 md:h-14 lg:h-16 bg-gray-400 flex items-center justify-center rounded-xl transition-all duration-200"
                   }
                 >
                   <span className="text-white font-medium text-xs sm:text-sm md:text-base lg:text-lg">

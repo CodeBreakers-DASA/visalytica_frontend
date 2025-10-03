@@ -213,7 +213,7 @@ export default function Analise() {
 
     return (
         <>
-            <div className='flex flex-col lg:flex-row min-h-[calc(100vh-120px)] xs:min-h-[calc(100vh-125px)] sm:min-h-[calc(100vh-135px)] md:min-h-[calc(100vh-145px)] lg:min-h-[calc(100vh-151px)] mx-2 xs:mx-3 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-12 gap-3 xs:gap-4 sm:gap-5 md:gap-6'>
+            <div className='flex flex-col lg:flex-row min-h-[calc(100vh-120px)] xs:min-h-[calc(100vh-125px)] sm:min-h-[calc(100vh-135px)] md:min-h-[calc(100vh-145px)] lg:min-h-[calc(100vh-151px)] mx-2 xs:mx-3 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-12 gap-3 xs:gap-4 sm:gap-5 md:gap-6 p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8'>
                 <div className='flex flex-col h-full gap-3 xs:gap-4 sm:gap-5 lg:w-2/3 xl:w-3/5'>
                     <ImagemTempoReal
                         label={'Altura'}
@@ -235,9 +235,11 @@ export default function Analise() {
                         qr={!showQRReader}
                     />
                 </div>
-                <div className='flex flex-col gap-4 xs:gap-5 sm:gap-6 w-full lg:w-1/2 xl:w-2/5'>
+                <div className='flex flex-col gap-6 w-full lg:w-1/2 max-lg:pb-5'>
+                    <div className='overflow-y-auto'>
 
-                    <CardInputs className='h-full w-full flex flex-col justify-between bg-cinza_claro rounded-xl xs:rounded-2xl sm:rounded-2xl md:rounded-3xl p-3 xs:p-4 sm:p-5 md:p-6 border border-cinza gap-3 xs:gap-4 sm:gap-5'>
+
+                    <CardInputs className='h-full w-full flex flex-col justify-between bg-cinza_claro rounded-2xl p-4 sm:p-6 border border-cinza '>
                         <Input
                             label={'CPF*'}
                             placeHolder={'000.000.000-00'}
@@ -290,6 +292,7 @@ export default function Analise() {
                             aria-required="true"
                         />
                     </CardInputs>
+                                        </div>
 
                     {/* Container dos botões */}
                     <div className='space-y-2 xs:space-y-3'>

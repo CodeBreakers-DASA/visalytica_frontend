@@ -16,11 +16,13 @@ export default function ConsultarPacientes() {
   const [termoPesquisa, setTermoPesquisa] = useState("");
 
   const fetchPacientes = async () => {
-    try{
-      const { data } = await api.get(`/pacientes/tabela?page=${page}&limit=8&search=${termoPesquisa}`);
+    try {
+      const { data } = await api.get(
+        `/pacientes/tabela?page=${page}&limit=8&search=${termoPesquisa}`
+      );
       setMockPacientes(data.items);
       setMeta(data.meta);
-    } catch(e){
+    } catch (e) {
       console.log(e);
     }
   };
@@ -34,8 +36,8 @@ export default function ConsultarPacientes() {
   };
 
   return (
-    <div className="h-[80vh] mx-12 gap-6">
-      <div className="w-full flex justify-between gap-20 h-16">
+    <div className="h-[80vh] mx-2 md:mx-12 gap-6">
+      <div className="w-full flex justify-between md:gap-20 md:h-16 gap-4 max-md:flex-col">
         <Link className="flex text-azul items-center gap-2" href={"/Home"}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,11 +59,11 @@ export default function ConsultarPacientes() {
             placeHolder="Pesquise por CPF, nome ou peça"
             value={termoPesquisa}
             onChange={handlePesquisaChange}
-            className="h-[50px]"
+            className="!h-[50px]"
           />
           <Button
             classes={
-              "bg-gradient-to-b from-azul to-azul_escuro w-[50px] h-[50px] rounded-2xl"
+              "bg-gradient-to-b from-azul to-azul_escuro w-[50px] h-[50px] min-w-[50px] rounded-2xl"
             }
           >
             <svg
@@ -80,7 +82,7 @@ export default function ConsultarPacientes() {
         </div>
       </div>
       <div>
-        <div className="max-w-7xl mx-auto mt-6">
+        <div className="md:max-w-7xl md:mx-auto mt-6">
           {mockPacientes[0] ? (
             <>
               <TabelaPacientes pacientes={mockPacientes} />
@@ -88,9 +90,9 @@ export default function ConsultarPacientes() {
             </>
           ) : (
             <h2 className="w-full text-azul text-center text-2xl">
-              {
-                meta?.itemCount != 0 ? "Carregando pacientes..." : "Paciente não encontrado"
-              }
+              {meta?.itemCount != 0
+                ? "Carregando pacientes..."
+                : "Paciente não encontrado"}
             </h2>
           )}
         </div>
