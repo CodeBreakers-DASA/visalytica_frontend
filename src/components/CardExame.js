@@ -103,7 +103,8 @@ export default function CardExame({ exame, paciente }) {
 
         <button
           onClick={handleEdit}
-          className="w-[35px] h-[35px] xs:w-[39px] xs:h-[39px] bg-[#F4DB1D] text-white rounded-[8px] xs:rounded-[10px] hover:bg-yellow-400 transition-colors flex items-center justify-center"
+          disabled={!exame.canEdit}
+          className="disabled:bg-gray-400 disabled:cursor-not-allowed w-[35px] h-[35px] xs:w-[39px] xs:h-[39px] bg-[#F4DB1D] text-white rounded-[8px] xs:rounded-[10px] hover:bg-yellow-400 transition-colors flex items-center justify-center"
           aria-label="Editar Exame"
           title="Editar"
         >

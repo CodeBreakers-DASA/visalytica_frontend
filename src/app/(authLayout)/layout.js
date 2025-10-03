@@ -5,8 +5,9 @@ import Image from "next/image";
 
 export default function RootLayout({ children }) {
   return (
-    <main className="flex h-screen">
-      <div className="h-screen w-full relative overflow-hidden hidden lg:flex">
+    <main className="flex flex-col lg:flex-row min-h-screen">
+      {/* Video section - hidden on mobile, visible on lg+ */}
+      <div className="hidden lg:block lg:h-screen lg:w-full relative overflow-hidden">
         <video
           autoPlay
           loop
@@ -18,20 +19,34 @@ export default function RootLayout({ children }) {
           Seu navegador não suporta vídeos.
         </video>
       </div>
-      <div className="flex flex-col justify-center items-center w-full px-3 xs:px-4 sm:px-6 md:px-8">
-        <div className="mt-auto flex flex-col items-center">
+      
+      {/* Content section */}
+      <div className="flex flex-col justify-center items-center w-full min-h-screen lg:h-screen p-4 xs:p-6 sm:p-8 lg:p-0">
+        <div className="flex flex-col items-center justify-center w-full max-w-sm xs:max-w-md sm:max-w-lg lg:max-w-none h-full">
+          {/* Logo */}
           <Image
             src={logoVisalytica}
             alt="logo visalytica"
-            className="w-48 h-18 xs:w-52 xs:h-19 sm:w-56 sm:h-20 md:w-60 md:h-22 lg:w-64 lg:h-24"
+            className="w-40 h-16 xs:w-48 xs:h-18 sm:w-64 sm:h-24 mb-[45px] xs:mb-[52px] sm:mb-[58px] md:mb-[60px] lg:mb-[63px]"
           />
-          <div className="mt-8 xs:mt-10 sm:mt-12 md:mt-14 p-[20px] xs:p-[25px] sm:p-[30px] border border-azul rounded-[8px] xs:rounded-[9px] sm:rounded-[10px] max-w-80 xs:max-w-84 sm:max-w-88 md:max-w-92 lg:max-w-96 mx-4 shadow-[3px_3px_0_1px_#166DED] xs:shadow-[3.5px_3.5px_0_1px_#166DED] sm:shadow-[4px_4px_0_1px_#166DED]">
+          
+          {/* Login box */}
+          <div className="p-5 xs:p-[25px] sm:p-[30px] border border-azul rounded-[10px] shadow-[4px_4px_0_1px_#166DED] w-full xs:w-[320px] sm:w-[383px] h-auto xs:h-[310px] sm:h-[339px]">
             {children}
           </div>
+          
+          {/* Spacer for better centering */}
+          <div className="flex-1 lg:hidden"></div>
         </div>
-        <div className="my-auto">
+        
+        {/* DASA Logo - hidden on mobile, visible on lg+ */}
+        <div className="hidden lg:block mt-auto mb-8">
           <a href="https://www.dasa.com.br" target="_blank" rel="noreferrer">
-          <Image src={logoDasa} alt="logo dasa" className="w-auto h-6 xs:h-7 sm:h-8 md:h-9 lg:h-auto" />
+            <Image
+              src={logoDasa}
+              alt="logo dasa"
+              className="w-auto h-6"
+            />
           </a>
         </div>
       </div>

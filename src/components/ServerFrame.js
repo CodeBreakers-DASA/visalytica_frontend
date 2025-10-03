@@ -5,7 +5,7 @@ import io from "socket.io-client";
 
 const socket = io("http://localhost:5000");
 
-export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas }) {
+export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas, qr }) {
   // Envia webCam para servidor
 
   const videoRef = refVideo;
@@ -22,7 +22,7 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas 
       .catch((err) => console.error("Erro câmera:", err));
 
     const sendFrames = setInterval(() => {
-      if (!videoRef.current) return;
+      if (!videoRef?.current) return;
 
       const canvas = document.createElement("canvas");
       canvas.width = videoRef.current.videoWidth;
@@ -35,7 +35,7 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas 
 
       frameCaptura(dataUrl)
 
-      socketRef.current.emit("frame", { cameraId: camera.id, data: dataUrl });
+      socketRef.current.emit("frame", { cameraId: camera.id, data: dataUrl, posicao: camera.posicao });
     }, 200); // 10 FPS
 
     return () => {
@@ -52,6 +52,8 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas 
       if (data.cameraId == camera.id) {
         setFrame(data.frame)
         // frameCaptura(data.frame)
+        console.log(data.cor_detectada);
+        
 
         if (camera.posicao == `cima` && data.medidas[0]) {          
           if (data.medidas[0][0]) {
@@ -62,7 +64,7 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas 
           }
         } else if(data.medidas[0]) {
           if (data?.medidas[0][0]) {
-            data.medidas[0][0] < medidas.altura_cm || medidas.altura_cm == 0 ? medidas.altura_cm = data?.medidas[0][0] : ``
+            data.medidas[0][0] < medidas.altura_cm || medidas.altura_cm == 0 ? medidas.altura_cm = data?.medidas[0][1] : ``
           }
         }
 
@@ -75,9 +77,11 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas 
 
   return (
     <div className="m-auto">
-      <video ref={videoRef} autoPlay playsInline className="hidden" />
       {
-        frame ? <img src={frame} alt="frame" className="h-[32vh] mx-auto" />
+        qr && <video ref={videoRef} autoPlay playsInline className="hidden" />
+      }
+      {
+        qr && frame ? <img src={frame} alt="frame" className="h-[32vh] mx-auto" />
           : <svg xmlns="http://www.w3.org/2000/svg" width="150" height="110" viewBox="0 0 150 110" fill="none">
             <path d="M135.938 110H14.0625C6.2959 110 0 103.844 0 96.25V13.75C0 6.15599 6.2959 0 14.0625 0H135.938C143.704 0 150 6.15599 150 13.75V96.25C150 103.844 143.704 110 135.938 110ZM32.8125 16.0417C23.7516 16.0417 16.4062 23.2238 16.4062 32.0833C16.4062 40.9429 23.7516 48.125 32.8125 48.125C41.8734 48.125 49.2188 40.9429 49.2188 32.0833C49.2188 23.2238 41.8734 16.0417 32.8125 16.0417ZM18.75 91.6667H131.25V59.5833L105.611 34.5139C104.238 33.1716 102.012 33.1716 100.639 34.5139L60.9375 73.3333L44.6733 57.4306C43.3005 56.0883 41.0745 56.0883 39.7014 57.4306L18.75 77.9167V91.6667Z" fill="#CFCFCF" />
           </svg>

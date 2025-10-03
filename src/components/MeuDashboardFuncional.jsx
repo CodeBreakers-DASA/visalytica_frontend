@@ -38,39 +38,46 @@ const getMonthName = (monthNumber) => {
   return months[monthNumber - 1];
 };
 
+const formatTimeFromMinutes = (decimalMinutes) => {
+  if (typeof decimalMinutes !== "number" || decimalMinutes < 0) {
+    return "0:00";
+  }
+  const totalSeconds = Math.round(decimalMinutes * 60);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const paddedSeconds = String(seconds).padStart(2, "0");
+
+  return `${minutes}:${paddedSeconds}`;
+};
+
 export default function MeuDashboardFuncional() {
   const { user, isLoading: isAuthLoading } = useAuth();
 
   const [analiseData, setAnaliseData] = useState([]);
-  const [comparativoData, setComparativoData] = useState([]);
+  const [tempoMedioData, setTempoMedioData] = useState([]);
   const [isDataLoading, setIsDataLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthLoading && user) {
       const fetchData = async () => {
         try {
-          const [analiseResponse, comparativoResponse] = await Promise.all([
+          const [analiseResponse, tempoMedioResponse] = await Promise.all([
             api.get("/medicos/stats/monthly-count"),
-            api.get("/medicos/stats/global-monthly-count"),
+            api.get("/amostras/media-tempo-mensal"),
           ]);
 
-          const formattedAnalise = analiseResponse.data
-            .map((item) => ({
-              month: getMonthName(item.month),
-              value: item.count,
-            }))
-            .reverse();
+          const formattedAnalise = analiseResponse.data.map((item) => ({
+            month: getMonthName(item.month),
+            value: item.count,
+          }));
 
-          const formattedComparativo = comparativoResponse.data
-            .map((item) => ({
-              month: getMonthName(item.month),
-              manual: item.manual,
-              visalytica: item.visalytica,
-            }))
-            .reverse();
+          const formattedTempoMedio = tempoMedioResponse.data.map((item) => ({
+            month: getMonthName(item.mes),
+            "Tempo Médio (min)": parseFloat(item.mediaTempoMinutos.toFixed(2)),
+          }));
 
           setAnaliseData(formattedAnalise);
-          setComparativoData(formattedComparativo);
+          setTempoMedioData(formattedTempoMedio);
         } catch (error) {
           console.error("Erro ao buscar dados para os gráficos:", error);
         } finally {
@@ -84,16 +91,14 @@ export default function MeuDashboardFuncional() {
 
   if (isAuthLoading || isDataLoading) {
     return (
-      <div className="flex justify-center items-center w-full h-full min-h-[200px] xs:min-h-[250px] sm:min-h-[300px]">
-        <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center w-full h-full min-h-[200px] xs:min-h-[240px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[360px] xl:min-h-[420px]">
+        <div className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 border-2 xs:border-[2.5px] sm:border-3 md:border-[3.5px] lg:border-4 border-azul border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col h-full w-full mx-auto gap-2 xs:gap-3 sm:gap-4">
-      
-      {/* Primeiro Card - Análises do Usuário */}
       <Card className="flex flex-1 flex-col min-h-[180px] xs:min-h-[200px] sm:min-h-[220px] md:min-h-[250px]">
         <CardHeader className="pb-2 xs:pb-3 sm:pb-4">
           <CardDescription className="text-xs xs:text-sm sm:text-base">
@@ -103,52 +108,65 @@ export default function MeuDashboardFuncional() {
             </span>
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1 p-2 xs:p-3 sm:p-4 pt-0">
+        <CardContent className="flex-1 p-1 xs:p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 pt-0">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={analiseData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+            <BarChart
+              data={analiseData}
+              margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+            >
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={12}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 12 }}
               />
               <YAxis
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={12}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 12 }}
+                width={30}
               />
-              <Tooltip 
-                contentStyle={{ 
-                  fontSize: '12px',
-                  padding: '8px',
-                  borderRadius: '8px',
-                  border: '1px solid #ccc'
+              <Tooltip
+                contentStyle={{
+                  fontSize: "12px",
+                  padding: "8px",
+                  borderRadius: "8px",
+                  border: "1px solid #ccc",
                 }}
+                className="xs:text-[9px] sm:text-[10px] md:text-xs lg:text-sm"
+                animationDuration={150}
               />
-              <Bar dataKey="value" fill="#79ABF5" radius={[6, 6, 6, 6]} className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]" />
+              <Bar
+                dataKey="value"
+                fill="#79ABF5"
+                radius={[6, 6, 6, 6]}
+                className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]"
+              />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
-      {/* Divisor */}
       <span className="border-b border-cinza w-3/4 xs:w-4/5 self-center my-1 xs:my-2" />
 
-      {/* Segundo Card - Comparativo */}
       <Card className="flex flex-1 flex-col min-h-[180px] xs:min-h-[200px] sm:min-h-[220px] md:min-h-[250px]">
         <CardHeader className="pb-2 xs:pb-3 sm:pb-4">
           <CardDescription className="text-xs xs:text-sm sm:text-base">
-            Comparativo: <span className="font-bold text-azul">Visalytica</span>{" "}
-            x medições manuais
+            Tempo Médio de Análise por Mês
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1 p-2 xs:p-3 sm:p-4 pt-0">
+        <CardContent className="flex-1 p-1 xs:p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 pt-0">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={comparativoData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+            <BarChart
+              data={tempoMedioData}
+              margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+            >
               <defs>
                 <linearGradient id="gradienteBarra" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#2A279C" />
@@ -158,40 +176,37 @@ export default function MeuDashboardFuncional() {
               <XAxis
                 dataKey="month"
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={12}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tick={{ fontSize: 12 }}
               />
               <YAxis
                 stroke="#888"
-                fontSize={10}
-                className="xs:text-xs sm:text-sm"
+                fontSize={12}
+                className="xs:text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs xl:text-sm"
                 tickLine={false}
                 axisLine={false}
+                tickFormatter={formatTimeFromMinutes}
               />
-              <Tooltip 
-                contentStyle={{ 
-                  fontSize: '12px',
-                  padding: '8px',
-                  borderRadius: '8px',
-                  border: '1px solid #ccc'
+              <Tooltip
+                cursor={{ fill: "transparent" }}
+                contentStyle={{
+                  fontSize: "12px",
+                  padding: "8px",
+                  borderRadius: "8px",
+                  border: "1px solid #ccc",
                 }}
+                formatter={(value) => formatTimeFromMinutes(value)}
               />
-              <Legend 
-                iconType="circle" 
-                wrapperStyle={{ 
-                  fontSize: '11px',
-                  paddingTop: '8px'
-                }}
-                className="xs:text-xs sm:text-sm"
-              />
-              <Bar dataKey="manual" fill="#959CA6" radius={[6, 6, 6, 6]} className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]" />
               <Bar
-                dataKey="visalytica"
+                dataKey="Tempo Médio (min)"
                 fill="url(#gradienteBarra)"
                 radius={[6, 6, 6, 6]}
                 className="xs:radius-[8,8,8,8] sm:radius-[10,10,10,10]"
+                animationDuration={600}
+                animationBegin={100}
               />
             </BarChart>
           </ResponsiveContainer>
