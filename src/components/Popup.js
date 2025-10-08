@@ -14,6 +14,7 @@ export default function Popup({
   userName,
   paciente,
   onConfirm,
+  id = "",
 }) {
   const transformaDatas = (data) => {
     const data2 = new Date(data);
@@ -25,7 +26,7 @@ export default function Popup({
     };
     return new Intl.DateTimeFormat("pt-BR", options).format(data2);
   };
-
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [selected, setSelected] = useState(type === "download" ? [] : null);
@@ -36,7 +37,6 @@ export default function Popup({
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const router = useRouter();
   const observer = useRef(null);
 
   const fetchExamesPaciente = async (reset = false) => {
@@ -95,9 +95,9 @@ export default function Popup({
   const handleDownload = async (exame) => {
     try {
       setLoading(true);
-      const { data } = await api.get('/auth/perfil');
+      const { data } = await api.get("/auth/perfil");
       const blob = await pdf(
-        <DownloadPDF dados={exame} medico={data}/>
+        <DownloadPDF dados={exame} medico={data} />
       ).toBlob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -114,11 +114,50 @@ export default function Popup({
     }
   };
 
+  const handleEdit = async (exame) => {
+    router.push(
+      `/GeraPDF?${new URLSearchParams({
+        cpf: dadosPaciente.cpf,
+        nomePaciente: dadosPaciente.nome,
+        dataNascimento: dadosPaciente.dataNascimento,
+        nomePeca: exame.nomeAmostra,
+        comprimento: exame.comprimento,
+        largura: exame.largura,
+        altura: exame.altura,
+        diagnostico: exame.possivelDiagnostico,
+        observacoes: exame.observacoes,
+        modo: "edit",
+        id: exame.id,
+      }).toString()}`
+    );
+  };
+
+  const handleDelete = async (cpf, justificativa, tipo) => {
+    try {
+      const { data } = await api.delete(`/${tipo}/${cpf}`, {
+        data: {
+          justificativa: justificativa,
+        },
+      });
+      console.log(data);
+      toast.success("Solicitação de exclusão enviada");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleConfirm = () => {
-    if (type === "delete") {
+    if (type === "delete pacientes") {
       onConfirm?.(reason);
+      console.log("Motivo:", reason);
+      handleDelete(dadosPaciente.cpf, reason, "pacientes");
+    } else if (type === "delete amostras") {
+      onConfirm?.(reason);
+      console.log(id);
+      handleDelete(id, reason, "amostras");
     } else if (type === "edit") {
       onConfirm?.(selected);
+      handleEdit(selected);
     } else if (type === "download") {
       selected.forEach((exame) =>
         handleDownload({ ...exame, paciente: dadosPaciente })
@@ -158,7 +197,7 @@ export default function Popup({
               )}
             </p>
 
-            {type === "delete" && (
+            {type == "delete amostras" || type == "delete pacientes" ? (
               <textarea
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
@@ -166,6 +205,8 @@ export default function Popup({
                 className="w-full border border-gray-300 rounded-lg p-3 text-sm mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-red-400"
                 rows="3"
               ></textarea>
+            ) : (
+              ""
             )}
 
             {(type === "edit" || type === "download") && (
@@ -210,13 +251,14 @@ export default function Popup({
               <button
                 onClick={handleConfirm}
                 disabled={
-                  (type === "delete" && !reason.trim()) ||
+                  ((type == "delete amostras" || type == "delete pacientes") &&
+                    !reason.trim()) ||
                   (type === "edit" && !selected) ||
                   (type === "download" && selected.length === 0) ||
                   loading
                 }
                 className={`flex-1 py-2 rounded-lg transition ${
-                  type === "delete"
+                  type == "delete amostras" || type == "delete pacientes"
                     ? "bg-red-600 hover:bg-red-700 text-white"
                     : type === "edit"
                     ? "bg-yellow-400 hover:bg-yellow-500 text-black"
@@ -225,7 +267,7 @@ export default function Popup({
               >
                 {loading
                   ? "Carregando..."
-                  : type === "delete"
+                  : type == "delete amostras" || type == "delete pacientes"
                   ? "Solicitar"
                   : type === "edit"
                   ? "Continuar"

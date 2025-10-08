@@ -221,6 +221,9 @@ export default function RelatorioMedicoPDF({ dados, medico }) {
     minute: "2-digit",
   });
 
+  // console.log(dados);
+  
+
   // Número do relatório único
   const numeroRelatorio = `REL-${new Date().getFullYear()}-${String(
     Date.now()

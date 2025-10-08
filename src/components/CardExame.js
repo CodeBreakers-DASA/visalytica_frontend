@@ -115,8 +115,9 @@ export default function CardExame({ exame, paciente, medico }) {
         <Popup
           classTrigger={"w-[35px] h-[35px] xs:w-[39px] xs:h-[39px] bg-vermelho text-white rounded-[8px] xs:rounded-[10px] hover:bg-red-700 transition-colors flex items-center justify-center"}
           paciente={paciente}
-          type="delete"
+          type="delete amostras"
           key={exame.id}
+          id={exame.id}
           triggerText={<Trash2 size={16} className="xs:w-[18px] xs:h-[18px]" />}
           title={`Você deseja solicitar a exclusão permanentemente do ${paciente.nome}`}
         />

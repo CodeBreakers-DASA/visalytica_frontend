@@ -34,7 +34,7 @@ export default function AcoesTabela({ paciente }) {
       <Popup
         triggerText={<Trash2 size={18} />}
         classTrigger="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
-        type="delete"
+        type="delete pacientes"
         title={`Você deseja solicitar a exclusão permanentemente do ${paciente.nome_paciente}`}
         onConfirm={(reason) => console.log("Motivo:", reason)}
         paciente={paciente}
