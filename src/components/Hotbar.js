@@ -26,7 +26,6 @@ export default function Hotbar() {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex h-[60px] xs:h-[70px] sm:h-[80px] md:h-[90px] lg:h-[101px] items-center justify-between px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 py-1 xs:py-1.5 sm:py-2 bg-white shadow-sm">
       
-      {/* Logo Section */}
       <div className="flex justify-between items-center gap-1 xs:gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8">
         <Link href={"/Home"}>
           <Image
