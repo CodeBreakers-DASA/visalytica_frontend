@@ -253,7 +253,7 @@ export default function Analise() {
 
   return (
     <>
-      <div className="h-full w-full flex flex-row py-10 mx-2 gap-3">
+      <div className="h-full w-full flex flex-row py-10 px-5 gap-3">
         <div className="flex flex-col w-2/3 gap-3 bg-white p-7 rounded-[10px]">
           <ImagemTempoReal
             label={"Altura"}
