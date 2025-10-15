@@ -3,7 +3,7 @@ import IconSeta from "./IconSeta";
 
 export default function BotoesPaginacao({meta, page, setPage}) {
     return (
-        <div className="flex items-center justify-end gap-3 xs:gap-4 sm:gap-5 py-3 xs:py-4">
+        <div className="flex items-center justify-end gap-3 pt-7">
 
             {
                 meta?.currentPage && page - 1 != 0 ? (
