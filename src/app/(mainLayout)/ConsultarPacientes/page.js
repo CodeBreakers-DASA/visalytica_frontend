@@ -18,7 +18,7 @@ export default function ConsultarPacientes() {
   const fetchPacientes = async () => {
     try {
       const { data } = await api.get(
-        `/pacientes/tabela?page=${page}&limit=8&search=${termoPesquisa}`
+        `/pacientes/tabela?page=${page}&limit=10&search=${termoPesquisa}`
       );
       setMockPacientes(data.items);
       setMeta(data.meta);
@@ -36,8 +36,8 @@ export default function ConsultarPacientes() {
   };
 
   return (
-    <div className="h-[80vh] mx-2 md:mx-12 gap-6">
-      <div className="w-full flex justify-between md:gap-20 md:h-16 gap-4 max-md:flex-col">
+    <div className="flex flex-col h-screen px-5 py-10 gap-6">
+      <div className="w-full flex justify-between gap-8 bg-white px-9 py-5 rounded-[10px]">
         <Link className="flex text-azul items-center gap-2" href={"/Home"}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ export default function ConsultarPacientes() {
               fill="#166DED"
             />
           </svg>
-          <h3 className="text-lg">Voltar</h3>
+          <h3 className="">Voltar</h3>
         </Link>
         <div className="flex w-full gap-5">
           <Input
@@ -63,13 +63,13 @@ export default function ConsultarPacientes() {
           />
           <Button
             classes={
-              "bg-gradient-to-b from-azul to-azul_escuro w-[50px] h-[50px] min-w-[50px] rounded-2xl"
+              "bg-gradient-to-b from-azul to-roxo_gradient w-[50px] h-[50px] min-w-[50px] rounded-2xl"
             }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
+              width="20"
+              height="20"
               viewBox="0 0 25 25"
               fill="none"
             >
@@ -81,8 +81,7 @@ export default function ConsultarPacientes() {
           </Button>
         </div>
       </div>
-      <div>
-        <div className="md:max-w-7xl md:mx-auto mt-6">
+        <div className="bg-white p-10 pb-5 rounded-[10px] h-full">
           {mockPacientes[0] ? (
             <>
               <TabelaPacientes pacientes={mockPacientes} />
@@ -96,7 +95,6 @@ export default function ConsultarPacientes() {
             </h2>
           )}
         </div>
-      </div>
     </div>
   );
 }

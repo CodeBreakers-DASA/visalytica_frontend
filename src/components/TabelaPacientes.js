@@ -42,41 +42,41 @@ export default function TabelaPacientes({ pacientes }) {
 
   return (
     <>
-      <div className="bg-white shadow-md md:rounded-xl md:border md:border-cinza overflow-hidden">
-        <div className="overflow-x-auto hidden md:block">
-          <table className="min-w-full text-sm text-center">
-            <thead className="text-sm font-semibold border-b">
+      <div className="bg-white shadow-md overflow-hidden rounded-[10px] text-[#615D5D] h-[92%]">
+        <div className="flex flex-col justify-between">
+          <table className="min-w-full text-sm text-center h-full">
+            <thead className="text-sm font-semibold ">
               <tr>
                 {headers.map((header) => (
                   <th
                     key={header}
                     scope="col"
-                    className="bg-cinza_medio px-6 py-4 text-sm border-r"
+                    className="bg-cinza_medio px-6 py-4 text-sm"
                   >
                     {header}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="">
               {pacientes.map((paciente) => (
                 <tr
                   key={paciente.cpf}
-                  className="border-cinza bg-white border-b hover:bg-cinza_escuro/30"
+                  className=" bg-white hover:bg-cinza_escuro/30 h-full"
                 >
-                  <td className="px-6 py-4 border-r font-medium">
+                  <td className="px-4 my-auto font-medium">
                     {paciente.nome_paciente}
                   </td>
-                  <td className="px-6 py-4 border-r">
+                  <td className="px-4 py-4">
                     {formatarCPF(paciente.cpf)}
                   </td>
-                  <td className="px-6 py-4 border-r">
+                  <td className="px-4 py-4">
                     {transformaDatas(paciente.ultima_atualizacao_exame)}
                   </td>
-                  <td className="px-6 py-4 border-r">
+                  <td className="px-4 py-4">
                     {transformaDatas(paciente.data_criacao_paciente)}
                   </td>
-                  <td className="px-6 py-4 border-r">
+                  <td className="px-4 py-4">
                     <Link
                       href={`/pacientes/${paciente.cpf}`}
                       className="font-medium text-blue-600 hover:underline"
@@ -104,7 +104,7 @@ export default function TabelaPacientes({ pacientes }) {
           </table>
         </div>
       </div>
-      <div className="md:hidden gap-3 flex flex-col w-full">
+      <div className="md:hidden gap-3 flex flex-col w-full h-full">
         {pacientes.map((paciente) => (
           <div
             key={paciente.cpf}
