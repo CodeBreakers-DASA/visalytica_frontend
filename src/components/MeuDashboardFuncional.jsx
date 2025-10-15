@@ -22,18 +22,20 @@ export default function MenuDashboardFuncional({
   gradient = false,
   formatter,
 }) {
-  
+
   //Pega ultimos 6
   const dataFiltrada = data.slice(-6)
+  console.log(dataFiltrada);
+  
   
   return (
-    <Card className="flex flex-1 flex-col min-h-[180px] xs:min-h-[200px] sm:min-h-[220px] md:min-h-[250px]">
-      <CardHeader className="pb-2 xs:pb-3 sm:pb-4">
-        <CardDescription className="text-xs xs:text-sm sm:text-base">
+    <Card className="flex flex-1 flex-col h-full ">
+      <CardHeader className="pb-5 pl-14">
+        <CardDescription className="text-cinza_escuro text-[16px]">
           {title}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 p-1 xs:p-2 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 pt-0">
+      <CardContent className="flex-1 pt-0">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={dataFiltrada} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
             {gradient && (
@@ -58,7 +60,7 @@ export default function MenuDashboardFuncional({
               tickLine={false}
               axisLine={false}
               tickFormatter={formatter}
-              width={30}
+              width={40}
             />
             <Tooltip
               contentStyle={{
@@ -71,7 +73,7 @@ export default function MenuDashboardFuncional({
             />
             <Bar
               dataKey={dataKey}
-              fill={gradient ? "url(#gradienteBarra)" : "#79ABF5"}
+              fill={gradient ? "url(#gradienteBarra)" : "#716FEA"}
               radius={[6, 6, 6, 6]}
               animationDuration={600}
             />
