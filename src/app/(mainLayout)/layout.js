@@ -7,8 +7,8 @@ export default function RootLayout({ children }) {
     <PrivateRoute> 
       <div className="flex min-h-screen">
         <Hotbar />
-        <main className="flex-1 overflow-y-auto bg-[radial-gradient(circle,_#0077FF29,_#F3F5F729)]">
-          <div className="px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 max-md:py-4">
+        <main className="flex-1 overflow-y-auto bg-[radial-gradient(circle,_#0077FF39,_#F3F5F729)]">
+          <div className="h-full px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 max-md:py-4">
             {children}
           </div>
         </main>

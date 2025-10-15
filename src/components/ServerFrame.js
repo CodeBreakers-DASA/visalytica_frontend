@@ -5,7 +5,7 @@ import io from "socket.io-client";
 
 const socket = io("http://localhost:5000");
 
-export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas, qr }) {
+export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas, qr, setClasse }) {
   const videoRef = refVideo;
   const socketRef = useRef(null);
 
@@ -78,7 +78,7 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas,
       {
         qr && <video ref={videoRef} autoPlay playsInline className="hidden" />
       }
-      { qr && frame && <img src={frame} alt="frame" className="h-[32vh] mx-auto" />}
+      { qr && frame && <img src={frame} alt="frame" className="h-[32vh] mx-auto bg-gray-900" />}
     </div>
   );
 }
