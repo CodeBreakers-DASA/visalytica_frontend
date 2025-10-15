@@ -69,6 +69,8 @@ function HomeInicial() {
       </div>
     );
   }
+  console.log(tempoMedioData);
+  
 
   return (
     <div className="h-screen w-full flex flex-col justify-between py-6">
@@ -85,22 +87,35 @@ function HomeInicial() {
             }
             data={analiseData}
             dataKey="value"
+            tipoGrafico = 'bar'
           />
-          <div className="bg-cinza_medio h-full w-0.5"></div>
-          <div className="w-1/2">
-            <h2 className="text-center text-cinza_escuro">quantidade<br/>realizada em<br/><span className="text-azul font-semibold text-3xl uppercase">{data.toLocaleString('pt-BR', { month: 'long' })}:</span></h2>
-            <p>{analiseData[analiseData.length - 1].value}</p>
+          <div className="bg-cinza_escuro h-full w-0.5"></div>
+          <div className=" flex flex-col gap-3 justify-center">
+            <h2 className="text-center text-cinza_escuro">quantidade realizada em<br/><span className="text-azul font-semibold text-3xl uppercase">{data.toLocaleString('pt-BR', { month: 'long' })}:</span></h2>
+            <div>
+              <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-[128px] font-bold text-center">{analiseData[analiseData.length - 1].value}</p>
+              <p className="text-center text-azul text-2xl -mt-8">análise{analiseData[analiseData.length - 1].value > 1 && 's'}</p>
+            </div>
           </div>
         </div>
 
-        <div className="flex-[0.5] bg-white rounded-lg py-10 px-12">
+        <div className="flex-[0.5] flex flex-row-reverse gap-16 bg-white rounded-lg py-10 px-12">
           <MenuDashboardFuncional
             title="Tempo Médio de Análise por Mês"
             data={tempoMedioData}
             dataKey="Tempo Médio (min)"
             gradient
             formatter={formatTimeFromMinutes}
+            tipoGrafico = 'line'
           />
+          <div className="bg-cinza_escuro h-full w-0.5"></div>
+          <div className=" flex flex-col gap-3 justify-center">
+            <h2 className="text-center text-cinza_escuro">seu tempo médio de análise em<br/><span className="text-azul font-semibold text-3xl uppercase">{data.toLocaleString('pt-BR', { month: 'long' })}:</span></h2>
+            <div>
+              <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-[128px] font-bold text-center">{tempoMedioData[tempoMedioData.length - 1]['Tempo Médio (min)']}</p>
+              <p className="text-center text-azul text-2xl -mt-8">minuto{tempoMedioData[tempoMedioData.length - 1]['Tempo Médio (min)'] > 1 && 's'}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
