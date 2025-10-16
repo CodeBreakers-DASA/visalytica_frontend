@@ -189,10 +189,7 @@ export default function PerfilPaciente() {
         <div>
           <div className="bg-white px-5 py-3 rounded-[10px] flex flex-col justify-between items-start mb-4 xs:mb-5 sm:mb-6 gap-3 sm:gap-4">
 
-            <div className="flex gap-3 xs:gap-4 sm:gap-5 w-full items-center justify-between">
-              <h1 className="text-2xl xs:text-3xl font-bold text-black">
-                EXAMES
-              </h1>
+            <div className="flex gap-3 xs:gap-4 sm:gap-5 w-1/2 items-center justify-end ml-auto">
               <Input
                 type="text"
                 placeHolder="Pesquise por ID, Dr(a), peça ou diagnóstico"
@@ -202,7 +199,7 @@ export default function PerfilPaciente() {
               />
               <Button
                 classes={
-                  "bg-gradient-to-b from-azul to-azul_escuro min-w-[50px] xs:min-w-[55px] sm:min-w-[60px] h-[50px] xs:h-[55px] sm:h-[60px] rounded-xl xs:rounded-2xl"
+                  "bg-gradient-to-b from-azul to-roxo_gradient min-w-[50px] xs:min-w-[55px] sm:min-w-[60px] h-[50px] xs:h-[55px] sm:h-[60px] rounded-xl xs:rounded-2xl"
                 }
               >
                 <svg
@@ -220,7 +217,7 @@ export default function PerfilPaciente() {
                 </svg>
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xs:gap-8 sm:gap-10 lg:gap-12 justify-items-center mb-4">
+            <div className="w-full grid grid-cols-2 gap-6 justify-items-center justify-center mb-4 p-6">
               {exames &&
                 exames.map((exame) => (
                   <CardExame

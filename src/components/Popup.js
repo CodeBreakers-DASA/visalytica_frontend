@@ -168,7 +168,7 @@ export default function Popup({
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center">
       <button onClick={() => setOpen(true)} className={classTrigger}>
         {triggerText}
       </button>
