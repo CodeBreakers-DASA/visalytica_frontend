@@ -73,7 +73,7 @@ function HomeInicial() {
   
 
   return (
-    <div className="h-screen w-full flex flex-col justify-between py-6">
+    <div className="h-screen px-7 w-full flex flex-col justify-between py-6">
       <div className="flex flex-col flex-1 gap-5 rounded-lg">
         <div className="flex-[0.5] flex gap-16 bg-white rounded-lg py-10 px-12">
           <MenuDashboardFuncional
