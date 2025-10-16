@@ -60,8 +60,8 @@ export default function CardExame({ exame, paciente, medico }) {
   };
 
   return (
-    <div className="bg-white border border-gray-300 rounded-xl xs:rounded-2xl shadow-sm hover:shadow-md transition-shadow w-full min-h-[250px] xs:min-h-[270px] sm:min-h-[284px] flex flex-col">
-      <div className="bg-gradient-to-r from-azul to-azul_escuro text-white text-center py-2 xs:py-2.5 px-3 xs:px-4 rounded-t-xl xs:rounded-t-2xl">
+    <div className="bg-white rounded-[10px] shadow-sm hover:shadow-md transition-shadow w-full min-h-[250px] flex flex-col">
+      <div className="bg-gradient-to-r from-azul to-azul_escuro text-white text-center py-2 xs:py-2.5 px-3 xs:px-4 rounded-t-[10px] ">
         <h3 className="font-semibold text-sm xs:text-base">Nº exame: {exame.numeroExame}</h3>
       </div>
 
