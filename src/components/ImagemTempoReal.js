@@ -19,7 +19,7 @@ export default function ImagemTempoReal({
       className={`flex flex-col items-center w-auto h-full relative rounded-xl`}
     >
       <div className="w-full flex justify-between items-center my-2 xs:my-3">
-        <p className="text-[#444444] text-xs xs:text-sm sm:text-base">
+        <p className="text-[#444444] text-xs xs:text-sm sm:text-base dark:text-cinza">
           {label}
         </p>
         <div className="flex">
@@ -35,7 +35,7 @@ export default function ImagemTempoReal({
               backgroundColor: status ? "#439F57" : "#CFCFCF",
               color: status && "#fff",
             }}
-            className={`px-3 xs:px-4 sm:px-5 py-1 xs:py-1.5 rounded-[10px] text-xs mr-5`}
+            className={`px-3 xs:px-4 sm:px-5 py-1 xs:py-1.5 rounded-[10px] text-xs mr-5 dark:text-black`}
           >
             {status ? "Capturado" : "Não capturado"}
           </p>

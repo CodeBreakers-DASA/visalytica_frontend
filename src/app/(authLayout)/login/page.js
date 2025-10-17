@@ -47,15 +47,20 @@ function Login() {
 
   return (
     <>
-      <div className="flex flex-col w-full -mt-[10px] xs:-mt-[12px] sm:-mt-[15px]">
+      <form
+        onSubmit={handleLogin}
+        className="flex flex-col w-full -mt-[10px] xs:-mt-[12px] sm:-mt-[15px]"
+      >
         {/* Título Login */}
         <div className="flex w-full justify-center mb-[5px] xs:mb-[6px] sm:mb-[8px]">
-          <h1 className="text-[18px] xs:text-[20px] sm:text-[24px] font-bold bg-gradient-to-r from-azul to-azul_escuro bg-clip-text text-transparent">Login</h1>
+          <h1 className="text-[18px] xs:text-[20px] sm:text-[24px] font-bold bg-gradient-to-r from-azul to-roxo_gradient bg-clip-text text-transparent">
+            Login
+          </h1>
         </div>
 
         {/* Campo Usuário */}
         <div className="mb-[6px] xs:mb-[7px] sm:mb-[9px]">
-          <label className="block text-black font-medium text-[13px] xs:text-[14px] sm:text-base mb-[4px] xs:mb-[5px] sm:mb-[6px]">
+          <label className="block text-black dark:text-cinza font-medium text-[13px] xs:text-[14px] sm:text-base mb-[4px] xs:mb-[5px] sm:mb-[6px]">
             Usuário
           </label>
           <Input
@@ -70,7 +75,7 @@ function Login() {
 
         {/* Campo Senha */}
         <div className="mb-[1px] xs:mb-[1px] sm:mb-[2px]">
-          <label className="block text-black font-medium text-[13px] xs:text-[14px] sm:text-base mb-[4px] xs:mb-[5px] sm:mb-[6px]">
+          <label className="block text-black dark:text-cinza font-medium text-[13px] xs:text-[14px] sm:text-base mb-[4px] xs:mb-[5px] sm:mb-[6px]">
             Senha
           </label>
           <Input
@@ -86,12 +91,9 @@ function Login() {
 
         {/* Link Esqueceu a senha */}
         <div className="mb-[16px]">
-          <a
-            href="#"
-            className="text-azul font-medium text-[10px] xs:text-[11px] sm:text-xs hover:underline"
-          >
+          <p className="mt-2 text-azul font-medium text-[10px] xs:text-[11px] sm:text-xs">
             Esqueceu a senha ou não tem login? Contate o admin
-          </a>
+          </p>
         </div>
 
         {/* Mensagem de erro */}
@@ -106,16 +108,16 @@ function Login() {
         {/* Botão Entrar */}
         <div className="w-full flex justify-center">
           <Button
+            type="submit"
             classes={
-              "bg-gradient-to-r from-azul to-azul_escuro w-fit py-2.5 px-16 !mt-2.5 text-white"
+              "bg-gradient-to-r from-azul to-roxo_gradient w-fit py-2.5 px-16 !mt-2.5 text-white"
             }
-            onClick={handleLogin}
             disabled={mutation.isPending}
           >
             {mutation.isPending ? "Entrando..." : "Entrar"}
           </Button>
         </div>
-      </div>
+      </form>
     </>
   );
 }
