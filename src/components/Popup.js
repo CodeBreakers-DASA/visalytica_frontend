@@ -175,7 +175,7 @@ export default function Popup({
 
       {open && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-xl shadow-lg w-[400px] text-center">
+          <div className="bg-white dark:bg-noturno_medio p-6 rounded-xl shadow-lg w-[400px] text-center">
             {/* Ícone */}
             <div className="flex justify-center mb-4">
               {type === "delete" && (
@@ -202,7 +202,7 @@ export default function Popup({
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="Escreva o motivo da exclusão"
-                className="w-full border border-gray-300 rounded-lg p-3 text-sm mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-red-400"
+                className="w-full border border-gray-300 dark:border-none dark:bg-noturno_medio_claro rounded-lg p-3 text-sm mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-red-400"
                 rows="3"
               ></textarea>
             ) : (
@@ -223,10 +223,10 @@ export default function Popup({
                         type === "download"
                           ? selected.includes(opt)
                             ? "bg-blue-100 border-blue-400 text-blue-800"
-                            : "bg-gray-100 hover:bg-gray-200"
+                            : "bg-gray-100 dark:bg-noturno_medio_escuro dark:hover:bg-noturno_claro hover:bg-gray-200"
                           : selected === opt
                           ? "bg-yellow-100 border-yellow-400 text-yellow-800"
-                          : "bg-gray-100 hover:bg-gray-200"
+                          : "bg-gray-100  dark:bg-noturno_medio_escuro dark:hover:bg-noturno_claro hover:bg-gray-200"
                       }disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-200`}
                     >
                       {transformaDatas(opt.dataAtualizacao)} - {opt.nomeAmostra}{" "}

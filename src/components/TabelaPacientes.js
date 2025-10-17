@@ -42,7 +42,7 @@ export default function TabelaPacientes({ pacientes }) {
 
   return (
     <>
-      <div className="bg-white shadow-md overflow-hidden rounded-[10px] text-[#615D5D] h-[92%]">
+      <div className=" dark:shadow-none shadow-md overflow-hidden rounded-[10px] text-[#615D5D] dark:text-cinza h-[92%]">
         <div className="flex flex-col justify-between">
           <table className="min-w-full text-sm text-center h-full">
             <thead className="text-sm font-semibold ">
@@ -51,7 +51,7 @@ export default function TabelaPacientes({ pacientes }) {
                   <th
                     key={header}
                     scope="col"
-                    className="bg-cinza_medio px-6 py-4 text-sm"
+                    className="bg-cinza_medio dark:bg-noturno_medio_claro px-6 py-4 text-sm"
                   >
                     {header}
                   </th>
@@ -62,7 +62,7 @@ export default function TabelaPacientes({ pacientes }) {
               {pacientes.map((paciente) => (
                 <tr
                   key={paciente.cpf}
-                  className=" bg-white hover:bg-cinza_escuro/30 h-full"
+                  className=" bg-white dark:bg-noturno_medio dark:hover:bg-noturno_medio_claro hover:bg-cinza_escuro/30 h-full"
                 >
                   <td className="px-4 my-auto font-medium">
                     {paciente.nome_paciente}

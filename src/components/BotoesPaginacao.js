@@ -12,7 +12,7 @@ export default function BotoesPaginacao({meta, page, setPage}) {
                         {
                             page >= meta.totalPages + 2 && (
                                 <>
-                                    <Button classes={"text-azul w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg-white border-2 border-cinza rounded-xl xs:rounded-2xl hover:bg-gray-50 text-azul text-xs xs:text-sm"} onClick={() => setPage(1)}>
+                                    <Button classes={"text-azul w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg-white dark:bg-noturno_medio_escuro dark:border-noturno_medio_claro border-2 border-cinza rounded-xl xs:rounded-2xl hover:bg-gray-50 text-azul text-xs xs:text-sm"} onClick={() => setPage(1)}>
                                         1
                                     </Button>
                                     <span className="text-cinza_escuro text-lg xs:text-xl font-medium px-1 xs:px-2">
@@ -21,7 +21,7 @@ export default function BotoesPaginacao({meta, page, setPage}) {
                                 </>
                             )
                         }
-                        <Button classes={"w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg-white border-2 border-cinza rounded-xl xs:rounded-2xl hover:bg-gray-50 text-azul text-xs xs:text-sm"} onClick={() => setPage(page - 1)}>
+                        <Button classes={"w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg-white dark:bg-noturno_medio_escuro dark:border-noturno_medio_claro border-2 border-cinza rounded-xl xs:rounded-2xl hover:bg-gray-50 text-azul text-xs xs:text-sm"} onClick={() => setPage(page - 1)}>
                             {page - 1}
                         </Button>
                     </>
@@ -39,7 +39,7 @@ export default function BotoesPaginacao({meta, page, setPage}) {
             {
                 meta && meta.totalPages != page ? (
                     <>
-                        <Button classes={"w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg-white border-2 border-cinza rounded-xl xs:rounded-2xl hover:bg-gray-50 text-azul text-xs xs:text-sm"} onClick={() => setPage(page + 1)}>
+                        <Button classes={"w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg-white dark:bg-noturno_medio_escuro dark:border-noturno_medio_claro border-2 border-cinza rounded-xl xs:rounded-2xl hover:bg-gray-50 text-azul text-xs xs:text-sm"} onClick={() => setPage(page + 1)}>
                             {page + 1}
                         </Button>
 
@@ -49,7 +49,7 @@ export default function BotoesPaginacao({meta, page, setPage}) {
                                     <span className="text-cinza_escuro text-lg xs:text-xl font-medium px-1 xs:px-2">
                                         ...
                                     </span>
-                                    <Button classes={"w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg-white border-2 border-cinza rounded-xl xs:rounded-2xl hover:bg-gray-50 text-azul text-xs xs:text-sm"} onClick={() => setPage(meta.totalPages)}>
+                                    <Button classes={"w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg- dark:bg-noturno_medio_escuro dark:border-noturno_medio_claro border-2 border-cinza rounded-xl xs:rounded-2xl hover:bg-gray-50 text-azul text-xs xs:text-sm"} onClick={() => setPage(meta.totalPages)}>
                                         {meta.totalPages}
                                     </Button>
                                 </>

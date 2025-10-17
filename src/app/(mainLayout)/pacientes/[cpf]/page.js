@@ -116,7 +116,7 @@ export default function PerfilPaciente() {
   return (
     <PrivateRoute>
       <div className="h-full py-6 mx-3 xs:mx-4 sm:mx-6 md:mx-8 lg:mx-12 gap-4 xs:gap-5 sm:gap-6">
-        <div className="bg-white p-6 mb-6 xs:mb-7 sm:mb-8 rounded-[10px]">
+        <div className="bg-white dark:bg-noturno_medio p-6 mb-6 xs:mb-7 sm:mb-8 rounded-[10px]">
           <div className="w-full flex justify-start mb-4 xs:mb-5 sm:mb-6">
             <Link
               className="flex text-azul items-center gap-1.5 xs:gap-2"
@@ -139,7 +139,7 @@ export default function PerfilPaciente() {
             </Link>
           </div>
           <div className="px-5">
-            <h1 className="text-2xl xs:text-3xl font-bold text-black mb-4 xs:mb-5 sm:mb-6">
+            <h1 className="text-2xl xs:text-3xl font-bold text-black dark:text-white mb-4 xs:mb-5 sm:mb-6">
               DADOS PACIENTE
             </h1>
             <h2 className="text-xl xs:text-2xl font-semibold text-azul mb-3 xs:mb-4 flex items-center gap-3">
@@ -162,7 +162,7 @@ export default function PerfilPaciente() {
                 <span className="text-azul font-bold text-sm xs:text-base">
                   ID:{" "}
                 </span>
-                <span className="text-[#444444] text-sm xs:text-base">
+                <span className="text-[#444444] dark:text-cinza text-sm xs:text-base">
                   {paciente.id}
                 </span>
               </div>
@@ -170,7 +170,7 @@ export default function PerfilPaciente() {
                 <span className="text-azul font-bold text-sm xs:text-base">
                   CPF:{" "}
                 </span>
-                <span className="text-[#444444] text-sm xs:text-base">
+                <span className="text-[#444444] dark:text-cinza text-sm xs:text-base">
                   {formatarCPF(paciente.cpf)}
                 </span>
               </div>
@@ -178,7 +178,7 @@ export default function PerfilPaciente() {
                 <span className="text-azul font-bold text-sm xs:text-base">
                   Data de nascimento:{" "}
                 </span>
-                <span className="text-[#444444] text-sm xs:text-base">
+                <span className="text-[#444444] dark:text-cinza text-sm xs:text-base">
                   {formatarDataNascimento(paciente.dataNascimento)}
                 </span>
               </div>
@@ -187,7 +187,7 @@ export default function PerfilPaciente() {
         </div>
 
         <div>
-          <div className="bg-white px-5 py-3 rounded-[10px] flex flex-col justify-between items-start mb-4 xs:mb-5 sm:mb-6 gap-3 sm:gap-4">
+          <div className="bg-white dark:bg-noturno_medio px-5 py-3 rounded-[10px] flex flex-col justify-between items-start mb-4 xs:mb-5 sm:mb-6 gap-3 sm:gap-4">
 
             <div className="flex gap-3 xs:gap-4 sm:gap-5 w-1/2 items-center justify-end ml-auto">
               <Input
