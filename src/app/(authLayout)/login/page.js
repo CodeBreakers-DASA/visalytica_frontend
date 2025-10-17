@@ -27,7 +27,7 @@ function Login() {
     onSuccess: async (data) => {
       toast.success("Login realizado com sucesso!");
       await auth.login(data.access_token);
-      router.push("/Home");
+      data.role == 'medico' ? router.push("/Home") : router.push("/Criar_usuario")   
     },
     onError: (error) => {
       const errorMessage =
