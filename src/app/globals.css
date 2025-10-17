@@ -145,3 +145,7 @@
     min-height: 200px !important;
   }
 }
+
+*{
+  @apply transition-colors duration-200
+}
