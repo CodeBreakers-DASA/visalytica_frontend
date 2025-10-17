@@ -19,6 +19,7 @@ module.exports = {
         cinza_medio: '#F3F3F3',
         cinza_escuro: '#9b9b9b',
         cinza: '#CFCFCF',
+        cinza_texto: '#444444',
         roxo: '#2A279C',
         roxo_gradient: '#716FEA',
         vermelho: '#DD2020',

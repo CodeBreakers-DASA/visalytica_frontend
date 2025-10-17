@@ -7,10 +7,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 function Input({ label, placeHolder, type = 'text', value, defaultValue, disabled, onChange, hasError, hasSuccess, className, ...props }) {
     return (
-        <div className={`flex flex-col w-full ${label ? 'gap-2 ' : ''}`}>
+        <div className={`flex flex-col w-full ${label ? 'gap-2 ' : ''} ${disabled && 'opacity-60'}`}>
             <label className={
                 hasError ? 'text-vermelho' : 
-                hasSuccess ? 'text-green-600' : ''
+                hasSuccess ? 'text-green-600' : 'text-cinza_texto font-medium'
             }>{label}</label>
             <input
                 disabled={disabled}
