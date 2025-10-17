@@ -154,7 +154,7 @@ function GeraPDF() {
 
   return (
     <div className="flex flex-col h-full xl:flex-row p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 gap-3 xs:gap-4 sm:gap-5 md:gap-6">
-      <div className="h-full bg-white p-7 flex flex-col w-full xl:flex-1 rounded-[10px]">
+      <div className="h-full bg-white  dark:bg-noturno_medio p-7 flex flex-col w-full xl:flex-1 rounded-[10px]">
         {/* Preview do PDF */}
         <div className="bg-[#252525] rounded-[10px] xs:rounded-xl sm:rounded-2xl flex items-center justify-center h-full shadow-lg">
           {loading ? (
@@ -185,7 +185,7 @@ function GeraPDF() {
       </div>
       <div className="rounded-[10px] flex flex-col w-full xl:w-1/2 xl:max-w-lg h-auto gap-2 justify-between">
         
-        <CardInputs className="h-full w-full flex flex-col justify-between bg-white rounded-[10px] p-7 ">
+        <CardInputs className="h-full w-full flex flex-col justify-between dark:bg-noturno_medio bg-white rounded-[10px] p-7 ">
           <Input
             label={"Nome do Paciente*"}
             value={dadosAnalise.paciente.nome}
@@ -237,7 +237,7 @@ function GeraPDF() {
           />
 
           <div className="flex flex-col gap-2 md:gap-3">
-            <label className="text-xs sm:text-sm md:text-base font-medium text-gray-700">
+            <label className="text-xs sm:text-sm md:text-base ">
               Observações*
             </label>
             <textarea
@@ -245,7 +245,7 @@ function GeraPDF() {
               onChange={handleObservacoesChange}
               placeholder="Carcinoma de pulmão"
               disabled={disableInputs.observacoes}
-              className="w-full p-2 sm:p-3 bg-cinza_medio border border-cinza rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none min-h-[50px] sm:min-h-[55px] md:min-h-[60px] lg:min-h-[65px] placeholder-cinza_escuro text-xs sm:text-sm md:text-base"
+              className="w-full p-2 sm:p-3 bg-cinza_medio border dark:bg-noturno_medio_claro dark:border-none border-cinza rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none min-h-[50px] sm:min-h-[55px] md:min-h-[60px] lg:min-h-[65px] placeholder-cinza_escuro text-xs sm:text-sm md:text-base"
             />
           </div>
           {/* Container dos botões responsivo */}

@@ -60,7 +60,7 @@ export default function CardExame({ exame, paciente, medico }) {
   };
 
   return (
-    <div className="bg-white rounded-[10px] shadow-sm hover:shadow-md transition-shadow w-full min-h-[250px] flex flex-col">
+    <div className="bg-white dark:bg-noturno_medio_claro rounded-[10px] shadow-sm hover:shadow-md transition-shadow w-full min-h-[250px] flex flex-col">
       <div className="flex justify-between items-center bg-gradient-to-r from-azul to-roxo_gradient text-white text-center p-4 rounded-t-[10px] ">
         <h3 className="font-semibold text-sm">ID exame: {exame.numeroExame}</h3>
         <h3 className="text-sm bg-vermelho text-white px-3 py-1 rounded-md">
@@ -82,8 +82,8 @@ export default function CardExame({ exame, paciente, medico }) {
                 fill="#166DED"
               />
             </svg>
-            <span className="text-[#444444] font-bold">Data realização: </span>
-            <span className="text-[#444444]">
+            <span className="text-[#444444] dark:text-cinza font-bold">Data realização: </span>
+            <span className="text-[#444444] dark:text-cinza">
               {formatarData(exame.dataCriacao)}
             </span>
           </div>
@@ -101,8 +101,8 @@ export default function CardExame({ exame, paciente, medico }) {
                 fill="#166DED"
               />
             </svg>
-            <span className="text-[#444444] font-bold">Data atualização: </span>
-            <span className="text-[#444444]">
+            <span className="text-[#444444] dark:text-cinza font-bold">Data atualização: </span>
+            <span className="text-[#444444] dark:text-cinza">
               {formatarData(exame.dataAtualizacao)}
             </span>
           </div>
@@ -120,8 +120,8 @@ export default function CardExame({ exame, paciente, medico }) {
                 fill="#166DED"
               />
             </svg>
-            <span className="text-[#444444] font-bold">Dr(a): </span>
-            <span className="text-[#444444]">{exame.medico.nome}</span>
+            <span className="text-[#444444] dark:text-cinza font-bold">Dr(a): </span>
+            <span className="text-[#444444] dark:text-cinza">{exame.medico.nome}</span>
           </div>
 
           <div className="flex gap-3 items-center">
@@ -137,8 +137,8 @@ export default function CardExame({ exame, paciente, medico }) {
                 fill="#166DED"
               />
             </svg>
-            <span className="text-[#444444] font-bold">Peça: </span>
-            <span className="text-[#444444]">{exame.nomeAmostra}</span>
+            <span className="text-[#444444] dark:text-cinza font-bold">Peça: </span>
+            <span className="text-[#444444] dark:text-cinza">{exame.nomeAmostra}</span>
           </div>
 
           <div className="flex gap-3 items-center">
@@ -154,10 +154,10 @@ export default function CardExame({ exame, paciente, medico }) {
                 fill="#166DED"
               />
             </svg>
-            <span className="text-[#444444] font-bold">
+            <span className="text-[#444444] dark:text-cinza font-bold">
               Possível diagnóstico:{" "}
             </span>
-            <span className="text-[#444444]">{exame.possivelDiagnostico}</span>
+            <span className="text-[#444444] dark:text-cinza">{exame.possivelDiagnostico}</span>
           </div>
         </div>
 

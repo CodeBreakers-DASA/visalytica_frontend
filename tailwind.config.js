@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
+  darkMode: 'class',
   content: [
     "./src/**/*.{js,jsx}",
     "./app/**/*.{js,jsx}",
@@ -13,7 +13,10 @@ module.exports = {
         azul: '#166DED',
         azul_escuro: '#2A279C',
         noturno: '#242437',
-        noturno_medio: '#242437',
+        noturno_borda: '#182A3B',
+        noturno_medio_claro: '#2B3948',
+        noturno_medio: '#212E3B',
+        noturno_medio_escuro: '#1C2834',
         noturno_claro: '#474769',
         cinza_claro: '#FFFBFB',
         cinza_medio: '#F3F3F3',
