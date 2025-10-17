@@ -35,7 +35,7 @@ export default function ImagemTempoReal({
               backgroundColor: status ? "#439F57" : "#CFCFCF",
               color: status && "#fff",
             }}
-            className={`px-3 xs:px-4 sm:px-5 py-1 xs:py-1.5 rounded-[10px] text-xs mr-5`}
+            className={`px-3 xs:px-4 sm:px-5 py-1 xs:py-1.5 rounded-[10px] text-xs mr-5 dark:text-black`}
           >
             {status ? "Capturado" : "Não capturado"}
           </p>
