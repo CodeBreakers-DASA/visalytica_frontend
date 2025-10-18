@@ -80,20 +80,20 @@ export default function ConsultarPacientes() {
           </Button>
         </div>
       </div>
-        <div className="bg-white dark:bg-noturno_medio p-10 pb-5 rounded-[10px] h-full">
-          {mockPacientes[0] ? (
-            <>
-              <TabelaPacientes pacientes={mockPacientes} />
-              <BotoesPaginacao meta={meta} page={page} setPage={setPage} />
-            </>
-          ) : (
-            <h2 className="w-full text-azul text-center text-2xl">
-              {meta?.itemCount != 0
-                ? "Carregando pacientes..."
-                : "Paciente não encontrado"}
-            </h2>
-          )}
-        </div>
+      <div className="bg-white dark:bg-noturno_medio p-10 pb-5 rounded-[10px] h-full">
+        {mockPacientes[0] ? (
+          <>
+            <TabelaPacientes pacientes={mockPacientes} />
+            <BotoesPaginacao meta={meta} page={page} setPage={setPage} />
+          </>
+        ) : (
+          <h2 className="w-full text-azul text-center text-2xl">
+            {meta?.itemCount != 0
+              ? "Carregando pacientes..."
+              : "Paciente não encontrado"}
+          </h2>
+        )}
+      </div>
     </div>
   );
 }
