@@ -30,13 +30,13 @@ export default function MenuDashboardFuncional({
   console.log(dataFiltrada);
 
   return (
-    <Card className="flex flex-1 flex-col h-full ">
+    <Card className="flex flex-1 flex-col ">
       <CardHeader className="pb-5 pl-14">
         <CardDescription className="text-cinza_escuro text-[16px]">
           {title}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pt-0">
+      <CardContent className="h-3/4">
         <ResponsiveContainer width="100%" height="100%">
           {tipoGrafico == "bar" ? (
             <BarChart
