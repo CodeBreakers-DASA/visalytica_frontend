@@ -190,7 +190,7 @@ export default function Sidebar() {
                   </h2>
                 </div>
               </Link>
-              {/* <Link href={`/Excluir_amostras`}>
+              <Link href={`/Excluir_amostras`}>
                 <div
                   className="flex gap-4 px-6 py-4 font-semibold"
                   style={
@@ -226,6 +226,7 @@ export default function Sidebar() {
                   </h2>
                 </div>
               </Link>
+              
               <Link href={`/Excluir_pacientes`}>
                 <div
                   className="flex gap-4 px-6 py-4 font-semibold"
@@ -297,7 +298,7 @@ export default function Sidebar() {
                     Excluir médicos
                   </h2>
                 </div>
-              </Link> */}
+              </Link>
             </>
           )}
         </div>
