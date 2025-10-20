@@ -74,8 +74,8 @@ function HomeInicial() {
 
   return (
     <div className="h-screen px-7 w-full flex flex-col justify-between py-6">
-      <div className="flex flex-col flex-1 gap-5 rounded-lg">
-        <div className="flex-[0.5] flex gap-16 bg-white dark:bg-noturno_medio rounded-lg py-10 px-12">
+      <div className="flex flex-col h-full gap-5 rounded-lg">
+        <div className="h-full flex items-center gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12">
           <MenuDashboardFuncional
             title={
               <p>
@@ -90,16 +90,14 @@ function HomeInicial() {
             tipoGrafico = 'bar'
           />
           <div className="bg-cinza_escuro h-full w-0.5"></div>
-          <div className=" flex flex-col gap-3 justify-center">
+          <div className=" flex flex-col justify-center">
             <h2 className="text-center text-cinza_escuro">quantidade realizada em<br/><span className="text-azul font-semibold text-3xl uppercase">{data.toLocaleString('pt-BR', { month: 'long' })}:</span></h2>
-            <div>
-              <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-[128px] font-bold text-center">{analiseData[analiseData.length - 1].value}</p>
-              <p className="text-center text-azul text-2xl -mt-8">análise{analiseData[analiseData.length - 1].value > 1 && 's'}</p>
-            </div>
+            <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-9xl font-bold text-center">{analiseData[analiseData.length - 1].value}</p>
+            <p className="text-center text-azul text-2xl ">análise{analiseData[analiseData.length - 1].value > 1 && 's'}</p>
           </div>
         </div>
 
-        <div className="flex-[0.5] flex flex-row-reverse gap-16 bg-white dark:bg-noturno_medio rounded-lg py-10 px-12">
+        <div className="h-full flex gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12">
           <MenuDashboardFuncional
             title="Tempo Médio de Análise por Mês"
             data={tempoMedioData}
@@ -112,8 +110,8 @@ function HomeInicial() {
           <div className=" flex flex-col gap-3 justify-center">
             <h2 className="text-center text-cinza_escuro">seu tempo médio de análise em<br/><span className="text-azul font-semibold text-3xl uppercase">{data.toLocaleString('pt-BR', { month: 'long' })}:</span></h2>
             <div>
-              <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-[128px] font-bold text-center">{tempoMedioData[tempoMedioData.length - 1]['Tempo Médio (min)']}</p>
-              <p className="text-center text-azul text-2xl -mt-8">minuto{tempoMedioData[tempoMedioData.length - 1]['Tempo Médio (min)'] > 1 && 's'}</p>
+              <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-9xl font-bold text-center">{tempoMedioData[tempoMedioData.length - 1]['Tempo Médio (min)']}</p>
+              <p className="text-center text-azul text-2xl">minuto{tempoMedioData[tempoMedioData.length - 1]['Tempo Médio (min)'] > 1 && 's'}</p>
             </div>
           </div>
         </div>
