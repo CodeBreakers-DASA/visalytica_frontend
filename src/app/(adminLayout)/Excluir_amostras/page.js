@@ -16,7 +16,7 @@ function Excluir_amostras() {
     const fetchSolicitacoes = async () => {
         try {
           const { data } = await api.get(
-            `/admin/requests?page=${page}&limit=10`
+            `/admin/requests/exams?page=${page}&limit=10`
           );
           setSolicitacao(data.items);
           console.log(data);
@@ -81,14 +81,7 @@ function Excluir_amostras() {
             </div>
             <TabelaSolicitacao 
                 colunas={[`Paciente`, `CPF`, `Data solicitação`, `Solicitante`, `Justificativas`, `Ações`]}
-                linhas={[{
-                    paciente: `Lorenzo Acquesta`,
-                    cpf: `123123123-10`,
-                    data_solicitacao: `25-12-2006`,
-                    solicitante: `123123SP`,
-                    justificativa: `2`,
-                    
-                }]}
+                linhas={solicitacao}
             />
             
         </div>
