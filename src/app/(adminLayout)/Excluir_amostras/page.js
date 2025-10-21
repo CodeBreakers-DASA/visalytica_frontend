@@ -55,7 +55,6 @@ function Excluir_amostras() {
                     <Input
                         type="text"
                         placeHolder="Pesquise por CPF, nome ou peça"
-                        value={'termoPesquisa'}
                         onChange={() => { }}
                         className="!h-[50px]"
                     />

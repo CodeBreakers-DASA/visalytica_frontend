@@ -55,7 +55,6 @@ function Excluir_pacientes() {
                     <Input
                         type="text"
                         placeHolder="Pesquise por CPF, nome ou peça"
-                        value={'termoPesquisa'}
                         onChange={() => { }}
                         className="!h-[50px]"
                     />

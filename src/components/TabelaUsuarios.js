@@ -57,7 +57,7 @@ function TabelaUsuarios({ colunas = [], linhas = [] }) {
                     onClick={() => handlRecusa(linha.idSolicitacao)}
                     classes="h-10 w-10 bg-[#FA3E3E]"
                   >
-                    <Trash/>
+                    <Trash color="white"/>
                   </Button>
                 </div>
               </div>
