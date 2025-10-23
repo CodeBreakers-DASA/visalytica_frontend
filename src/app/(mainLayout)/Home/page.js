@@ -69,13 +69,14 @@ function HomeInicial() {
       </div>
     );
   }
+  console.log("Tempo medio array: ");
   console.log(tempoMedioData);
   
-
+  
   return (
     <div className="h-screen px-7 w-full flex flex-col justify-between py-6">
       <div className="flex flex-col h-full gap-5 rounded-lg">
-        <div className="h-full flex items-center gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12">
+        <div className="h-full flex gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12 py-8">
           <MenuDashboardFuncional
             title={
               <p>
@@ -97,13 +98,12 @@ function HomeInicial() {
           </div>
         </div>
 
-        <div className="h-full flex gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12">
+        <div className="h-full flex gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12 py-8">
           <MenuDashboardFuncional
             title="Tempo Médio de Análise por Mês"
             data={tempoMedioData}
             dataKey="Tempo Médio (min)"
             gradient
-            formatter={formatTimeFromMinutes}
             tipoGrafico = 'line'
           />
           <div className="bg-cinza_escuro h-full w-0.5"></div>
