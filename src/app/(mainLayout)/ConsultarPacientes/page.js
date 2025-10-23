@@ -17,7 +17,7 @@ export default function ConsultarPacientes() {
   const fetchPacientes = async () => {
     try {
       const { data } = await api.get(
-        `/pacientes/tabela?page=${page}&limit=10&search=${termoPesquisa}`
+        `/pacientes/tabela?page=${page}&limit=8&search=${termoPesquisa}`
       );
       setMockPacientes(data.items);
       setMeta(data.meta);

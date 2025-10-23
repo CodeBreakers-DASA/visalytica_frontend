@@ -3,6 +3,7 @@
 import toast from "react-hot-toast";
 import Button from "./Button";
 import { api } from "@/services/api";
+import Popup from "./Popup";
 
 const transformaDatas = (data) => {
   // A data em formato ISO 8601
@@ -57,11 +58,11 @@ function TabelaSolicitacao({ colunas = [], linhas = [] }) {
               </h3>
             ))}
           </div>
-          <div className="flex flex-col justify-between p-5 text-cinza_texto">
+          <div className="flex flex-col p-5 text-cinza_texto justify-between">
             {linhas.map((linha, index) => (
               <div
                 key={index}
-                className="flex justify-around text-center items-center dark:text-white"
+                className="flex justify-around text-center items-center dark:text-white pb-3"
               >
                 <h3 className="w-full">{linha.nomePaciente}</h3>
                 <h3 className="w-full">{linha.cpf}</h3>
@@ -70,7 +71,7 @@ function TabelaSolicitacao({ colunas = [], linhas = [] }) {
                 </h3>
                 <h3 className="w-full">{linha.solicitante.crm}</h3>
                 <h3 className="w-full text-azul underline font-semibold">
-                  {linha.justificativa.texto} Justif.
+                  {linha.justificativa.texto}
                 </h3>
                 <div className="w-full flex justify-center gap-3">
                   <Button
