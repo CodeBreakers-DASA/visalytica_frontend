@@ -17,7 +17,7 @@ export default function ConsultarPacientes() {
   const fetchPacientes = async () => {
     try {
       const { data } = await api.get(
-        `/pacientes/tabela?page=${page}&limit=10&search=${termoPesquisa}`
+        `/pacientes/tabela?page=${page}&limit=8&search=${termoPesquisa}`
       );
       setMockPacientes(data.items);
       setMeta(data.meta);
@@ -35,7 +35,7 @@ export default function ConsultarPacientes() {
   };
 
   return (
-    <div className="flex flex-col h-screen px-5 py-10 gap-6">
+    <div className="flex flex-col px-5 py-10 gap-6">
       <div className="w-full flex justify-between gap-8 bg-white dark:bg-noturno_medio px-9 py-5 rounded-[10px]">
         <Link className="flex text-azul items-center gap-2" href={"/Home"}>
           <svg

@@ -15,23 +15,25 @@ function Excluir_amostras() {
 
     const fetchSolicitacoes = async () => {
         try {
-          const { data } = await api.get(
-            `/admin/requests/exams?page=${page}&limit=10`
-          );
-          setSolicitacao(data.items);
-          console.log(data);
+            const { data } = await api.get(
+                `/admin/requests/exams?page=${page}&limit=10&search=${termoPesquisa}`
+            );
+            setSolicitacao(data.items);
+            console.log(data);
         } catch (e) {
-          console.log(e);
+            console.log(e);
         }
-      };
-    
-      useEffect(() => {
-        fetchSolicitacoes();
-        
-      }, [page, termoPesquisa]);
+    };
 
-      console.log(solicitacao);
-      
+    useEffect(() => {
+        fetchSolicitacoes();
+    }, [page, termoPesquisa]);
+
+    const handlePesquisaChange = (e) => {
+        setTermoPesquisa(e.target.value);
+        console.log(e.target.value);
+    };
+
 
     return (
         <div className="w-full h-full p-9 flex flex-col gap-7">
@@ -55,7 +57,7 @@ function Excluir_amostras() {
                     <Input
                         type="text"
                         placeHolder="Pesquise por CPF, nome ou peça"
-                        onChange={() => { }}
+                        onChange={handlePesquisaChange}
                         className="!h-[50px]"
                     />
                     <Button
@@ -78,11 +80,11 @@ function Excluir_amostras() {
                     </Button>
                 </div>
             </div>
-            <TabelaSolicitacao 
+            <TabelaSolicitacao
                 colunas={[`Paciente`, `CPF`, `Data solicitação`, `Solicitante`, `Justificativas`, `Ações`]}
                 linhas={solicitacao}
             />
-            
+
         </div>
     );
 }

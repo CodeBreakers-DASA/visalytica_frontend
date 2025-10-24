@@ -7,7 +7,7 @@ export default function RootLayout({ children }) {
     <PrivateRoute> 
       <div className="flex min-h-screen">
         <Hotbar />
-        <main className="relative isolate flex-1 overflow-y-auto">
+        <main className="relative isolate flex-1 overflow-y-auto ml-[270px]">
           <div 
             className="
               absolute inset-0 z-[-1]

@@ -1,9 +1,9 @@
 import Button from "./Button";
 import IconSeta from "./IconSeta";
 
-export default function BotoesPaginacao({meta, page, setPage}) {
+export default function BotoesPaginacao({meta, page, setPage, className}) {
     return (
-        <div className="flex items-center justify-end gap-3 pt-7">
+        <div className={"flex items-center justify-end gap-3 pt-7 " + className}>
 
             {
                 meta?.currentPage && page - 1 != 0 ? (

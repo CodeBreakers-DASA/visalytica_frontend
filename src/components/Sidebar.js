@@ -25,7 +25,7 @@ export default function Sidebar() {
   const user = auth.user;
 
   return (
-    <div className="z-50 flex flex-col h-screen w-[270px] max-lg:hidden items-center justify-between py-10 bg-white dark:bg-noturno_medio shadow-sm border-r border-cinza dark:border-noturno_borda">
+    <div className="fixed  top-0 left-0 z-50 flex flex-col h-screen w-[270px] max-lg:hidden items-center justify-between py-10 bg-white dark:bg-noturno_medio shadow-sm border-r border-cinza dark:border-noturno_borda">
 
       <div className="flex flex-col gap-12">
         <div className="flex flex-col justify-between items-center gap-3 ">

@@ -16,7 +16,7 @@ function Excluir_pacientes() {
     const fetchSolicitacoes = async () => {
         try {
           const { data } = await api.get(
-            `/admin/requests/patients?page=${page}&limit=10`
+            `/admin/requests/patients?page=${page}&limit=10&search=${termoPesquisa}`
           );
           setSolicitacao(data.items);
           console.log(data);
@@ -30,7 +30,10 @@ function Excluir_pacientes() {
         
       }, [page, termoPesquisa]);
 
-      console.log(solicitacao);
+       const handlePesquisaChange = (e) => {
+        setTermoPesquisa(e.target.value);
+        console.log(e.target.value);
+    };
       
 
     return (
@@ -55,7 +58,7 @@ function Excluir_pacientes() {
                     <Input
                         type="text"
                         placeHolder="Pesquise por CPF, nome ou peça"
-                        onChange={() => { }}
+                        onChange={handlePesquisaChange}
                         className="!h-[50px]"
                     />
                     <Button

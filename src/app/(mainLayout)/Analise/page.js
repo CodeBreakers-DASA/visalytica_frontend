@@ -253,8 +253,8 @@ export default function Analise() {
 
   return (
     <>
-      <div className="h-full w-full flex flex-row py-10 px-5 gap-3">
-        <div className="flex flex-col w-2/3 gap-3 bg-white dark:bg-noturno_medio p-7 rounded-[10px]">
+      <div className="w-full h-full flex flex-row py-10 px-5 gap-3">
+        <div className="flex flex-col w-1/2 gap-3 bg-white dark:bg-noturno_medio px-7 py-4 rounded-[10px]">
           <ImagemTempoReal
             label={"Altura"}
             selectedDevice={selectedDevice1}
@@ -276,7 +276,7 @@ export default function Analise() {
           />
         </div>
         <div className="flex flex-col gap-6 w-1/2 h-full">
-          <CardInputs className="h-full w-full flex flex-col justify-between bg-white dark:bg-noturno_medio rounded-[10px] p-7 ">
+          <CardInputs className="h-full w-full flex flex-col justify-between bg-white dark:bg-noturno_medio rounded-[10px] px-7 py-4 gap-3">
             <Input
               label={"CPF*"}
               placeHolder={"000.000.000-00"}

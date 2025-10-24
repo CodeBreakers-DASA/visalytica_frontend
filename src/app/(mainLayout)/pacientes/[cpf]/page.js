@@ -39,7 +39,7 @@ export default function PerfilPaciente() {
 
   const fetchPacienteExames = async (termoPesquisa, page) => {
     const { data } = await api.get(
-      `/pacientes/${pacienteCpf}?page=${page}&limit=3&search=${termoPesquisa}`
+      `/pacientes/${pacienteCpf}?page=${page}&limit=2&search=${termoPesquisa}`
     );
     console.log(data);
     setMeta(data?.exames?.meta);
@@ -195,7 +195,8 @@ export default function PerfilPaciente() {
                 placeHolder="Pesquise por ID, Dr(a), peça ou diagnóstico"
                 value={termoPesquisa}
                 onChange={handlePesquisaChange}
-                className="h-[50px] xs:h-[55px] sm:h-[60px]"
+                className="h-[50px] xs:h-[55px] sm:h-[60px] w-full"
+                classDiv="w-full"
               />
               <Button
                 classes={
@@ -228,21 +229,26 @@ export default function PerfilPaciente() {
                   />
                 ))}
             </div>
-          </div>
+            <div className="ml-auto">
+              {exames?.length != 0 && (
+                <BotoesPaginacao meta={meta} setPage={setPage} page={page} className="pt-0"/>
+              )}
+            </div>
 
-          {meta && (
-            <BotoesPaginacao meta={meta} setPage={setPage} page={page} />
-          )}
-
-          {exames && exames.length === 0 && (
-            <div className="text-center py-8 xs:py-10 sm:py-12">
-              <p className="text-gray-500 text-base xs:text-lg">
+            {exames && exames.length === 0 && (
+            <div className="text-center py-8 xs:py-10 sm:py-12 mx-auto">
+              <p className="text-gray-500 text-base xs:text-lg dark:text-white">
                 {termoPesquisa
                   ? "Nenhum exame encontrado com os critérios de busca."
                   : "Este paciente ainda não possui exames cadastrados."}
               </p>
             </div>
           )}
+
+          </div>
+
+
+          
         </div>
       </div>
     </PrivateRoute>
