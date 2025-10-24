@@ -137,7 +137,7 @@ export default function Criar_usuario() {
   };
 
   return (
-    <div className="max-h-[70vh] min-h-[60vh] bg-white rounded-[10px] px-6 py-10 flex flex-col justify-between">
+    <div className="max-h-[70vh] min-h-[60vh] bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-between">
       <div className="w-full flex justify-center gap-5">
         <InputRadio
           selected={selected[0]}
@@ -154,14 +154,14 @@ export default function Criar_usuario() {
       <div className="flex py-6 gap-6 flex-1">
         <div className="flex flex-1 flex-col justify-between">
           <Input
-            className="font-medium text-cinza_texto"
+            className="font-medium text-cinza_texto w-full flex-col"
             label="Nome"
             onChange={handleInputChange("nome")}
             placeHolder="Digite o nome"
             hasError={inputError.nome}
           />
           <Input
-            className="font-medium text-cinza_texto"
+            className="font-medium text-cinza_texto w-full flex-col"
             label="CPF"
             value={inputs.cpf}               // ← campo controlado
             onChange={handleInputChange("cpf")}
@@ -169,7 +169,7 @@ export default function Criar_usuario() {
             hasError={inputError.cpf}
           />
           <Input
-            className="font-medium text-cinza_texto"
+            className="font-medium text-cinza_texto w-full flex-col"
             label="Senha"
             type="password"
             onChange={handleInputChange("senha")}
@@ -180,14 +180,14 @@ export default function Criar_usuario() {
 
         <div className="flex flex-1 flex-col justify-between">
           <Input
-            className="font-medium text-cinza_texto"
+            className="font-medium text-cinza_texto w-full flex-col"
             label="Username"
             onChange={handleInputChange("username")}
             placeHolder="Digite o username"
             hasError={inputError.username}
           />
           <Input
-            className={`font-medium text-cinza_texto ${selected[1] && "opacity-50"}`}
+            className={`font-medium text-cinza_texto w-full flex-col ${selected[1] && "opacity-50"}`}
             label="CRM"
             disabled={selected[1]}
             onChange={handleInputChange("crm")}
@@ -195,7 +195,7 @@ export default function Criar_usuario() {
             hasError={inputError.crm}
           />
           <Input
-            className="font-medium text-cinza_texto"
+            className="font-medium text-cinza_texto w-full flex-col"
             label="Repetir senha"
             type="password"
             onChange={handleInputChange("confirmaSenha")}
