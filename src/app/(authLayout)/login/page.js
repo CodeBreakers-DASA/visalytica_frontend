@@ -70,6 +70,7 @@ function Login() {
             hasError={mutation.isError}
             hasSuccess={mutation.isSuccess}
             className="w-full"
+            classDiv="flex-col"
           />
         </div>
 
@@ -86,6 +87,7 @@ function Login() {
             hasError={mutation.isError}
             hasSuccess={mutation.isSuccess}
             className="w-full"
+            classDiv="flex-col"
           />
         </div>
 

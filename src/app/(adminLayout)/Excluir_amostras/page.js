@@ -32,7 +32,6 @@ function Excluir_amostras() {
     const handlePesquisaChange = (e) => {
         setTermoPesquisa(e.target.value);
         console.log(e.target.value);
-        
     };
 
 

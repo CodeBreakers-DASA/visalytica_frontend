@@ -178,9 +178,10 @@ export default function Popup({
           <div className="bg-white dark:bg-noturno_medio p-6 rounded-xl shadow-lg w-[400px] text-center">
             {/* Ícone */}
             <div className="flex justify-center mb-4">
-              {type === "delete" && (
-                <Trash2 size={40} className="text-red-600" />
-              )}
+              {type == "delete amostras" ||
+                (type == "delete pacientes" && (
+                  <Trash2 size={40} className="text-red-600" />
+                ))}
               {type === "edit" && (
                 <Pencil size={40} className="text-yellow-500" />
               )}
@@ -190,10 +191,12 @@ export default function Popup({
             </div>
 
             {/* Texto */}
-            <p className="text-lg font-medium mb-4">
+            <p className="text-lg font-medium mb-4 dark:text-white">
               {title}{" "}
               {userName && (
-                <span className="text-blue-600 font-semibold">{userName}</span>
+                <span className={"text-blue-600 font-semibold "}>
+                  {userName}
+                </span>
               )}
             </p>
 
@@ -248,31 +251,38 @@ export default function Popup({
               >
                 Cancelar
               </button>
-              <button
-                onClick={handleConfirm}
-                disabled={
-                  ((type == "delete amostras" || type == "delete pacientes") &&
-                    !reason.trim()) ||
-                  (type === "edit" && !selected) ||
-                  (type === "download" && selected.length === 0) ||
-                  loading
-                }
-                className={`flex-1 py-2 rounded-lg transition ${
-                  type == "delete amostras" || type == "delete pacientes"
-                    ? "bg-red-600 hover:bg-red-700 text-white"
+              {type != "delete" && (
+                <button
+                  onClick={handleConfirm}
+                  disabled={
+                    ((type == "delete amostras" ||
+                      type == "delete pacientes") &&
+                      !reason.trim()) ||
+                    (type === "edit" && !selected) ||
+                    (type === "download" && selected.length === 0) ||
+                    loading
+                  }
+                  className={`flex-1 py-2 rounded-lg transition ${
+                    type == "delete amostras" ||
+                    type == "delete pacientes" ||
+                    type == "delete"
+                      ? "bg-red-600 hover:bg-red-700 text-white"
+                      : type === "edit"
+                      ? "bg-yellow-400 hover:bg-yellow-500 text-black"
+                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  {loading
+                    ? "Carregando..."
+                    : type == "delete amostras" || type == "delete pacientes"
+                    ? "Solicitar"
                     : type === "edit"
-                    ? "bg-yellow-400 hover:bg-yellow-500 text-black"
-                    : "bg-blue-600 hover:bg-blue-700 text-white"
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
-              >
-                {loading
-                  ? "Carregando..."
-                  : type == "delete amostras" || type == "delete pacientes"
-                  ? "Solicitar"
-                  : type === "edit"
-                  ? "Continuar"
-                  : "Download"}
-              </button>
+                    ? "Continuar"
+                    : type == "delete"
+                    ? "Excluir"
+                    : "Download"}
+                </button>
+              )}
             </div>
           </div>
         </div>

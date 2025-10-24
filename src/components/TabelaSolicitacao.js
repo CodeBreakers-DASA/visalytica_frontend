@@ -71,7 +71,7 @@ function TabelaSolicitacao({ colunas = [], linhas = [] }) {
                 </h3>
                 <h3 className="w-full">{linha.solicitante.crm}</h3>
                 <h3 className="w-full text-azul underline font-semibold">
-                  {linha.justificativa.texto}
+                  <Popup classTrigger="line-clamp-1" title="Justificativa: " userName={linha.justificativa.texto}  type="delete" triggerText={linha.justificativa.texto}/>
                 </h3>
                 <div className="w-full flex justify-center gap-3">
                   <Button

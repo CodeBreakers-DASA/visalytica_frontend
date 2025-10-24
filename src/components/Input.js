@@ -5,13 +5,17 @@ import { twMerge } from 'tailwind-merge';
 
 const inter = Inter({ subsets: ['latin'] });
 
-function Input({ label, placeHolder, type = 'text', value, defaultValue, disabled, onChange, hasError, hasSuccess, className, ...props }) {
+function Input({ label, placeHolder, type = 'text', value, defaultValue, disabled, onChange, hasError, hasSuccess, className, classDiv, ...props }) {
     return (
-        <div className={`flex flex-row w-full justify-between items-center ${label ? 'gap-2 ' : ''} ${disabled && 'opacity-60'}`}>
-            <label className={
-                hasError ? 'text-vermelho' : 
-                hasSuccess ? 'text-green-600' : 'text-cinza_texto font-medium dark:text-white w-full'
-            }>{label}</label>
+        <div className={`flex flex-row w-full justify-between items-center ${label ? 'gap-2 ' : ''} ${disabled && 'opacity-60'} ` + classDiv}>
+            {
+                label && (
+                    <label className={
+                        hasError ? 'text-vermelho' : 
+                        hasSuccess ? 'text-green-600' : 'text-cinza_texto font-medium dark:text-white w-full'
+                    }>{label}</label>
+                )
+            }
             <input
                 disabled={disabled}
                 type={type} 

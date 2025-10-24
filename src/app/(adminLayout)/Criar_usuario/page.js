@@ -154,53 +154,59 @@ export default function Criar_usuario() {
       <div className="flex py-6 gap-6 flex-1">
         <div className="flex flex-1 flex-col justify-between">
           <Input
-            className="font-medium text-cinza_texto w-full flex-col"
+            className="font-medium text-cinza_texto w-full"
             label="Nome"
             onChange={handleInputChange("nome")}
             placeHolder="Digite o nome"
             hasError={inputError.nome}
+            classDiv="flex-col"
           />
           <Input
-            className="font-medium text-cinza_texto w-full flex-col"
+            className="font-medium text-cinza_texto w-full"
             label="CPF"
             value={inputs.cpf}               // ← campo controlado
             onChange={handleInputChange("cpf")}
             placeHolder="000.000.000-00"
             hasError={inputError.cpf}
+            classDiv="flex-col"
           />
           <Input
-            className="font-medium text-cinza_texto w-full flex-col"
+            className="font-medium text-cinza_texto w-full"
             label="Senha"
             type="password"
             onChange={handleInputChange("senha")}
             placeHolder="**********"
             hasError={inputError.senha}
+            classDiv="flex-col"
           />
         </div>
 
         <div className="flex flex-1 flex-col justify-between">
           <Input
-            className="font-medium text-cinza_texto w-full flex-col"
+            className="font-medium text-cinza_texto w-full"
             label="Username"
             onChange={handleInputChange("username")}
             placeHolder="Digite o username"
             hasError={inputError.username}
+            classDiv="flex-col"
           />
           <Input
-            className={`font-medium text-cinza_texto w-full flex-col ${selected[1] && "opacity-50"}`}
+            className={`font-medium text-cinza_texto w-full ${selected[1] && "opacity-50"}`}
             label="CRM"
             disabled={selected[1]}
             onChange={handleInputChange("crm")}
             placeHolder="00000SP"
             hasError={inputError.crm}
+            classDiv="flex-col"
           />
           <Input
-            className="font-medium text-cinza_texto w-full flex-col"
+            className="font-medium text-cinza_texto w-full"
             label="Repetir senha"
             type="password"
             onChange={handleInputChange("confirmaSenha")}
             placeHolder="**********"
             hasError={inputError.confirmaSenha}
+            classDiv="flex-col"
           />
         </div>
       </div>
