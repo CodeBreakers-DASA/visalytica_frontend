@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 function Excluir_medico() {
   const [solicitacao, setSolicitacao] = useState([]);
   const [page, setPage] = useState(1);
-  const [termoPesquisa, setTermoPesquisa] = useState();
+  const [termoPesquisa, setTermoPesquisa] = useState("");
 
   const fetchSolicitacoes = async () => {
     try {
@@ -54,8 +54,8 @@ function Excluir_medico() {
         <div className="flex w-full gap-5">
           <Input
             type="text"
-            placeHolder="Pesquise por CPF, nome ou peça"
-            onChange={() => {}}
+            placeHolder="Pesquise por nome, username, crm ou cpf"
+            onChange={handlePesquisaChange}
             className="!h-[50px]"
           />
           <Button
@@ -88,6 +88,7 @@ function Excluir_medico() {
           `Ação`,
         ]}
         linhas={solicitacao}
+        onUpdate={fetchSolicitacoes}
       />
     </div>
   );

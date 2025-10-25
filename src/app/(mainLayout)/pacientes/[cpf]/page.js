@@ -88,8 +88,8 @@ export default function PerfilPaciente() {
     return (
       <div className="h-[80vh] mx-4 xs:mx-6 sm:mx-8 md:mx-12 flex items-center justify-center">
         <div className="text-center flex flex-col items-center">
-          <Frown className="size-8 xs:size-10 text-gray-600 mb-3 xs:mb-4" />
-          <h2 className="text-xl xs:text-2xl font-bold text-gray-600 mb-3 xs:mb-4">
+          <Frown className="size-8 xs:size-10 text-gray-600 mb-3 xs:mb-4  dark:text-white" />
+          <h2 className="text-xl xs:text-2xl font-bold text-gray-600 mb-3 xs:mb-4 dark:text-white">
             Paciente não encontrado
           </h2>
           <Link
@@ -187,12 +187,12 @@ export default function PerfilPaciente() {
         </div>
 
         <div>
-          <div className="bg-white dark:bg-noturno_medio px-5 py-3 rounded-[10px] flex flex-col justify-between items-start mb-4 xs:mb-5 sm:mb-6 gap-3 sm:gap-4">
+          <div className="bg-white dark:bg-noturno_medio p-5 rounded-[10px] flex flex-col justify-between items-start mb-4 xs:mb-5 sm:mb-6 gap-3 sm:gap-4">
 
             <div className="flex gap-3 xs:gap-4 sm:gap-5 w-1/2 items-center justify-end ml-auto">
               <Input
                 type="text"
-                placeHolder="Pesquise por ID, Dr(a), peça ou diagnóstico"
+                placeHolder="Pesquise por nome da amostra, médico ou número do exame."
                 value={termoPesquisa}
                 onChange={handlePesquisaChange}
                 className="h-[50px] xs:h-[55px] sm:h-[60px] w-full"
@@ -218,7 +218,7 @@ export default function PerfilPaciente() {
                 </svg>
               </Button>
             </div>
-            <div className="w-full grid grid-cols-2 gap-6 justify-items-center justify-center mb-4 p-6">
+            <div className="w-full grid grid-cols-2 gap-6 justify-items-center justify-center px-6 pt-6">
               {exames &&
                 exames.map((exame) => (
                   <CardExame

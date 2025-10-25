@@ -55,7 +55,7 @@ export default function ConsultarPacientes() {
         <div className="flex w-full gap-5">
           <Input
             type="text"
-            placeHolder="Pesquise por CPF, nome ou peça"
+            placeHolder="Pesquise por CPF, nome ou médico"
             value={termoPesquisa}
             onChange={handlePesquisaChange}
             className="!h-[50px]"

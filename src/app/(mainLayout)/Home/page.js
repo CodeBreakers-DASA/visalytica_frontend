@@ -103,7 +103,7 @@ function HomeInicial() {
           />
           <div className="bg-cinza_escuro h-full w-0.5"></div>
           <div className=" flex flex-col justify-center">
-            <h2 className="text-center text-cinza_escuro">
+            <h2 className="text-center text-cinza_escuro leading-9">
               quantidade realizada em
               <br />
               <span className="text-azul font-semibold text-3xl uppercase">
@@ -129,7 +129,7 @@ function HomeInicial() {
           />
           <div className="bg-cinza_escuro h-full w-0.5"></div>
           <div className=" flex flex-col gap-3 justify-center">
-            <h2 className="text-center text-cinza_escuro">
+            <h2 className="text-center text-cinza_escuro leading-9">
               seu tempo médio de análise em
               <br />
               <span className="text-azul font-semibold text-3xl uppercase">
@@ -152,7 +152,7 @@ function HomeInicial() {
 
         <Link href="/Analise">
           <div
-            className="fixed bottom-2 left-1/2 z-50 flex items-center py-3 px-10 ml-8 rounded-md gap-3"
+            className="fixed bottom-4 left-1/2 z-50 flex items-center py-3 px-10 ml-8 rounded-[10px] gap-3 hover:opacity-90"
             style={{
               backgroundImage: `linear-gradient(to right, #166DED, #716FEA)`,
             }}

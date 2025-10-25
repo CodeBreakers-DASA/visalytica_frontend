@@ -212,7 +212,7 @@ export default function CardExame({ exame, paciente, medico }) {
                   />
                 </svg>
               </div>
-              <div className="text-gray-300 max-w-[350px] line-clamp-2">
+              <div className="text-[#444444] dark:text-cinza max-w-[350px] line-clamp-2">
                 <strong>Possível diagnóstico:</strong>{" "}
                 {exame.possivelDiagnostico}
               </div>

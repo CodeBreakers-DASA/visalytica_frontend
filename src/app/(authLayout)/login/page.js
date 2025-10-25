@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
-
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useAuth } from "../../../context/AuthContext";
 import { api } from "../../../services/api";
 
@@ -19,6 +19,7 @@ const loginRequest = async (credentials) => {
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const auth = useAuth();
 
@@ -79,16 +80,29 @@ function Login() {
           <label className="block text-black dark:text-cinza font-medium text-[13px] xs:text-[14px] sm:text-base mb-[4px] xs:mb-[5px] sm:mb-[6px]">
             Senha
           </label>
-          <Input
-            placeHolder={"*********"}
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            hasError={mutation.isError}
-            hasSuccess={mutation.isSuccess}
-            className="w-full"
-            classDiv="flex-col"
-          />
+        <div className="relative w-full">
+            <Input
+              placeHolder={"*********"}
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              hasError={mutation.isError}
+              hasSuccess={mutation.isSuccess}
+              className="w-full"
+              classDiv="flex-col"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 cursor-pointer"
+            >
+              {showPassword ? (
+                <AiOutlineEyeInvisible size={20} />
+              ) : (
+                <AiOutlineEye size={20} />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Link Esqueceu a senha */}

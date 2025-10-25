@@ -26,12 +26,13 @@ const transformaDatas = (data) => {
   return dataFormatada;
 };
 
-function TabelaSolicitacao({ colunas = [], linhas = [] }) {
+function TabelaSolicitacao({ colunas = [], linhas = [], onUpdate }) {
   const handlAceita = async (id) => {
     try {
       const { data } = await api.patch(`/admin/requests/${id}/approve`);
       console.log(data);
       toast.success("Requisição aprovada");
+      onUpdate();
     } catch (e) {
       console.log(e);
     }
@@ -42,6 +43,7 @@ function TabelaSolicitacao({ colunas = [], linhas = [] }) {
       const { data } = await api.patch(`/admin/requests/${id}/reject`);
       console.log(data);
       toast.error("Exclusão negada");
+      onUpdate();
     } catch (e) {
       console.log(e);
     }
@@ -51,7 +53,7 @@ function TabelaSolicitacao({ colunas = [], linhas = [] }) {
     <div className="bg-white dark:bg-noturno_medio p-10 pb-5 rounded-[10px] h-full">
       {linhas.length > 0 ? (
         <>
-          <div className="flex justify-around items-center text-center bg-cinza_medio rounded-t-[10px] text-cinza_texto font-medium p-5">
+          <div className="flex justify-around items-center text-center bg-cinza_medio dark:text-white dark:bg-noturno_medio_claro rounded-t-[10px] text-cinza_texto font-medium p-5">
             {colunas.map((coluna) => (
               <h3 key={coluna} className="w-full">
                 {coluna}

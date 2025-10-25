@@ -11,7 +11,7 @@ function Excluir_amostras() {
 
     const [solicitacao, setSolicitacao] = useState([])
     const [page, setPage] = useState(1)
-    const [termoPesquisa, setTermoPesquisa] = useState()
+    const [termoPesquisa, setTermoPesquisa] = useState("")
 
     const fetchSolicitacoes = async () => {
         try {
@@ -56,7 +56,7 @@ function Excluir_amostras() {
                 <div className="flex w-full gap-5">
                     <Input
                         type="text"
-                        placeHolder="Pesquise por CPF, nome ou peça"
+                        placeHolder="Pesquise por paciente, cpf, nome da amostra ou solicitante"
                         onChange={handlePesquisaChange}
                         className="!h-[50px]"
                     />
@@ -83,6 +83,7 @@ function Excluir_amostras() {
             <TabelaSolicitacao
                 colunas={[`Paciente`, `CPF`, `Data solicitação`, `Solicitante`, `Justificativas`, `Ações`]}
                 linhas={solicitacao}
+                onUpdate={fetchSolicitacoes}
             />
 
         </div>
