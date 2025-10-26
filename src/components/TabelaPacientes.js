@@ -42,7 +42,7 @@ export default function TabelaPacientes({ pacientes }) {
 
   return (
     <>
-      <div className=" dark:shadow-none overflow-hidden rounded-[10px] text-[#615D5D] dark:text-cinza h-[92%]">
+      <div className="max-md:hidden dark:shadow-none overflow-hidden rounded-[10px] text-[#615D5D] dark:text-cinza h-[92%]">
         <div className="flex flex-col justify-between">
           <table className="min-w-full text-sm text-center h-full">
             <thead className="text-sm font-semibold ">
@@ -108,7 +108,7 @@ export default function TabelaPacientes({ pacientes }) {
         {pacientes.map((paciente) => (
           <div
             key={paciente.cpf}
-            className="border w-full p-4 rounded-[10px] space-y-3"
+            className="border w-full p-4 bg-white dark:bg-noturno_medio_claro rounded-[10px] space-y-3"
           >
             <div className="flex justify-between items-start gap-1">
               <div className="font-bold text-lg text-azul">
@@ -120,11 +120,11 @@ export default function TabelaPacientes({ pacientes }) {
             </div>
             <div className="space-y-1 text-sm">
               <div>
-                <span className="font-semibold text-gray-600">CPF: </span>
+                <span className="font-semibold text-gray-600 dark:text-cinza_escuro">CPF: </span>
                 <span>{formatarCPF(paciente.cpf)}</span>
               </div>
               <div>
-                <span className="font-semibold text-gray-600">
+                <span className="font-semibold text-gray-600 dark:text-cinza_escuro">
                   Última atualização:{" "}
                 </span>
                 <span>
@@ -132,13 +132,13 @@ export default function TabelaPacientes({ pacientes }) {
                 </span>
               </div>
               <div>
-                <span className="font-semibold text-gray-600">
+                <span className="font-semibold text-gray-600 dark:text-cinza_escuro">
                   Data de criação:{" "}
                 </span>
                 <span>{transformaDatas(paciente.data_criacao_paciente)}</span>
               </div>
               <div>
-                <span className="font-semibold text-gray-600">Exames: </span>
+                <span className="font-semibold text-gray-600 dark:text-cinza_escuro">Exames: </span>
                 <Link
                   href={`/pacientes/${paciente.cpf}`}
                   className="font-medium text-blue-600 underline"

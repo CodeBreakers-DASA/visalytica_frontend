@@ -36,7 +36,7 @@ export default function ConsultarPacientes() {
 
   return (
     <div className="flex flex-col px-5 py-10 gap-6">
-      <div className="w-full flex justify-between gap-8 bg-white dark:bg-noturno_medio px-9 py-5 rounded-[10px]">
+      <div className="w-full flex max-md:flex-col justify-between gap-4 md:gap-8 bg-white dark:bg-noturno_medio px-9 py-5 rounded-[10px]">
         <Link className="flex text-azul items-center gap-2" href={"/Home"}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ export default function ConsultarPacientes() {
           </svg>
           <h3 className="">Voltar</h3>
         </Link>
-        <div className="flex w-full gap-5">
+        <div className="flex w-full gap-2 md:gap-5">
           <Input
             type="text"
             placeHolder="Pesquise por CPF, nome ou médico"
@@ -62,7 +62,7 @@ export default function ConsultarPacientes() {
           />
           <Button
             classes={
-              "bg-gradient-to-b from-azul to-roxo_gradient w-[50px] h-[50px] min-w-[50px] rounded-2xl"
+              "bg-gradient-to-b from-azul to-roxo_gradient w-[50px] h-[50px] min-w-[50px] rounded-[10px]"
             }
           >
             <svg
@@ -80,7 +80,7 @@ export default function ConsultarPacientes() {
           </Button>
         </div>
       </div>
-      <div className="bg-white dark:bg-noturno_medio p-10 pb-5 rounded-[10px] h-full">
+      <div className="bg-white dark:bg-noturno_medio max-md:p-6 p-10 pb-5 rounded-[10px] h-full">
         {mockPacientes[0] ? (
           <>
             <TabelaPacientes pacientes={mockPacientes} />

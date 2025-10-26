@@ -7,7 +7,7 @@ export default function RootLayout({ children }) {
     <PrivateRoute> 
       <div className="flex min-h-screen">
         <Sidebar />
-        <main className="ml-[270px] flex-1 overflow-y-auto bg-[radial-gradient(circle,_#0077FF39,_#F3F5F729)]
+        <main className="max-md:mt-[76px] md:ml-[270px] flex-1 overflow-y-auto bg-[radial-gradient(circle,_#0077FF39,_#F3F5F729)]
               dark:bg-[radial-gradient(circle,_#0077FF_10%,_#1D232C_82%)] dark:opacity-65">
           <div className="h-full flex flex-col items-center justify-center">
             {children}

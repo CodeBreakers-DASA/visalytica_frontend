@@ -87,7 +87,7 @@ function HomeInicial() {
   return (
     <div className="h-screen px-7 w-full flex flex-col justify-between py-6">
       <div className="flex flex-col h-full gap-5 rounded-lg">
-        <div className="h-full flex gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12 py-8">
+        <div className="h-full max-md:flex-col flex gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12 py-8">
           <MenuDashboardFuncional
             title={
               <p>
@@ -119,7 +119,7 @@ function HomeInicial() {
           </div>
         </div>
 
-        <div className="h-full flex flex-row-reverse gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12 py-8">
+        <div className="h-full max-md:flex-col flex flex-row-reverse gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12 py-8">
           <MenuDashboardFuncional
             title="Tempo Médio de Análise por Mês"
             data={tempoMedioData}

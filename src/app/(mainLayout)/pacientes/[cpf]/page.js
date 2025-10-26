@@ -218,7 +218,7 @@ export default function PerfilPaciente() {
                 </svg>
               </Button>
             </div>
-            <div className="w-full grid grid-cols-2 gap-6 justify-items-center justify-center px-6 pt-6">
+            <div className="w-full grid-cols-1 grid md:grid-cols-2 gap-6 justify-items-center justify-center md:px-6 pt-6">
               {exames &&
                 exames.map((exame) => (
                   <CardExame
