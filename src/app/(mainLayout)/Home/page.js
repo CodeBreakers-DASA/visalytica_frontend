@@ -152,7 +152,7 @@ function HomeInicial() {
 
         <Link href="/Analise">
           <div
-            className="fixed bottom-4 left-1/2 z-50 flex items-center py-3 px-10 ml-8 rounded-[10px] gap-3 hover:opacity-90"
+            className="fixed bottom-5 left-1/2 z-50 flex items-center py-3 px-10 ml-8 rounded-[10px] gap-3 hover:opacity-90"
             style={{
               backgroundImage: `linear-gradient(to right, #166DED, #716FEA)`,
             }}

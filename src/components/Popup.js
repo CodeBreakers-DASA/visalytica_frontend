@@ -191,7 +191,7 @@ export default function Popup({
             </div>
 
             {/* Texto */}
-            <p className="text-lg font-medium mb-4 dark:text-white">
+            <p className="text-lg font-medium mb-4 dark:text-white w-full whitespace-pre-wrap">
               {title}{" "}
               {userName && (
                 <span className={"text-blue-600 font-semibold "}>

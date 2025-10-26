@@ -6,17 +6,19 @@ import InputRadio from "@/components/InputRadio";
 import { api } from "@/services/api";
 import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function Criar_usuario() {
   const [selected, setSelected] = useState([true, false]); // Médico = [true,false], Admin = [false,true]
-  const [inputs, setInputs] = useState({
+  const initialInputsState = {
     nome: "",
     username: "",
     cpf: "",
     crm: "",
     senha: "",
     confirmaSenha: "",
-  });
+  };
+  const [inputs, setInputs] = useState(initialInputsState);
 
   const [inputError, setInputsError] = useState({
     nome: false,
@@ -27,6 +29,8 @@ export default function Criar_usuario() {
     confirmaSenha: false,
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handleSelected = (id) => {
     id === 0 ? setSelected([true, false]) : setSelected([false, true]);
   };
@@ -44,7 +48,10 @@ export default function Criar_usuario() {
 
         // Aplica a formatação automaticamente
         if (value.length > 9) {
-          value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, "$1.$2.$3-$4");
+          value = value.replace(
+            /(\d{3})(\d{3})(\d{3})(\d{0,2})/,
+            "$1.$2.$3-$4"
+          );
         } else if (value.length > 6) {
           value = value.replace(/(\d{3})(\d{3})(\d{0,3})/, "$1.$2.$3");
         } else if (value.length > 3) {
@@ -64,8 +71,6 @@ export default function Criar_usuario() {
     },
     []
   );
-
-
 
   const handleRegistrar = async () => {
     // Reset dos erros
@@ -127,17 +132,32 @@ export default function Criar_usuario() {
         role: selected[0] ? "medico" : "admin",
       });
       toast.success("Usuário registrado com sucesso!");
-      
+      setInputs(initialInputsState);
+
       console.log("Usuário válido:", inputs);
     } catch (error) {
-      toast.error("Erro ao registrar usuário");
-      console.log(error);
-      
+      console.error("Erro completo do backend:", error.response?.data || error);
+
+      const defaultErrorMessage = "Erro ao registrar usuário. Tente novamente.";
+
+      const messages = error?.response?.data?.message;
+
+      if (Array.isArray(messages) && messages.length > 0) {
+        messages.forEach((msg) => {
+          if (typeof msg === "string") {
+            toast.error(msg);
+          }
+        });
+      } else if (typeof messages === "string" && messages.trim() !== "") {
+        toast.error(messages);
+      } else {
+        toast.error(defaultErrorMessage);
+      }
     }
   };
 
   return (
-    <div className="max-h-[70vh] min-h-[60vh] bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-between">
+    <div className="max-h-[60vh] min-h-[50vh] bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-between">
       <div className="w-full flex justify-center gap-5">
         <InputRadio
           selected={selected[0]}
@@ -152,10 +172,11 @@ export default function Criar_usuario() {
       </div>
 
       <div className="flex py-6 gap-6 flex-1">
-        <div className="flex flex-1 flex-col justify-between">
+        <div className="flex flex-1 flex-col gap-2 justify-between">
           <Input
             className="font-medium text-cinza_texto w-full"
             label="Nome"
+            value={inputs.nome}
             onChange={handleInputChange("nome")}
             placeHolder="Digite o nome"
             hasError={inputError.nome}
@@ -164,50 +185,82 @@ export default function Criar_usuario() {
           <Input
             className="font-medium text-cinza_texto w-full"
             label="CPF"
-            value={inputs.cpf}               // ← campo controlado
+            value={inputs.cpf} // ← campo controlado
             onChange={handleInputChange("cpf")}
             placeHolder="000.000.000-00"
             hasError={inputError.cpf}
             classDiv="flex-col"
           />
-          <Input
-            className="font-medium text-cinza_texto w-full"
-            label="Senha"
-            type="password"
-            onChange={handleInputChange("senha")}
-            placeHolder="**********"
-            hasError={inputError.senha}
-            classDiv="flex-col"
-          />
+          <div className="relative w-full">
+            <Input
+              className="font-medium text-cinza_texto w-full"
+              label="Senha"
+              value={inputs.senha}
+              type={showPassword ? "text" : "password"}
+              onChange={handleInputChange("senha")}
+              placeHolder="**********"
+              hasError={inputError.senha}
+              classDiv="flex-col"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute bottom-3.5 right-3 text-gray-500 cursor-pointer"
+            >
+              {showPassword ? (
+                <AiOutlineEye size={20} />
+              ) : (
+                <AiOutlineEyeInvisible size={20} />
+              )}
+            </button>
+          </div>
         </div>
 
-        <div className="flex flex-1 flex-col justify-between">
+        <div className="flex flex-1 flex-col gap-2  justify-between">
           <Input
             className="font-medium text-cinza_texto w-full"
             label="Username"
+            value={inputs.username}
             onChange={handleInputChange("username")}
             placeHolder="Digite o username"
             hasError={inputError.username}
             classDiv="flex-col"
           />
           <Input
-            className={`font-medium text-cinza_texto w-full ${selected[1] && "opacity-50"}`}
+            className={`font-medium text-cinza_texto w-full ${
+              selected[1] && "opacity-50"
+            }`}
             label="CRM"
+            value={inputs.crm}
             disabled={selected[1]}
             onChange={handleInputChange("crm")}
             placeHolder="00000SP"
             hasError={inputError.crm}
             classDiv="flex-col"
           />
-          <Input
-            className="font-medium text-cinza_texto w-full"
-            label="Repetir senha"
-            type="password"
-            onChange={handleInputChange("confirmaSenha")}
-            placeHolder="**********"
-            hasError={inputError.confirmaSenha}
-            classDiv="flex-col"
-          />
+          <div className="relative w-full">
+            <Input
+              className="font-medium text-cinza_texto w-full"
+              label="Repetir senha"
+              value={inputs.confirmaSenha}
+              type={showConfirmPassword ? "text" : "password"}
+              onChange={handleInputChange("confirmaSenha")}
+              placeHolder="**********"
+              hasError={inputError.confirmaSenha}
+              classDiv="flex-col"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute bottom-3.5 right-3 text-gray-500 cursor-pointer"
+            >
+              {showConfirmPassword ? (
+                <AiOutlineEye size={20} />
+              ) : (
+                <AiOutlineEyeInvisible size={20} />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 

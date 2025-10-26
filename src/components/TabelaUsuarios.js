@@ -5,7 +5,49 @@ import Button from "./Button";
 import { api } from "@/services/api";
 import { Trash } from "lucide-react";
 
-function TabelaUsuarios({ colunas = [], linhas = [], onUpdate }) {
+import BotoesPaginacao from "./BotoesPaginacao";
+
+const transformaDatas = (data) => {
+  const dataISO = data;
+
+  const data2 = new Date(dataISO);
+
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "America/Sao_Paulo",
+  };
+
+  const dataFormatada = new Intl.DateTimeFormat("pt-BR", options).format(data2);
+
+  return dataFormatada;
+};
+const formatarCPF = (cpf) => {
+  if (!cpf) return "-";
+
+  const regexLetras = /[a-zA-Z]/;
+
+  if (regexLetras.test(cpf)) {
+    return cpf;
+  }
+
+  const cpfLimpo = cpf.replace(/\D/g, "");
+
+  const cpfFinal = cpfLimpo.slice(0, 11);
+
+  return cpfFinal.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+};
+
+function TabelaUsuarios({
+  colunas = [],
+  linhas = [],
+  onUpdate,
+  meta,
+  page,
+  setPage,
+  isLoading
+}) {
   const handleAceita = async (id) => {
     try {
       const { data } = await api.delete(`/admin/medicos/${id}`);
@@ -17,49 +59,71 @@ function TabelaUsuarios({ colunas = [], linhas = [], onUpdate }) {
       console.log(e);
     }
   };
+  const LoadingIndicator = () => (
+    <div className="flex-1 flex flex-col gap-2 justify-center items-center">
+      <h2 className="text-azul text-2xl">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          <span className="bg-gradient-to-r from-azul to-roxo_gradient bg-clip-text text-transparent">
+            Carregando...
+          </span>
+        </div>
+      </h2>
+    </div>
+  );
 
   return (
-    <div className="bg-white dark:bg-noturno_medio p-10 pb-5 rounded-[10px] h-full">
-      {linhas.length > 0 ? (
-        <>
-          <div className="flex justify-around items-center text-center dark:text-white dark:bg-noturno_medio_claro bg-cinza_medio rounded-t-[10px] text-cinza_texto font-medium p-5">
-            {colunas.map((coluna) => (
-              <h3 key={coluna} className="w-full">
-                {coluna}
-              </h3>
-            ))}
-          </div>
-          <div className="flex flex-col gap-5 justify-between p-5 text-cinza_texto">
-            {linhas.map((linha, index) => (
-              <div
-                key={index}
-                className="flex justify-around text-center items-center dark:text-white"
-              >
-                <h3 className="w-full">{linha.nome}</h3>
-                <h3 className="w-full">
-                  {linha.dataNascimento}
+    <div className="bg-white dark:bg-noturno_medio p-10 pb-5 rounded-[10px] h-full  flex flex-col justify-between">
+       {isLoading ? (
+        <LoadingIndicator />
+      ) : linhas.length > 0 ? (
+        <div className="flex flex-col">
+          <>
+            <div className="flex justify-around items-center text-center dark:text-white dark:bg-noturno_medio_claro bg-cinza_medio rounded-t-[10px] text-cinza_texto font-medium p-5">
+              {colunas.map((coluna) => (
+                <h3 key={coluna} className="w-full">
+                  {coluna}
                 </h3>
-                <h3 className="w-full">{linha.cpf}</h3>
-                <h3 className="w-full">{linha.crm}</h3>
-                <h3 className="w-full">
-                  {linha.username} 
-                </h3>
-                <div className="w-full flex justify-center gap-3">
-                  <Button
-                    onClick={() => handleAceita(linha.id)}
-                    classes="h-10 w-10 bg-[#FA3E3E]"
-                  >
-                    <Trash color="white"/>
-                  </Button>
+              ))}
+            </div>
+            <div className="flex flex-col justify-between px-5 py-2 text-cinza_texto ">
+              {linhas.map((linha, index) => (
+                <div
+                  key={index}
+                  className="flex hover:bg-cinza_medio dark:hover:bg-noturno_medio_claro justify-around text-center items-center dark:text-white py-2 border-b border-cinza_medio dark:border-noturno_medio_claro"
+                >
+                  <h3 className="w-full">{linha.nome}</h3>
+                  <h3 className="w-full">
+                    {transformaDatas(linha.dataNascimento)}
+                  </h3>
+                  <h3 className="w-full">{formatarCPF(linha.cpf)}</h3>
+                  <h3 className="w-full">{linha.crm}</h3>
+                  <h3 className="w-full">{linha.username}</h3>
+                  <div className="w-full flex justify-center gap-3">
+                    <Button
+                      onClick={() => handleAceita(linha.id)}
+                      classes="h-9 w-9 bg-[#FA3E3E]"
+                    >
+                      <Trash color="white" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </>
+              ))}
+            </div>
+          </>
+        </div>
       ) : (
-        <h2 className="text-center text-2xl text-cinza_texto dark:text-white">Nenhuma solicitação encontrada</h2>
-      )}
-    </div>
+              <div className="flex-1 flex flex-col gap-2 justify-center items-center">
+                <h2 className="text-azul text-2xl">Dados não encontrados</h2>
+              </div>
+            )}
+      
+            {!isLoading && meta && meta.totalPages > 1 && (
+              <div className="self-end flex justify-end">
+                <BotoesPaginacao meta={meta} page={page} setPage={setPage} />
+              </div>
+            )}
+          </div>
   );
 }
 

@@ -10,17 +10,26 @@ import { useEffect, useState } from "react";
 function Excluir_medico() {
   const [solicitacao, setSolicitacao] = useState([]);
   const [page, setPage] = useState(1);
+  const [meta, setMeta] = useState({});
   const [termoPesquisa, setTermoPesquisa] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchSolicitacoes = async () => {
+    setIsLoading(true);
     try {
       const { data } = await api.get(
         `/admin/medicos?page=${page}&limit=10&search=${termoPesquisa}`
       );
       setSolicitacao(data.items);
+      setMeta(data.meta);
       console.log(data);
     } catch (e) {
       console.log(e);
+      setSolicitacao([]);
+      setMeta(null);
+      toast.error("Erro ao buscar solicitações.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -30,7 +39,7 @@ function Excluir_medico() {
 
   const handlePesquisaChange = (e) => {
     setTermoPesquisa(e.target.value);
-    console.log(e.target.value);
+    setPage(1);
   };
 
   return (
@@ -78,6 +87,7 @@ function Excluir_medico() {
           </Button>
         </div>
       </div>
+         <>
       <TabelaUsuarios
         colunas={[
           `Nome`,
@@ -89,7 +99,12 @@ function Excluir_medico() {
         ]}
         linhas={solicitacao}
         onUpdate={fetchSolicitacoes}
+        meta={meta}
+        page={page}
+        setPage={setPage}
+        isLoading={isLoading}
       />
+      </>
     </div>
   );
 }

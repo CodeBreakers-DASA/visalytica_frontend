@@ -276,7 +276,7 @@ export default function Analise() {
           />
         </div>
         <div className="flex flex-col gap-6 w-1/2 h-full">
-          <CardInputs className="h-full w-full flex flex-col justify-between bg-white dark:bg-noturno_medio rounded-[10px] px-7 py-4 gap-3">
+          <CardInputs className="h-full w-full flex flex-col justify-between bg-white dark:bg-noturno_medio rounded-[10px] px-7 py-4 gap-5">
             <Input
               label={"CPF*"}
               placeHolder={"000.000.000-00"}

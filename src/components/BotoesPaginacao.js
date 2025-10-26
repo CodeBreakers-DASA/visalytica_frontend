@@ -30,7 +30,7 @@ export default function BotoesPaginacao({meta, page, setPage, className}) {
 
             {
                 meta && (
-                    <Button classes={'w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg-gradient-to-b from-azul to-azul_escuro rounded-xl xs:rounded-2xl text-white text-xs xs:text-sm'} onClick={() => setPage(page)}>
+                    <Button classes={'w-[32px] h-[32px] xs:w-[36px] xs:h-[36px] sm:w-[40px] sm:h-[40px] bg-gradient-to-b from-azul to-roxo_gradient rounded-xl xs:rounded-2xl text-white text-xs xs:text-sm'} onClick={() => setPage(page)}>
                         {page}
                     </Button>
                 )

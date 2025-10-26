@@ -42,7 +42,7 @@ export default function TabelaPacientes({ pacientes }) {
 
   return (
     <>
-      <div className=" dark:shadow-none shadow-md overflow-hidden rounded-[10px] text-[#615D5D] dark:text-cinza h-[92%]">
+      <div className=" dark:shadow-none overflow-hidden rounded-[10px] text-[#615D5D] dark:text-cinza h-[92%]">
         <div className="flex flex-col justify-between">
           <table className="min-w-full text-sm text-center h-full">
             <thead className="text-sm font-semibold ">
