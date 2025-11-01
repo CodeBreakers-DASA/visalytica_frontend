@@ -155,7 +155,7 @@ const LoadingIndicator = () => (
         ) : (
         // Se não está carregando E NÃO tem linhas, mostra "Dados não encontrados"
         <div className="flex-1 flex flex-col gap-2 justify-center items-center">
-          <h2 className="text-azul text-2xl">Dados não encontrados</h2>
+          <h2 className="text-azul text-2xl text-center">Dados não encontrados :(</h2>
         </div>
       )}
 

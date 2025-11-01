@@ -28,7 +28,7 @@ function SidebarContent({ user, pathName, handleLogout, closeMobileMenu, isMobil
             <div className="w-full">
 {!isMobile && (
             <div className="flex flex-col items-center gap-3 mb-16">
-                <Link href={"/Home"} onClick={handleLinkClick}>
+                <Link href={user.role === "medico" ? "/Home" : "/Criar_usuario"} onClick={handleLinkClick}>
                     <Image
                         src={LogoVisalytica}
                         alt="Logo da Visalytica"
@@ -224,7 +224,7 @@ export default function Sidebar() {
                 </button>
                 <div className="flex items-center gap-4">
 
-                 <Link href={"/Home"}>
+                 <Link href={user.role === "medico" ? "/Home" : "/Criar_usuario"}>
                     <Image
                         src={LogoVisalytica}
                         alt="Logo Visalytica"

@@ -70,7 +70,7 @@ export default function CardExame({ exame, paciente, medico }) {
         )}
       </div>
       <div className="flex px-5 py-3 h-full">
-        <div className="flex-1 flex flex-col justify-between pb-0 text-sm w-3/4">
+        <div className="flex-1 flex flex-col justify-between pb-0 gap-2 text-sm w-3/4">
           <div className="flex items-center justify-between">
             <div className="flex gap-3 items-center">
               <svg
@@ -93,7 +93,7 @@ export default function CardExame({ exame, paciente, medico }) {
                 {formatarData(exame.dataCriacao)}
               </span>
             </div>
-            <div className="flex justify-center gap-2 ">
+            <div className="flex max-md:hidden justify-center gap-2 ">
               <button
                 onClick={handleDownload}
                 className="w-[30px] h-[30px] bg-azul text-white rounded-[8px] xs:rounded-[10px] hover:bg-blue-700 transition-colors flex items-center justify-center"
@@ -218,6 +218,40 @@ export default function CardExame({ exame, paciente, medico }) {
               </div>
             </div>
           )}
+                      <div className="flex md:hidden justify-center gap-2 mt-2">
+              <button
+                onClick={handleDownload}
+                className="w-[30px] h-[30px] bg-azul text-white rounded-[8px] xs:rounded-[10px] hover:bg-blue-700 transition-colors flex items-center justify-center"
+                aria-label="Upload do Exame"
+                title="Upload"
+              >
+                <Upload size={16} className="xs:w-[18px] xs:h-[18px]" />
+              </button>
+
+              <button
+                onClick={handleEdit}
+                disabled={!exame.canEdit}
+                className="disabled:bg-gray-400 disabled:cursor-not-allowed w-[30px] h-[30px] bg-[#F4DB1D] text-white rounded-[8px] xs:rounded-[10px] hover:bg-yellow-400 transition-colors flex items-center justify-center"
+                aria-label="Editar Exame"
+                title="Editar"
+              >
+                <Pencil size={16} className="xs:w-[18px] xs:h-[18px]" />
+              </button>
+
+              <Popup
+                classTrigger={
+                  "w-[30px] h-[30px] bg-vermelho text-white rounded-[8px] xs:rounded-[10px] hover:bg-red-700 transition-colors flex items-center justify-center"
+                }
+                paciente={paciente}
+                type="delete amostras"
+                key={exame.id}
+                id={exame.id}
+                triggerText={
+                  <Trash2 size={16} className="xs:w-[18px] xs:h-[18px]" />
+                }
+                title={`Você deseja solicitar a exclusão permanentemente do ${paciente.nome}`}
+              />
+            </div>
         </div>
       </div>
     </div>

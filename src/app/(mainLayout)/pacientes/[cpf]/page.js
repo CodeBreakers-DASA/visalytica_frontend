@@ -189,7 +189,7 @@ export default function PerfilPaciente() {
         <div>
           <div className="bg-white dark:bg-noturno_medio p-5 rounded-[10px] flex flex-col justify-between items-start mb-4 xs:mb-5 sm:mb-6 gap-3 sm:gap-4">
 
-            <div className="flex gap-3 xs:gap-4 sm:gap-5 w-1/2 items-center justify-end ml-auto">
+            <div className="flex gap-3 xs:gap-4 sm:gap-5 max-md:w-full w-1/2 items-center justify-end ml-auto">
               <Input
                 type="text"
                 placeHolder="Pesquise por nome da amostra, médico ou número do exame."

@@ -253,8 +253,8 @@ export default function Analise() {
 
   return (
     <>
-      <div className="w-full h-full flex flex-row py-10 px-5 gap-3">
-        <div className="flex flex-col w-1/2 gap-3 bg-white dark:bg-noturno_medio px-7 py-4 rounded-[10px]">
+      <div className="w-full h-full flex max-md:flex-col flex-row py-10 px-5 gap-3">
+        <div className="flex flex-col md:w-1/2 gap-3 bg-white dark:bg-noturno_medio px-7 py-4 rounded-[10px]">
           <ImagemTempoReal
             label={"Altura"}
             selectedDevice={selectedDevice1}
@@ -275,7 +275,7 @@ export default function Analise() {
             qr={!showQRReader}
           />
         </div>
-        <div className="flex flex-col gap-6 w-1/2 h-full">
+        <div className="flex flex-col gap-6 md:w-1/2 h-full">
           <CardInputs className="h-full w-full flex flex-col justify-between bg-white dark:bg-noturno_medio rounded-[10px] px-7 py-4 gap-5">
             <Input
               label={"CPF*"}
@@ -467,9 +467,9 @@ export default function Analise() {
       {/* Modal de Leitura QR Code */}
       {showQRReader && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4">
-          <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center w-full max-w-md relative">
+          <div className="bg-white dark:bg-noturno_medio rounded-xl shadow-lg p-6 flex flex-col items-center w-full max-w-md relative">
             <button
-              className="absolute top-2 right-2 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-azul"
+              className="absolute top-2 right-2 w-8 h-8 bg-gray-100 dark:bg-noturno_medio_claro dark:text-white rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-azul"
               onClick={handleCloseQRReader}
               aria-label="Fechar leitor de QR Code"
             >
@@ -519,7 +519,7 @@ export default function Analise() {
               />
             ) : (
               <div className="text-center p-4">
-                <p className="text-gray-600 mb-2">Nenhuma câmera detectada</p>
+                <p className="text-gray-600 dark:text-white mb-2">Nenhuma câmera detectada</p>
                 <p className="text-sm text-gray-500">
                   Verifique se a câmera está conectada e as permissões estão
                   habilitadas
