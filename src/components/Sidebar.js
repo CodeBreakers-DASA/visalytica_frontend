@@ -203,7 +203,7 @@ export default function Sidebar() {
     return (
         <>
             {/* --- Sidebar Desktop --- */}
-            <div className="fixed top-0 left-0 z-30 flex flex-col h-screen w-[270px] max-lg:hidden items-center justify-between py-10 bg-white dark:bg-noturno_medio shadow-sm border-r border-cinza dark:border-noturno_borda">
+            <div className="fixed top-0 left-0 z-30 flex flex-col h-screen w-[270px] max-md:hidden items-center justify-between py-10 bg-white dark:bg-noturno_medio shadow-sm border-r border-cinza dark:border-noturno_borda">
                 <SidebarContent 
                     user={user} 
                     pathName={pathName} 
@@ -213,7 +213,7 @@ export default function Sidebar() {
             </div>
 
             {/* --- Header Mobile --- */}
-            <div className="lg:hidden h-[76px] fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-white dark:bg-noturno_medio border-b border-cinza dark:border-noturno_borda">
+            <div className="md:hidden h-[76px] fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-white dark:bg-noturno_medio border-b border-cinza dark:border-noturno_borda">
                  {/* Logo Menor no Mobile */}
                 <button 
                     onClick={openMobileMenu} 
@@ -242,13 +242,13 @@ export default function Sidebar() {
             {/* --- Mobile Drawer Menu --- */}
             {/* Overlay */}
             <div 
-                className={`lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                className={`md:hidden fixed inset-0 z-50 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 onClick={closeMobileMenu}
                 aria-hidden={!isMobileMenuOpen}
             />
             {/* Drawer */}
             <div 
-                className={`lg:hidden  fixed top-0 left-0 z-50 flex flex-col h-full w-80 bg-white dark:bg-noturno_medio border-r border-cinza dark:border-noturno_borda transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+                className={`md:hidden  fixed top-0 left-0 z-50 flex flex-col h-full w-80 bg-white dark:bg-noturno_medio border-r border-cinza dark:border-noturno_borda transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="mobile-menu-title"
