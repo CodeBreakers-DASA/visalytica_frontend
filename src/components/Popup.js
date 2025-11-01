@@ -175,7 +175,7 @@ export default function Popup({
 
       {open && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white dark:bg-noturno_medio p-6 rounded-xl shadow-lg w-[400px] text-center">
+          <div className="bg-white dark:bg-noturno_medio p-6 rounded-xl shadow-lg w-full mx-4 md:w-[400px] text-center">
             {/* Ícone */}
             <div className="flex justify-center mb-4">
               {type == "delete amostras" ||

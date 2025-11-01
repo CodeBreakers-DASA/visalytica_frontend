@@ -35,7 +35,7 @@ export default function ImagemTempoReal({
               backgroundColor: status ? "#439F57" : "#CFCFCF",
               color: status && "#fff",
             }}
-            className={`px-3 xs:px-4 sm:px-5 py-1 xs:py-1.5 rounded-[10px] text-xs mr-5 dark:text-black`}
+            className={`px-3 xs:px-4 sm:px-5 py-1 xs:py-1.5 rounded-[10px] text-xs mr-5 whitespace-nowrap dark:text-black`}
           >
             {status ? "Capturado" : "Não capturado"}
           </p>
@@ -51,7 +51,7 @@ export default function ImagemTempoReal({
           qr={qr}
         />
       ) : (
-        <div className="bg-gray-900 h-full w-full flex justify-center items-center rounded-[10px]">
+        <div className="bg-gray-900 h-full w-full max-md:min-h-40 flex justify-center items-center rounded-[10px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="150"

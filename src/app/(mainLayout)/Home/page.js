@@ -85,9 +85,9 @@ function HomeInicial() {
   console.log(tempoMedioData);
 
   return (
-    <div className="h-screen px-7 w-full flex flex-col justify-between py-6">
+    <div className="h-full px-7 w-full flex flex-col justify-between py-6">
       <div className="flex flex-col h-full gap-5 rounded-lg">
-        <div className="h-full flex gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12 py-8">
+        <div className="h-full max-md:flex-col flex gap-16 max-md:gap-6 bg-white dark:bg-noturno_medio rounded-lg px-12 max-md:py-12 py-8">
           <MenuDashboardFuncional
             title={
               <p>
@@ -101,7 +101,7 @@ function HomeInicial() {
             dataKey="value"
             tipoGrafico="bar"
           />
-          <div className="bg-cinza_escuro h-full w-0.5"></div>
+          <div className="bg-cinza_escuro dark:bg-gray-700 h-full w-0.5 max-md:h-0.5 max-md:w-full"></div>
           <div className=" flex flex-col justify-center">
             <h2 className="text-center text-cinza_escuro leading-9">
               quantidade realizada em
@@ -119,7 +119,7 @@ function HomeInicial() {
           </div>
         </div>
 
-        <div className="h-full flex flex-row-reverse gap-16 bg-white dark:bg-noturno_medio rounded-lg px-12 py-8">
+        <div className="relative h-full max-md:flex-col flex flex-row-reverse gap-16 max-md:gap-6 bg-white dark:bg-noturno_medio rounded-lg max-md:py-12 px-12 py-8">
           <MenuDashboardFuncional
             title="Tempo Médio de Análise por Mês"
             data={tempoMedioData}
@@ -127,7 +127,7 @@ function HomeInicial() {
             gradient
             tipoGrafico="line"
           />
-          <div className="bg-cinza_escuro h-full w-0.5"></div>
+          <div className="bg-cinza_escuro dark:bg-gray-700 h-full w-0.5 max-md:h-0.5 max-md:w-full"></div>
           <div className=" flex flex-col gap-3 justify-center">
             <h2 className="text-center text-cinza_escuro leading-9">
               seu tempo médio de análise em
@@ -152,7 +152,7 @@ function HomeInicial() {
 
         <Link href="/Analise">
           <div
-            className="fixed bottom-5 left-1/2 z-50 flex items-center py-3 px-10 ml-8 rounded-[10px] gap-3 hover:opacity-90"
+            className="fixed max-md:absolute bottom-5 left-1/2 max-md:transform max-md:-translate-x-1/2 max-md:ml-0 z-50 flex items-center py-3 px-10 ml-8 rounded-[10px] gap-3 hover:opacity-90"
             style={{
               backgroundImage: `linear-gradient(to right, #166DED, #716FEA)`,
             }}
@@ -170,7 +170,7 @@ function HomeInicial() {
                 fill={`white`}
               />
             </svg>
-            <h2 style={{ color: `white` }}>Fazer análise</h2>
+            <h2 style={{ color: `white` }} className="whitespace-nowrap">Fazer análise</h2>
           </div>
         </Link>
       </div>

@@ -45,7 +45,7 @@ function Excluir_amostras() {
 
   return (
     <div className="w-full h-full p-9 flex flex-col gap-7">
-      <div className="w-full flex justify-between gap-8 bg-white dark:bg-noturno_medio px-9 py-5 rounded-[10px]">
+      <div className="w-full max-md:flex-col flex justify-between gap-8 bg-white dark:bg-noturno_medio px-9 py-5 rounded-[10px]">
         <Link className="flex text-azul items-center gap-2" href={"/Home"}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,7 @@ function Excluir_amostras() {
           </svg>
           <h3 className="">Voltar</h3>
         </Link>
-        <div className="flex w-full gap-5">
+        <div className="flex  w-full gap-5">
           <Input
             type="text"
             placeHolder="Pesquise por paciente, cpf, nome da amostra ou solicitante"

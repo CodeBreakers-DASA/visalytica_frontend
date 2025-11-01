@@ -157,7 +157,7 @@ export default function Criar_usuario() {
   };
 
   return (
-    <div className="max-h-[60vh] min-h-[50vh] bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-between">
+    <div className="max-h-[60vh] min-h-[50vh] max-md:min-h-fit max-md:my-12 max-md:w-[90vw] bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-between">
       <div className="w-full flex justify-center gap-5">
         <InputRadio
           selected={selected[0]}
@@ -171,7 +171,7 @@ export default function Criar_usuario() {
         />
       </div>
 
-      <div className="flex py-6 gap-6 flex-1">
+      <div className="flex max-md:flex-col py-6 gap-6 flex-1">
         <div className="flex flex-1 flex-col gap-2 justify-between">
           <Input
             className="font-medium text-cinza_texto w-full"
@@ -267,7 +267,7 @@ export default function Criar_usuario() {
       <div className="flex justify-center">
         <Button
           onClick={handleRegistrar}
-          classes="text-white px-4 py-3 bg-gradient-to-r from-azul to-roxo_gradient hover:opacity-90 w-1/4 rounded-xl transition-all duration-200"
+          classes="text-white max-md:w-full px-4 py-3 bg-gradient-to-r from-azul to-roxo_gradient hover:opacity-90 w-1/4 rounded-xl transition-all duration-200"
         >
           Registrar
         </Button>

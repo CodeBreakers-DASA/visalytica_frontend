@@ -36,7 +36,7 @@ export default function MenuDashboardFuncional({
           {title}
         </CardDescription>
       </CardHeader>
-      <CardContent className="h-3/4">
+      <CardContent className="h-3/4 max-md:min-h-52">
         <ResponsiveContainer width="100%" height="100%">
           {tipoGrafico == "bar" ? (
             <BarChart
