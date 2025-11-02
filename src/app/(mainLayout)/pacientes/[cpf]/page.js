@@ -12,6 +12,8 @@ import Button from "../../../../components/Button";
 import CardExame from "../../../../components/CardExame";
 import { Frown } from "lucide-react";
 import BotoesPaginacao from "@/components/BotoesPaginacao";
+import Popup from "@/components/Popup";
+import { UserRoundX} from "lucide-react";
 
 const fetchPacienteDetails = async ({ queryKey }) => {
   const [_key, cpf] = queryKey;
@@ -166,6 +168,19 @@ export default function PerfilPaciente() {
                 />
               </svg>
               {paciente.nome}
+               <Popup
+                              classTrigger={
+                                "w-[30px] ml-5 h-[30px] bg-vermelho text-white items-center justify-center rounded-[8px] xs:rounded-[10px] hover:bg-red-700 transition-colors flex items-center justify-center"
+                              }
+                              paciente={paciente}
+                              type="delete pacientes"
+                              key={paciente.id}
+                              id={paciente.id}
+                              triggerText={
+                                <UserRoundX size={18} className="xs:w-[18px] xs:h-[18px]" />
+                              }
+                              title={`Você deseja solicitar a exclusão permanentemente de ${paciente.nome}`}
+                            />
             </h2>
             <div className="space-y-1.5 xs:space-y-2">
               <div>

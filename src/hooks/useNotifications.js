@@ -6,7 +6,11 @@ export function useNotifications(userId) {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    if (!userId) return;
+    console.log('useNotifications - userId recebido:', userId);
+    if (!userId) {
+      console.log('useNotifications - userId é null/undefined, retornando');
+      return;
+    }
 
     const getApiUrl = () => {
       if (typeof window !== 'undefined') {
@@ -23,8 +27,11 @@ export function useNotifications(userId) {
 
     const fetchUnread = async () => {
       try {
+        console.log('Fazendo requisição para:', `${apiUrl}/notifications/unread/${userId}`);
         const response = await fetch(`${apiUrl}/notifications/unread/${userId}`);
+        console.log('Response status:', response.status);
         const unread = await response.json();
+        console.log('Notificações recebidas:', unread);
         setNotifications(unread);
       } catch (error) {
         console.error('Erro ao buscar notificações:', error);
@@ -37,14 +44,19 @@ export function useNotifications(userId) {
     
     eventSource.onmessage = (event) => {
       const notification = JSON.parse(event.data);
+      console.log('Nova notificação via EventSource:', notification);
       setNotifications(prev => [notification, ...(Array.isArray(prev) ? prev : [])]);
     };
 
     eventSource.onerror = (error) => {
       console.error('Erro no EventSource:', error);
+      console.log('EventSource readyState:', eventSource.readyState);
     };
 
-    return () => eventSource.close();
+    return () => {
+      console.log('useNotifications - Fechando EventSource');
+      eventSource.close();
+    };
   }, [userId]);
 
   const markAsRead = async (notificationId) => {

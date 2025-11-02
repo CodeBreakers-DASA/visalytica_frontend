@@ -27,7 +27,15 @@ function Login() {
     mutationFn: loginRequest,
     onSuccess: async (data) => {
       toast.success("Login realizado com sucesso!");
-      await auth.login(data.access_token);
+      const userData = {
+        id: data.id,
+        nome: data.nome,
+        username: data.username,
+        role: data.role,
+        cpf: data.cpf,
+        crm: data.crm
+      };
+      await auth.login(data.access_token, userData);
       data.role == 'medico' ? router.push("/Home") : router.push("/Criar_usuario")   
     },
     onError: (error) => {
