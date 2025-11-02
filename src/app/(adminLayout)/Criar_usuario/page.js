@@ -31,6 +31,16 @@ export default function Criar_usuario() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  const [changePasswordInputs, setChangePasswordInputs] = useState({
+    username: "",
+    newPassword: ""
+  });
+  const [changePasswordErrors, setChangePasswordErrors] = useState({
+    username: false,
+    newPassword: false
+  });
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const handleSelected = (id) => {
     id === 0 ? setSelected([true, false]) : setSelected([false, true]);
   };
@@ -65,6 +75,21 @@ export default function Criar_usuario() {
       }));
 
       setInputsError((prev) => ({
+        ...prev,
+        [field]: false,
+      }));
+    },
+    []
+  );
+
+  const handleChangePasswordInputChange = useCallback(
+    (field) => (e) => {
+      setChangePasswordInputs((prev) => ({
+        ...prev,
+        [field]: e.target.value,
+      }));
+
+      setChangePasswordErrors((prev) => ({
         ...prev,
         [field]: false,
       }));
@@ -156,8 +181,52 @@ export default function Criar_usuario() {
     }
   };
 
+  const handleAlterarSenha = async () => {
+    setChangePasswordErrors({
+      username: false,
+      newPassword: false
+    });
+
+    if (!changePasswordInputs.username.trim()) {
+      toast.error("Username é obrigatório");
+      setChangePasswordErrors((prev) => ({ ...prev, username: true }));
+      return;
+    }
+
+    if (changePasswordInputs.newPassword.length < 6) {
+      toast.error("A nova senha deve ter pelo menos 6 caracteres");
+      setChangePasswordErrors((prev) => ({ ...prev, newPassword: true }));
+      return;
+    }
+
+    try {
+      await api.patch(`/admin/users/${changePasswordInputs.username}`, {
+        newPassword: changePasswordInputs.newPassword
+      });
+      toast.success("Senha alterada com sucesso!");
+      setChangePasswordInputs({ username: "", newPassword: "" });
+    } catch (error) {
+      console.error("Erro ao alterar senha:", error.response?.data || error);
+      
+      const messages = error?.response?.data?.message;
+      if (Array.isArray(messages) && messages.length > 0) {
+        messages.forEach((msg) => {
+          if (typeof msg === "string") {
+            toast.error(msg);
+          }
+        });
+      } else if (typeof messages === "string" && messages.trim() !== "") {
+        toast.error(messages);
+      } else {
+        toast.error("Erro ao alterar senha. Tente novamente.");
+      }
+    }
+  };
+
   return (
-    <div className="max-h-[60vh] min-h-[50vh] max-md:min-h-fit max-md:my-12 max-md:w-[90vw] bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-between">
+    <div className="flex max-xl:flex-col mx-12 gap-4 max-md:gap-8 max-md:my-12">
+    <div className="max-h-[60vh] min-h-[50vh] max-md:min-h-fit max-md:w-[90vw] bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-between">
+      <span className="text-center text-azul font-bold text-xl mb-4">Criar usuário</span>
       <div className="w-full flex justify-center gap-5">
         <InputRadio
           selected={selected[0]}
@@ -272,6 +341,53 @@ export default function Criar_usuario() {
           Registrar
         </Button>
       </div>
+    </div>
+
+    <div className=" h-fit max-md:w-[90vw] gap-6 bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-center">
+      <span className="text-center text-azul font-bold text-xl">Alterar senha</span>
+      <div className="flex max-md:flex-col gap-4">
+        <div className="w-full">
+        <Input
+          className="font-medium text-cinza_texto w-full"
+          label="Username"
+          value={changePasswordInputs.username}
+          onChange={handleChangePasswordInputChange("username")}
+          placeHolder="Digite o username"
+          hasError={changePasswordErrors.username}
+          classDiv="flex-col"
+          />
+          </div>
+        <div className="relative w-full">
+          <Input
+            className="font-medium text-cinza_texto w-full"
+            label="Nova senha"
+            value={changePasswordInputs.newPassword}
+            type={showNewPassword ? "text" : "password"}
+            onChange={handleChangePasswordInputChange("newPassword")}
+            placeHolder="**********"
+            hasError={changePasswordErrors.newPassword}
+            classDiv="flex-col"
+          />
+          <button
+            type="button"
+            onClick={() => setShowNewPassword(!showNewPassword)}
+            className="absolute bottom-3.5 right-3 text-gray-500 cursor-pointer"
+          >
+            {showNewPassword ? (
+              <AiOutlineEye size={20} />
+            ) : (
+              <AiOutlineEyeInvisible size={20} />
+            )}
+          </button>
+        </div>
+      </div>
+      <Button
+        onClick={handleAlterarSenha}
+        classes="text-white max-md:w-full self-center px-4 py-3 bg-gradient-to-r from-azul to-roxo_gradient hover:opacity-90 w-1/4 rounded-xl transition-all duration-200"
+      >
+        Alterar
+      </Button>
+    </div>
     </div>
   );
 }
