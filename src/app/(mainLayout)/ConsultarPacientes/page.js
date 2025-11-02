@@ -13,8 +13,10 @@ export default function ConsultarPacientes() {
   const [meta, setMeta] = useState({});
   const [page, setPage] = useState(1);
   const [termoPesquisa, setTermoPesquisa] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchPacientes = async () => {
+    setIsLoading(true);
     try {
       const { data } = await api.get(
         `/pacientes/tabela?page=${page}&limit=8&search=${termoPesquisa}`
@@ -23,6 +25,8 @@ export default function ConsultarPacientes() {
       setMeta(data.meta);
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -80,18 +84,29 @@ export default function ConsultarPacientes() {
           </Button>
         </div>
       </div>
-      <div className="bg-white dark:bg-noturno_medio max-md:p-6 p-10 pb-5 rounded-[10px] h-full">
-        {mockPacientes[0] ? (
+      <div className="bg-white dark:bg-noturno_medio max-md:p-6 p-10 pb-5 rounded-[10px] h-full flex flex-col justify-between">
+        {isLoading ? (
+          <div className="flex-1 flex flex-col gap-2 justify-center items-center min-h-[80vh]">
+            <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <span className="bg-gradient-to-r from-azul to-roxo_gradient bg-clip-text text-transparent text-2xl">
+              Carregando...
+            </span>
+          </div>
+        ) : mockPacientes.length > 0 ? (
           <>
             <TabelaPacientes pacientes={mockPacientes} />
-            <BotoesPaginacao meta={meta} page={page} setPage={setPage} />
+            {meta && meta.totalPages > 1 && (
+              <div className="flex justify-end">
+                <BotoesPaginacao meta={meta} page={page} setPage={setPage} />
+              </div>
+            )}
           </>
         ) : (
-          <h2 className="w-full text-azul text-center text-2xl">
-            {meta?.itemCount != 0
-              ? "Carregando pacientes..."
-              : "Paciente não encontrado"}
-          </h2>
+          <div className="flex-1 flex flex-col gap-2 justify-center items-center">
+            <h2 className="text-azul text-2xl text-center">
+              Paciente não encontrado
+            </h2>
+          </div>
         )}
       </div>
     </div>

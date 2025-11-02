@@ -76,8 +76,11 @@ function HomeInicial() {
 
   if (isAuthLoading || isDataLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="w-10 h-10 border-4 border-azul border-t-transparent rounded-full animate-spin"></div>
+      <div className="md:ml-[270px] fixed inset-0 flex justify-center items-center">
+        <div className="text-center">
+          <div className="w-8 h-8 xs:w-10 xs:h-10 sm:w-12 sm:h-12 border-4 border-azul border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-sm xs:text-base">Carregando dados do médico...</p>
+        </div>
       </div>
     );
   }
