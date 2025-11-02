@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
+import { NotificationPanel } from '../components/NotificationPanel';
 import { useState } from 'react'; // Importar useState
 import { Menu, X } from 'lucide-react'; // Importar ícones
 
@@ -160,7 +161,10 @@ function SidebarContent({ user, pathName, handleLogout, closeMobileMenu, isMobil
             {/* Bottom Section: User Info & Logout */}
             <div className="relative">
                 <div className="flex flex-col items-center gap-3"> {/* Removido cursor-pointer */}
-                    <ThemeSwitcher />
+                    <div className="flex items-center gap-4">
+                        <ThemeSwitcher />
+                        <NotificationPanel />
+                    </div>
                     <div className="w-20 mt-2 h-[1px] bg-cinza dark:bg-noturno_borda"></div>
                     {/* SVG Profile Icon */}
                     {user.role == "medico" ? 
