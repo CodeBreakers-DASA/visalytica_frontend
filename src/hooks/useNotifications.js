@@ -13,13 +13,7 @@ export function useNotifications(userId) {
     }
 
     const getApiUrl = () => {
-      if (typeof window !== 'undefined') {
-        const hostname = window.location.hostname;
-        if (hostname === 'localhost' || hostname === '127.0.0.1') {
-          return 'http://localhost:3001';
-        }
-      }
-      return 'https://nest-visalytica.onrender.com';
+      return process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'https://nest-visalytica.onrender.com';
     };
 
     const apiUrl = getApiUrl();
@@ -62,13 +56,7 @@ export function useNotifications(userId) {
   const markAsRead = async (notificationId) => {
     try {
       const getApiUrl = () => {
-        if (typeof window !== 'undefined') {
-          const hostname = window.location.hostname;
-          if (hostname === 'localhost' || hostname === '127.0.0.1') {
-            return 'http://localhost:3001';
-          }
-        }
-        return 'https://nest-visalytica.onrender.com';
+        return process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'https://nest-visalytica.onrender.com';
       };
 
       const apiUrl = getApiUrl();
