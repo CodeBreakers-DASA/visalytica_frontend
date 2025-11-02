@@ -12,6 +12,12 @@ export function NotificationPanel() {
 
   const unreadCount = Array.isArray(notifications) ? notifications.filter(n => !n.read).length : 0;
 
+  useEffect(() => {
+    console.log('NotificationPanel - User:', user);
+    console.log('NotificationPanel - Notifications:', notifications);
+    console.log('NotificationPanel - Unread count:', unreadCount);
+  }, [user, notifications, unreadCount]);
+
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
@@ -32,13 +38,13 @@ export function NotificationPanel() {
         </button>
 
         {isOpen && (
-          <div className="fixed right-0 top-28 max-md:mx-2 max-md:w-[81vw] md:right-4 md:top-16 md:w-80 bg-white dark:bg-noturno_medio border border-cinza dark:border-noturno_borda rounded-[10px] shadow-lg" style={{zIndex: 9999}}>
+          <div className="absolute bottom-full mb-6 max-md:min-w-[300px] max-md:right-[-62px] right-[-120px] md:w-80 bg-white dark:bg-noturno_medio border border-cinza dark:border-noturno_borda rounded-[10px] shadow-lg" style={{zIndex: 9999}}>
             <div className="p-3 border-b flex justify-center items-center gap-2 border-cinza text-azul dark:border-noturno_borda">
                <Bell size={20} /> 
               <h3 className="font-semibold text-center">Notificações</h3>
             </div>
             
-            <div className="max-h-72 min-h-72 overflow-y-auto rounded-b-[10px] scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+            <div className="max-h-72 min-h-72 overflow-y-auto overflow-x-hidden rounded-b-[10px] scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
               {!Array.isArray(notifications) || notifications.length === 0 ? (
                 <div className="p-4 text-center text-cinza_escuro dark:text-cinza_claro">
                   Nenhuma notificação

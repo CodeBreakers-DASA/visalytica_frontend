@@ -8,9 +8,22 @@ export function useNotifications(userId) {
   useEffect(() => {
     if (!userId) return;
 
+    const getApiUrl = () => {
+      if (typeof window !== 'undefined') {
+        const hostname = window.location.hostname;
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+          return 'http://localhost:3001';
+        }
+      }
+      return 'https://nest-visalytica.onrender.com';
+    };
+
+    const apiUrl = getApiUrl();
+    console.log('API URL:', apiUrl, 'User ID:', userId);
+
     const fetchUnread = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/notifications/unread/${userId}`);
+        const response = await fetch(`${apiUrl}/notifications/unread/${userId}`);
         const unread = await response.json();
         setNotifications(unread);
       } catch (error) {
@@ -20,14 +33,15 @@ export function useNotifications(userId) {
 
     fetchUnread();
 
-    const eventSource = new EventSource(`http://localhost:3001/notifications/${userId}`);
+    const eventSource = new EventSource(`${apiUrl}/notifications/${userId}`);
     
     eventSource.onmessage = (event) => {
       const notification = JSON.parse(event.data);
       setNotifications(prev => [notification, ...(Array.isArray(prev) ? prev : [])]);
     };
 
-    eventSource.onerror = () => {
+    eventSource.onerror = (error) => {
+      console.error('Erro no EventSource:', error);
     };
 
     return () => eventSource.close();
@@ -35,7 +49,18 @@ export function useNotifications(userId) {
 
   const markAsRead = async (notificationId) => {
     try {
-      await fetch(`http://localhost:3001/notifications/read/${notificationId}`, {
+      const getApiUrl = () => {
+        if (typeof window !== 'undefined') {
+          const hostname = window.location.hostname;
+          if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return 'http://localhost:3001';
+          }
+        }
+        return 'https://nest-visalytica.onrender.com';
+      };
+
+      const apiUrl = getApiUrl();
+      await fetch(`${apiUrl}/notifications/read/${notificationId}`, {
         method: 'PATCH'
       });
       setNotifications(prev => 
