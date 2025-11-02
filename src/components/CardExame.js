@@ -115,7 +115,7 @@ export default function CardExame({ exame, paciente, medico }) {
 
               <Popup
                 classTrigger={
-                  "w-[30px] h-[30px] bg-vermelho text-white rounded-[8px] xs:rounded-[10px] hover:bg-red-700 transition-colors flex items-center justify-center"
+                  "w-[30px] h-[30px] bg-vermelho text-white justify-center rounded-[8px] xs:rounded-[10px] hover:bg-red-700 transition-colors flex items-center justify-center"
                 }
                 paciente={paciente}
                 type="delete amostras"
@@ -124,7 +124,7 @@ export default function CardExame({ exame, paciente, medico }) {
                 triggerText={
                   <Trash2 size={16} className="xs:w-[18px] xs:h-[18px]" />
                 }
-                title={`Você deseja solicitar a exclusão permanentemente do ${paciente.nome}`}
+                title={`Você deseja solicitar a exclusão permanentemente de ${exame.nomeAmostra}`}
               />
             </div>
           </div>
@@ -196,7 +196,7 @@ export default function CardExame({ exame, paciente, medico }) {
           </div>
 
           {exame.possivelDiagnostico && (
-            <div className="flex gap-3 items-center ">
+            <div className="flex gap-3 items-start ">
               <div className="flex items-center gap-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -240,7 +240,7 @@ export default function CardExame({ exame, paciente, medico }) {
 
               <Popup
                 classTrigger={
-                  "w-[30px] h-[30px] bg-vermelho text-white rounded-[8px] xs:rounded-[10px] hover:bg-red-700 transition-colors flex items-center justify-center"
+                  "w-[30px] h-[30px] bg-vermelho text-white items-center justify-center rounded-[8px] xs:rounded-[10px] hover:bg-red-700 transition-colors flex items-center justify-center"
                 }
                 paciente={paciente}
                 type="delete amostras"
@@ -249,7 +249,7 @@ export default function CardExame({ exame, paciente, medico }) {
                 triggerText={
                   <Trash2 size={16} className="xs:w-[18px] xs:h-[18px]" />
                 }
-                title={`Você deseja solicitar a exclusão permanentemente do ${paciente.nome}`}
+                title={`Você deseja solicitar a exclusão permanentemente de ${exame.nomeAmostra}`}
               />
             </div>
         </div>

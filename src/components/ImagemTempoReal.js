@@ -51,7 +51,7 @@ export default function ImagemTempoReal({
           qr={qr}
         />
       ) : (
-        <div className="bg-gray-900 h-full w-full max-md:min-h-40 flex justify-center items-center rounded-[10px]">
+        <div className="bg-gray-900 h-full w-full max-lg:min-h-40 flex justify-center items-center rounded-[10px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="150"

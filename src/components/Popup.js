@@ -5,6 +5,8 @@ import { api } from "../services/api";
 import { pdf } from "@react-pdf/renderer";
 import DownloadPDF from "./pdf/DownloadPDF";
 import { useRouter } from "next/navigation";
+import ReactDOM from "react-dom";
+import toast from "react-hot-toast";
 
 export default function Popup({
   triggerText = "Abrir Popup",
@@ -168,13 +170,13 @@ export default function Popup({
   };
 
   return (
-    <div className="flex justify-center">
-      <button onClick={() => setOpen(true)} className={classTrigger}>
+    <div className="inline justify-center">
+      <button onClick={() => setOpen(true)} className={[classTrigger, "text-start"]}>
         {triggerText}
       </button>
 
-      {open && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      {open && typeof window !== 'undefined' && ReactDOM.createPortal(
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
           <div className="bg-white dark:bg-noturno_medio p-6 rounded-xl shadow-lg w-full mx-4 md:w-[400px] text-center">
             {/* Ícone */}
             <div className="flex justify-center mb-4">
@@ -194,7 +196,7 @@ export default function Popup({
             <p className="text-lg font-medium mb-4 dark:text-white w-full whitespace-pre-wrap">
               {title}{" "}
               {userName && (
-                <span className={"text-blue-600 font-semibold "}>
+                <span className={"text-blue-600"}>
                   {userName}
                 </span>
               )}
@@ -285,7 +287,8 @@ export default function Popup({
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

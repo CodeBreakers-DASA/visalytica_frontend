@@ -46,7 +46,7 @@ function Excluir_amostras() {
   return (
     <div className="w-full h-full p-9 flex flex-col gap-7">
       <div className="w-full max-md:flex-col flex justify-between gap-8 bg-white dark:bg-noturno_medio px-9 py-5 rounded-[10px]">
-        <Link className="flex text-azul items-center gap-2" href={"/Home"}>
+        <Link className="flex text-azul items-center gap-2" href={"/Criar_usuario"}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

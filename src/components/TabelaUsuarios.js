@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import Button from "./Button";
 import { api } from "@/services/api";
 import { Trash } from "lucide-react";
+import ConfirmationPopup from "./ConfirmationPopup";
 
 import BotoesPaginacao from "./BotoesPaginacao";
 
@@ -73,12 +74,13 @@ function TabelaUsuarios({
   );
 
   return (
-    <div className="bg-white dark:bg-noturno_medio p-10 pb-5 rounded-[10px] h-full  flex flex-col justify-between">
+    <div className="bg-white dark:bg-noturno_medio p-10 pb-5 rounded-[10px] h-full flex flex-col justify-between">
        {isLoading ? (
         <LoadingIndicator />
       ) : linhas.length > 0 ? (
         <div className="flex flex-col">
-          <>
+          {/* Desktop Table */}
+          <div className="max-lg:hidden">
             <div className="flex justify-around items-center text-center dark:text-white dark:bg-noturno_medio_claro bg-cinza_medio rounded-t-[10px] text-cinza_texto font-medium p-5">
               {colunas.map((coluna) => (
                 <h3 key={coluna} className="w-full">
@@ -100,17 +102,67 @@ function TabelaUsuarios({
                   <h3 className="w-full">{linha.crm}</h3>
                   <h3 className="w-full">{linha.username}</h3>
                   <div className="w-full flex justify-center gap-3">
-                    <Button
-                      onClick={() => handleAceita(linha.id)}
-                      classes="h-9 w-9 bg-[#FA3E3E]"
+                    <ConfirmationPopup
+                      title="Excluir Usuário"
+                      message={`Tem certeza que deseja excluir o usuário ${linha.nome}?`}
+                      confirmText="Excluir"
+                      confirmButtonClass="bg-[#FA3E3E] hover:bg-red-700 text-white"
+                      onConfirm={() => handleAceita(linha.id)}
                     >
-                      <Trash color="white" />
-                    </Button>
+                      <Button classes="h-9 w-9 bg-[#FA3E3E]">
+                        <Trash color="white" />
+                      </Button>
+                    </ConfirmationPopup>
                   </div>
                 </div>
               ))}
             </div>
-          </>
+          </div>
+          <div className="lg:hidden gap-3 flex flex-col w-full">
+            {linhas.map((linha, index) => (
+              <div
+                key={index}
+                className="border w-full p-4 bg-white dark:bg-noturno_medio_claro rounded-[10px] space-y-3"
+              >
+                <div className="flex justify-between items-start gap-1">
+                  <div className="font-bold text-lg text-azul">
+                    {linha.nome}
+                  </div>
+                  <div className="flex-shrink-0">
+                    <ConfirmationPopup
+                      title="Excluir Usuário"
+                      message={`Tem certeza que deseja excluir o usuário ${linha.nome}?`}
+                      confirmText="Excluir"
+                      confirmButtonClass="bg-[#FA3E3E] hover:bg-red-700 text-white"
+                      onConfirm={() => handleAceita(linha.id)}
+                    >
+                      <Button classes="h-9 w-9 bg-[#FA3E3E]">
+                        <Trash color="white" />
+                      </Button>
+                    </ConfirmationPopup>
+                  </div>
+                </div>
+                <div className="space-y-1 text-sm">
+                  <div>
+                    <span className="font-semibold text-gray-600 dark:text-cinza_escuro">Data de nascimento: </span>
+                    <span>{transformaDatas(linha.dataNascimento)}</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-600 dark:text-cinza_escuro">CPF: </span>
+                    <span>{formatarCPF(linha.cpf)}</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-600 dark:text-cinza_escuro">CRM: </span>
+                    <span>{linha.crm}</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-600 dark:text-cinza_escuro">Username: </span>
+                    <span>{linha.username}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
               <div className="flex-1 flex flex-col gap-2 justify-center items-center">

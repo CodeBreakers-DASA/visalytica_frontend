@@ -31,7 +31,7 @@ export default function MenuDashboardFuncional({
 
   return (
     <Card className="flex flex-1 flex-col ">
-      <CardHeader className="pb-5 pl-14">
+      <CardHeader className="pb-5 md:pl-14 max-md:text-center">
         <CardDescription className="text-cinza_escuro text-[16px]">
           {title}
         </CardDescription>
