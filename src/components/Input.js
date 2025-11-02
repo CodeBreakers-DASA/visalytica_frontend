@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 function Input({ label, placeHolder, type = 'text', value, defaultValue, disabled, onChange, hasError, hasSuccess, className, classDiv, ...props }) {
     return (
-        <div className={`flex max-md:flex-col 2xl:flex-col w-full justify-between items-center ${label ? 'gap-2 ' : ''} ${disabled && 'opacity-60'} ` + classDiv}>
+        <div className={`flex max-lg:flex-col 2xl:flex-col w-full justify-between items-center ${label ? 'gap-2 ' : ''} ${disabled && 'opacity-60'} ` + classDiv}>
             {
                 label && (
                     <label className={

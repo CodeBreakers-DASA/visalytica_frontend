@@ -43,7 +43,7 @@ export default function TabelaPacientes({ pacientes }) {
   return (
     <>
       <div className="max-md:hidden dark:shadow-none overflow-hidden rounded-[10px] text-[#615D5D] dark:text-cinza h-[92%]">
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between  overflow-x-auto">
           <table className="min-w-full text-sm text-center h-full">
             <thead className="text-sm font-semibold ">
               <tr>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Pencil, Trash2, Upload } from "lucide-react";
+import { Pencil, UserRoundX , Upload } from "lucide-react";
 import Popup from "./Popup.js";
 
 export default function AcoesTabela({ paciente }) {
@@ -32,7 +32,7 @@ export default function AcoesTabela({ paciente }) {
 
       {/* Botão de Deletar */}
       <Popup
-        triggerText={<Trash2 size={18} />}
+        triggerText={<UserRoundX size={18} />}
         classTrigger="p-2 bg-[#FA3E3E] text-white rounded-[10px] hover:bg-red-600 transition-colors"
         type="delete pacientes"
         title={`Você deseja solicitar a exclusão permanentemente do ${paciente.nome_paciente}`}
