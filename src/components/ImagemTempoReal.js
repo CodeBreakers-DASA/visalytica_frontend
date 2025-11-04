@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ServerFrame from "./ServerFrame";
 
 export default function ImagemTempoReal({
@@ -13,6 +13,8 @@ export default function ImagemTempoReal({
   qr,
 }) {
   const [classeIdentificada, setClasseIdentificada] = useState(null);
+
+  useEffect(() => console.log(classeIdentificada), [classeIdentificada])
 
   return (
     <div

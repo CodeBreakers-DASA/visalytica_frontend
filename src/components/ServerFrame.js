@@ -34,7 +34,7 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas,
       frameCaptura(dataUrl)
 
       socketRef.current.emit("frame", { cameraId: camera.id, data: dataUrl, posicao: camera.posicao });
-    }, 200); // 10 FPS
+    }, 100); // 5 FPS
 
     return () => {
       clearInterval(sendFrames);
@@ -49,9 +49,9 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas,
     socket.on("server_frame_yolo", (data) => {
       if (data.cameraId == camera.id) {
         setFrame(data.frame)
-        // frameCaptura(data.frame)
-        console.log(data.cor_detectada);
-
+        frameCaptura(data.frame)
+        setClasse(data.classe)
+        
 
         if (camera.posicao == `cima` && data.medidas[0]) {
           if (data.medidas[0][0]) {
