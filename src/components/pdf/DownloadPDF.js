@@ -14,6 +14,7 @@ import { COLORS, PDF_FONTS, PDF_LAYOUT } from "../../constants/theme";
 import logoVisalytica from "../../assets/logoVisalytica.svg";
 import { useEffect, useState } from "react";
 import { api } from "@/services/api";
+import { getImageUrl } from "@/utils/imageUtils";
 
 // Estilos para o PDF
 // @react-pdf/renderer usa seu próprio sistema de estilos (StyleSheet)
@@ -199,6 +200,25 @@ const styles = StyleSheet.create({
 });
 
 export default function RelatorioMedicoPDF({ dados, medico }) {
+  console.log('PDF - Dados recebidos:', dados);
+  console.log('PDF - imageUrls:', dados?.imageUrls);
+  
+  const getImageAsBase64 = async (url) => {
+    try {
+      const response = await fetch(url, {
+        mode: 'no-cors'
+      });
+      const blob = await response.blob();
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error('Erro ao converter imagem:', error);
+      return null;
+    }
+  };
 
   const [config, setConfig] = useState({
     endereco: "Av. Lins de Vasconcelos, 1222 - Aclimação, São Paulo - SP,",

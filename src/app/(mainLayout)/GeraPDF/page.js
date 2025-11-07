@@ -129,6 +129,33 @@ function GeraPDF() {
     console.log(data);
   };
 
+  const handleDownloadPDF = async () => {
+    if (!pdfUrl) return;
+    
+    try {
+      const blob = await pdf(
+        <RelatorioMedicoPDF
+          dados={dadosAnalise}
+          configuracao={configuracaoRelatorio}
+        />
+      ).toBlob();
+      
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `relatorio-${dadosAnalise.paciente.nome}-${dadosAnalise.nome_amostra}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      toast.success('PDF baixado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao baixar PDF:', error);
+      toast.error('Erro ao baixar PDF');
+    }
+  };
+
   const handleSalvar = () => {
     var paginaDevolta;
     try {

@@ -63,7 +63,7 @@ export default function PerfilPaciente() {
 
   useEffect(() => {
     fetchMedico();
-  }, [medico]);
+  }, []);
 
   useEffect(() => {
     fetchPacienteExames(termoPesquisa, page);
