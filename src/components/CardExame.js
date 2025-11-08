@@ -1,6 +1,6 @@
 "use client";
 
-import { Pencil, Trash2, Upload } from "lucide-react";
+import { Pencil, Trash2, Download } from "lucide-react";
 import { pdf } from "@react-pdf/renderer";
 import DownloadPDF from "./pdf/DownloadPDF";
 import { useRouter } from "next/navigation";
@@ -100,7 +100,7 @@ export default function CardExame({ exame, paciente, medico }) {
                 aria-label="Upload do Exame"
                 title="Upload"
               >
-                <Upload size={16} className="xs:w-[18px] xs:h-[18px]" />
+                <Download size={16} className="xs:w-[18px] xs:h-[18px]" />
               </button>
 
               <button
@@ -225,7 +225,7 @@ export default function CardExame({ exame, paciente, medico }) {
                 aria-label="Upload do Exame"
                 title="Upload"
               >
-                <Upload size={16} className="xs:w-[18px] xs:h-[18px]" />
+                <Download size={16} className="xs:w-[18px] xs:h-[18px]" />
               </button>
 
               <button

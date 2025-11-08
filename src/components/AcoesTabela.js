@@ -1,6 +1,6 @@
 "use client";
 
-import { Pencil, UserRoundX , Upload } from "lucide-react";
+import { Pencil, UserRoundX , Download } from "lucide-react";
 import Popup from "./Popup.js";
 
 export default function AcoesTabela({ paciente }) {
@@ -10,7 +10,7 @@ export default function AcoesTabela({ paciente }) {
       {/* Botão de Visualizar/Exames (como link) */}
 
       <Popup
-        triggerText={<Upload size={18} />}
+        triggerText={<Download size={18} />}
         classTrigger="p-2 bg-[#166DED] text-white rounded-[10px] hover:bg-blue-600 transition-colors"
         type="download"
         title="Qual análise de"

@@ -113,7 +113,7 @@ function HomeInicial() {
                 {data.toLocaleString("pt-BR", { month: "long" })}:
               </span>
             </h2>
-            <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-9xl font-bold text-center">
+            <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-7xl md:text-9xl font-bold text-center">
               {analiseData[analiseData.length - 1].value}
             </p>
             <p className="text-center text-azul text-2xl ">
@@ -140,7 +140,7 @@ function HomeInicial() {
               </span>
             </h2>
             <div>
-              <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-9xl font-bold text-center">
+              <p className="bg-gradient-to-t bg-clip-text from-roxo_gradient to-azul text-transparent text-7xl md:text-9xl font-bold text-center">
                 {tempoMedioData[tempoMedioData.length - 1]["Tempo Médio (min)"]}
               </p>
               <p className="text-center text-azul text-2xl">

@@ -225,7 +225,7 @@ export default function Criar_usuario() {
 
   return (
     <div className="flex max-xl:flex-col mx-12 gap-4 max-md:gap-8 max-md:my-12">
-    <div className="max-h-[60vh] min-h-[50vh] max-md:min-h-fit max-md:w-[90vw] bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-between">
+    <div className="h-full max-md:min-h-fit max-md:w-[90vw] bg-white dark:bg-noturno_medio rounded-[10px] px-6 py-10 flex flex-col justify-between">
       <span className="text-center text-azul font-bold text-xl mb-4">Criar usuário</span>
       <div className="w-full flex justify-center gap-5">
         <InputRadio
