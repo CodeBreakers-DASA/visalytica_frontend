@@ -156,7 +156,7 @@ function GeraPDF() {
     <div className="flex flex-col h-full xl:flex-row p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8 gap-3 xs:gap-4 sm:gap-5 md:gap-6">
       <div className="h-full bg-white  dark:bg-noturno_medio p-7 flex flex-col w-full xl:flex-1 rounded-[10px]">
         {/* Preview do PDF */}
-        <div className="bg-[#252525] rounded-[10px] xs:rounded-xl sm:rounded-2xl flex items-center justify-center h-full shadow-lg">
+        <div className="bg-[#252525] max-md:min-h-96 rounded-[10px] xs:rounded-xl sm:rounded-2xl flex items-center justify-center h-full shadow-lg">
           {loading ? (
             <div className="text-white text-center p-3 xs:p-4">
               <div className="animate-spin w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 border-3 xs:border-4 border-white border-t-transparent rounded-full mx-auto mb-3 xs:mb-4"></div>
@@ -185,7 +185,7 @@ function GeraPDF() {
       </div>
       <div className="rounded-[10px] flex flex-col w-full xl:w-1/2 xl:max-w-lg h-auto gap-2 justify-between">
         
-        <CardInputs className="h-full w-full flex flex-col justify-between dark:bg-noturno_medio bg-white rounded-[10px] p-7 ">
+        <CardInputs className="max-md:space-y-3 h-full w-full flex flex-col justify-between dark:bg-noturno_medio bg-white rounded-[10px] p-7 ">
           <Input
             label={"Nome do Paciente*"}
             value={dadosAnalise.paciente.nome}
@@ -237,7 +237,7 @@ function GeraPDF() {
           />
 
           <div className="flex flex-col gap-2 md:gap-3">
-            <label className="text-xs sm:text-sm md:text-base ">
+            <label className="text-xs sm:text-sm md:text-base text-cinza_texto font-medium dark:text-white w-full">
               Observações*
             </label>
             <textarea
