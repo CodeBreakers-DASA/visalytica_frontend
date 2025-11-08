@@ -163,7 +163,7 @@ function SidebarContent({ user, pathName, handleLogout, closeMobileMenu, isMobil
                 <div className="flex flex-col items-center gap-3"> {/* Removido cursor-pointer */}
                     <div className="flex items-center gap-4">
                         <ThemeSwitcher />
-                        <NotificationPanel />
+                        {user.role !== 'admin' && <NotificationPanel />}
                     </div>
                     <div className="w-20 mt-2 h-[1px] bg-cinza dark:bg-noturno_borda"></div>
                     {/* SVG Profile Icon */}
