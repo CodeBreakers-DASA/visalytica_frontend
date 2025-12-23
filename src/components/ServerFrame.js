@@ -34,7 +34,7 @@ export default function VideoReceiver({ camera, refVideo, frameCaptura, medidas,
       frameCaptura(dataUrl)
 
       socketRef.current.emit("frame", { cameraId: camera.id, data: dataUrl, posicao: camera.posicao });
-    }, 100); // 5 FPS
+    }, 500); // 5 FPS
 
     return () => {
       clearInterval(sendFrames);
